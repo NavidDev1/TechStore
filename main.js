@@ -19,7 +19,7 @@ function initSite() {
 
 /** Uses the loaded products data to create a visible product list on the website */
 function addProductsToWebpage() {
-    let containerOfItems = document.querySelector(".classOfContainers");
+    let containerOfPhones = document.querySelector(".containerOfPhones");
     let output = "";
     for (const product of listOfProducts){
     output += `
@@ -32,5 +32,5 @@ function addProductsToWebpage() {
         </div>
     `
     }
-    containerOfItems.innerHTML = output;
+    containerOfPhones.innerHTML = output;
 }
