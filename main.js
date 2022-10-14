@@ -1,5 +1,4 @@
 var listOfProducts;
-
 /** Get products from the json file and store it in a gobal variable */
 function loadProducts() {
     fetch("./products.json")
@@ -20,12 +19,14 @@ function initSite() {
 
 /** Uses the loaded products data to create a visible product list on the website */
 function addProductsToWebpage() {
-    // Check your console to see that the products are stored in the listOfProducts varible.
-    console.log(listOfProducts);
+    let containerOfItems = document.querySelector(".classOfContainers");
+    let output = "";
+    output += `
+        <div class="ofItems">
+            <h1>${listOfProducts[0].title}</h1>
+            <p>${listOfProducts[0].image}</p>
 
-    // Add your code here, remember to brake your code in to smaller function blocks
-    // to reduce complexity and increase readability. Each function should have
-    // an explainetory comment like the one for this function, see row 22.
-    
-    // TODO: Remove the console.log and these comments when you've read them.
+        </div>
+    `
+    containerOfItems.innerHTML = output;
 }
