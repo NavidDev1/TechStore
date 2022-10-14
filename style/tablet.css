@@ -19,3 +19,22 @@ rgba(76,123,195,255) - blåa ramen runt telefonerna i kundvagnsläget
 
 rgba(245,245,245,255) - bakgrunden som displayar skärmarna (den med blåa ramen)
 */
+:root {
+    --backgroundone: rgba(248,248,248,255);
+    --backgroundtwo: rgba(254,254,254,255);
+
+
+    --blue: rgba(229,79,80,255);
+    --red: rgba(229,79,80,255);
+    --blacknav: rgba(34,32,28,255);
+    --blackparagraf: rgba(32,34,32,255);
+    
+    --blueframe: rgba(76,123,195,255);
+    --framebackgroundcolor: rgba(245,245,245,255);
+
+
+  }
+  
+  body { background-color: var(--backgroundone); }
+  
+  nav { background-color: var(--blacknav); }
