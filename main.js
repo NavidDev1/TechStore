@@ -21,12 +21,16 @@ function initSite() {
 function addProductsToWebpage() {
     let containerOfItems = document.querySelector(".classOfContainers");
     let output = "";
+    for (const product of listOfProducts){
     output += `
         <div class="ofItems">
-            <h1>${listOfProducts[0].title}</h1>
-            <p>${listOfProducts[0].image}</p>
-
+            <h1>${product.title}</h1>
+            <p>${product.description}</p>
+            <img src = "assets/${product.image}"></img>
+            <h2>${product.price}</h2>
+            <button>Lägg till i kundvagnen</button>
         </div>
     `
+    }
     containerOfItems.innerHTML = output;
 }
