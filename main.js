@@ -17,9 +17,10 @@ function initSite() {
     // This would also be a good place to initialize other parts of the UI
 }
 
+let containerOfPhones = document.querySelector(".containerOfPhones");
 /** Uses the loaded products data to create a visible product list on the website */
 function addProductsToWebpage() {
-    let containerOfPhones = document.querySelector(".containerOfPhones");
+    
     /************let Output för att vi vill ange ett värde som vi sen ska deklarera in i vår main page (containerOfPhones)*********/
     let output = "";
     /************Vi loopar alla produkter från JSON********/
@@ -39,3 +40,5 @@ function addProductsToWebpage() {
     /**************EFTER ATT LOOPEN HAR GÅTT IGENOM SÅ LÄGGER VI IN INFORMATIONEN I CONTAINER*********/
     containerOfPhones.innerHTML = output;
 }
+
+console.log(containerOfPhones);
