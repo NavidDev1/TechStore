@@ -1,4 +1,8 @@
+const customerId = Math.floor(Math.random()*999999) + 1000000;
+let addToShoppingCartBtns;
+let shoppingList = [];
 var listOfProducts;
+
 /** Get products from the json file and store it in a gobal variable */
 function loadProducts() {
     fetch("./products.json")
@@ -8,6 +12,8 @@ function loadProducts() {
     .then(function(products) {
         listOfProducts = products;
         addProductsToWebpage();
+        addToShoppingCartBtns = document.getElementsByClassName("addToShoppingCartBtn");    
+        addPutToShoppingCartBtnListners();
     });
 }
 
@@ -27,18 +33,30 @@ function addProductsToWebpage() {
     for (const product of listOfProducts){
     /*****Vi anger += för att ge outputen flera värden då vi loopar så länge produkter finns*******/
     /******************BACKTICKS SÅ VI KAN SKRIVA HTMLKOD OCH LÄGGA IN VÅRA PRODUKTER I ELEMENTEN PÅ ETT SMIDIGT SÄTT****************************/
+    let title = product.title
+    let btnId = title.split(" ").join("").toLowerCase();
     output += `  
         <div class="ofItems">
             <h1>${product.title}</h1>
             <p>${product.description}</p>
             <img src = "assets/${product.image}"></img>
             <h2>${product.price}</h2>
-            <button>Lägg till i kundvagnen</button>
+            <button id=${btnId} class="addToShoppingCartBtn">Lägg till i kundvagnen</button>
         </div>
     `
     }
     /**************EFTER ATT LOOPEN HAR GÅTT IGENOM SÅ LÄGGER VI IN INFORMATIONEN I CONTAINER*********/
-    containerOfPhones.innerHTML = output;
+    containerOfPhones.innerHTML = output;    
 }
 
-console.log(containerOfPhones);
+function addPutToShoppingCartBtnListners(){
+    for (const btn of addToShoppingCartBtns){
+        btn.addEventListener("click", addToShoppingCart)
+    }
+}
+
+function addToShoppingCart(){
+    shoppingList.push(this.id);
+}
+
+

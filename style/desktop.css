@@ -3,6 +3,7 @@
   --backgroundtwo: rgba(254,254,254,255);
 
   --blue: rgba(85,150,244,255);
+  --darkblue: rgb(41, 54, 228);
   --red: rgba(229,79,80,255);
   --blacknav: rgba(34,32,28,255);
   --blackparagraf: rgba(32,34,32,255);
@@ -68,6 +69,11 @@ nav { background-color: var(--blacknav); }
   padding: 15px 32px;
   font-size: 1.5rem;
   border-radius: 12px;
+  cursor: pointer;
+}
+
+.ofItems button:hover{
+  background-color: var(--darkblue);
 }
 
 .ofItems:nth-child(odd) {
