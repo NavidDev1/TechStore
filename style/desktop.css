@@ -35,8 +35,31 @@ rgba(245,245,245,255) - bakgrunden som displayar skärmarna (den med blåa ramen
 
 
   }
+
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
   
   body { background-color: var(--backgroundone); }
   
   nav { background-color: var(--blacknav); }
+
+  .header{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: var(--blacknav);
+    color: white;
+  }
+
+  .homeLink{
+    text-decoration: none;
+    cursor: pointer;
+    background-color: transparent;
+    color: white;
+    margin-left: 15px;
+  }
   
