@@ -1,8 +1,9 @@
-const customerId = Math.floor(Math.random()*999999) + 1000000;
+let customerId;
 let addToShoppingCartBtns;
 let shoppingList = [];
+let numberOfItemsInShoppingList;
 var listOfProducts;
-
+let customer = {};
 /** Get products from the json file and store it in a gobal variable */
 function loadProducts() {
     fetch("./products.json")
@@ -14,6 +15,18 @@ function loadProducts() {
         addProductsToWebpage();
         addToShoppingCartBtns = document.getElementsByClassName("addToShoppingCartBtn");    
         addPutToShoppingCartBtnListners();
+        if (!window.localStorage.getItem('activeCustomer')){
+            customerId = Math.floor(Math.random()*999999) + 1000000;
+            customer = {
+                "customerId": customerId,
+                "shoppingList": shoppingList
+            }
+            window.localStorage.setItem('activeCustomer', JSON.stringify(customer));
+        }
+        customer = JSON.parse(window.localStorage.getItem('activeCustomer'));
+        numberOfItemsInShoppingList = customer.shoppingList.length;
+        console.log(`Number of items in shopping list is: ${numberOfItemsInShoppingList}`);
+
     });
 }
 
@@ -56,7 +69,11 @@ function addPutToShoppingCartBtnListners(){
 }
 
 function addToShoppingCart(){
-    shoppingList.push(this.id);
+    customer.shoppingList.push(this.id);
+    numberOfItemsInShoppingList = customer.shoppingList.length;
+    window.localStorage.setItem('activeCustomer', JSON.stringify(customer));
+    console.log(`Number of items in shopping list after adding to basket is: ${numberOfItemsInShoppingList}`);
+    console.log(customer.shoppingList);
 }
 
 
