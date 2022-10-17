@@ -26,7 +26,7 @@ function loadProducts() {
         addProductsToWebpage();
         addToShoppingCartBtns = document.getElementsByClassName("addToShoppingCartBtn");    
         addPutToShoppingCartBtnListners();
-        
+        removeItemFromCurrentList();
 
     });
 }
@@ -103,11 +103,12 @@ function addToShoppingCart(){
             break;
     }
     numberOfItemsInShoppingList = customer.shoppingList.length;
+    itemQuantity.innerHTML = numberOfItemsInShoppingList;
     window.localStorage.setItem('activeCustomer', JSON.stringify(customer));
     console.log(`Number of items in shopping list after adding to basket is: ${numberOfItemsInShoppingList}`);
     console.log(customer.shoppingList);
     createUlFromShoppingCartList()
-    itemQuantity.innerHTML = numberOfItemsInShoppingList
+    
 }
 
 function displayShoppingCart(){
@@ -139,7 +140,9 @@ function createItemsDiv(item){
         </div>
     `;   
 }
-console.log(navShoppingCartBtn)
+
 navShoppingCartBtn.addEventListener("click",function(){
     displayShoppingCart()
 })
+
+
