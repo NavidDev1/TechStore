@@ -5,6 +5,7 @@ const phones = {
 	lgv30: 3
 };
 const navShoppingCartBtn =  document.querySelector("#shoppingcart");
+let itemQuantity = document.querySelector(".item_quantity");
 
 let containerOfPhones = document.querySelector(".containerOfPhones");
 let customerId;
@@ -30,6 +31,10 @@ function loadProducts() {
     });
 }
 
+
+
+
+
 function initSite() {
     loadProducts();
     // This would also be a good place to initialize other parts of the UI
@@ -44,7 +49,9 @@ function initSite() {
     customer = JSON.parse(window.localStorage.getItem('activeCustomer'));
     numberOfItemsInShoppingList = customer.shoppingList.length;
     console.log(`Number of items in shopping list is: ${numberOfItemsInShoppingList}`);
+   
 }
+
 
 /** Uses the loaded products data to create a visible product list on the website */
 function addProductsToWebpage() {
@@ -99,6 +106,8 @@ function addToShoppingCart(){
     window.localStorage.setItem('activeCustomer', JSON.stringify(customer));
     console.log(`Number of items in shopping list after adding to basket is: ${numberOfItemsInShoppingList}`);
     console.log(customer.shoppingList);
+    createUlFromShoppingCartList()
+    itemQuantity.innerHTML = numberOfItemsInShoppingList
 }
 
 function displayShoppingCart(){
@@ -132,5 +141,5 @@ function createItemsDiv(item){
 }
 console.log(navShoppingCartBtn)
 navShoppingCartBtn.addEventListener("click",function(){
-    createUlFromShoppingCartList()
+    displayShoppingCart()
 })
