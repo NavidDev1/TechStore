@@ -25,22 +25,22 @@ body { background-color: var(--backgroundone); }
 
 nav { background-color: var(--blacknav); }
 
-.body {
-  height:100vh;
-  display: inline-block;
-}
-
-.containerOfPhones {  
+.containerOfPhones {     
   text-align: center;
 }
 
-.containerOfPhones h1 {  
+.containerOfShoppingCart {
+  text-align: center;
+  display: flex;
+}
+
+.containerOfPhones h1, .containerOfShoppingCart h1 {  
   font-size: 2.5rem;  
 }
 
 .ofItems {
-  height:100vh;
   padding: 3rem;
+  height: 100vh;
 }
 
 .ofItems p, h1, h2 {
