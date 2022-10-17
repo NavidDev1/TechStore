@@ -38,3 +38,5 @@ rgba(245,245,245,255) - bakgrunden som displayar skärmarna (den med blåa ramen
   body { background-color: var(--backgroundone); }
   
   nav { background-color: var(--blacknav); }
+
+  

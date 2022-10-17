@@ -12,11 +12,18 @@
         <link rel="stylesheet" href="/style/mobile.css">
         <link rel="stylesheet" href="/style/tablet.css">
 
+        <!-- Link your stylesheet file/files, do NOT write styles in the html file! -->
+        <script src="./main.js" defer></script>
         <script src="https://kit.fontawesome.com/90b3871c83.js" crossorigin="anonymous"></script>
+        <script src="https://kit.fontawesome.com/8ff83b32cf.js" crossorigin="anonymous"></script>
         <style>
             @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500;600&display=swap');
-            </style>
-        <script src="./main.js"></script>
+        </style>
+        
+        
+        
+        
+        
     </head>
     <body onload="initSite()">
         <header>
@@ -30,19 +37,27 @@
                 </ul>
                     
                 <ul class="navbar-right">
-                    <li class="item-quantity">
+                    <li>
                         <!--Få siffran att ändra sig-->
-                        <a></a>
+                        <a class="item-quantity">4</a>
                          <!--LÄNKA TILL SHOPPINGCART-->
-                        <i class="fa-solid fa-cart-shopping"></i>
+                        <div id="shoppingcart">
+                            <i class="fa-solid fa-cart-shopping"></i>
+                        </div>
                     </li>
                     
                 </ul>
             </div>  
         </header>
 
-        <main>
-            <!-- Add the content of your site here via javascript -->
+        <main class ="containerOfPhones">
+            <div class="ofItems">
+                <h1></h1>
+                <p></p>
+                <img></img>
+                <h2></h2>
+                <button></button>
+            </div>
         </main>
 
     </body>
