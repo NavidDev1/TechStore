@@ -1,9 +1,3 @@
-const phones = {
-	iphonex: 0,
-	oneplus5: 1,
-	galaxys8: 2,
-	lgv30: 3
-};
 const navShoppingCartBtn =  document.getElementById("shoppingCartBtn");
 
 let containerOfPhones = document.querySelector(".containerOfPhones");
@@ -13,6 +7,7 @@ let shoppingList = [];
 let numberOfItemsInShoppingList;
 var listOfProducts;
 let customer = {};
+let phoneTitle;
 
 
 /** Get products from the json file and store it in a gobal variable */
@@ -79,18 +74,19 @@ function addPutToShoppingCartBtnListners(){
 }
 
 function addToShoppingCart(){
-    switch (this.id) {
+    phoneTitle = this.id;
+    switch (this.id) {        
         case "iphonex":
-            customer.shoppingList.push(listOfProducts[phones.iphonex]);
+            customer.shoppingList.push(listOfProducts[listOfProducts.findIndex(phoneTitleMatch, this.id)]);
             break;
         case "oneplus5":
-            customer.shoppingList.push(listOfProducts[phones.oneplus5]);
+            customer.shoppingList.push(listOfProducts[listOfProducts.findIndex(phoneTitleMatch, this.id)]);
             break;
         case "galaxys8":
-            customer.shoppingList.push(listOfProducts[phones.galaxys8]);
+            customer.shoppingList.push(listOfProducts[listOfProducts.findIndex(phoneTitleMatch, this.id)]);
             break;
         case "lgv30":
-            customer.shoppingList.push(listOfProducts[phones.lgv30]);
+            customer.shoppingList.push(listOfProducts[listOfProducts.findIndex(phoneTitleMatch, this.id)]);
             break;    
         default:
             console.log("No such product found to add to the shopping list!");
@@ -131,4 +127,8 @@ function createItemsDiv(item){
             <button id=${btnId} class="removeFromShoppingCartBtn">Ta bort</button>
         </div>
     `;   
+}
+
+function phoneTitleMatch(phone){
+    return phone.title.split(" ").join("").toLowerCase() == this
 }
