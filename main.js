@@ -1,9 +1,3 @@
-const phones = {
-	iphonex: 0,
-	oneplus5: 1,
-	galaxys8: 2,
-	lgv30: 3
-};
 const navShoppingCartBtn =  document.querySelector("#shoppingcart");
 let itemQuantity = document.querySelector(".item_quantity");
 
@@ -85,23 +79,8 @@ function addPutToShoppingCartBtnListners(){
 }
 
 function addToShoppingCart(){
-    switch (this.id) {
-        case "iphonex":
-            customer.shoppingList.push(listOfProducts[phones.iphonex]);
-            break;
-        case "oneplus5":
-            customer.shoppingList.push(listOfProducts[phones.oneplus5]);
-            break;
-        case "galaxys8":
-            customer.shoppingList.push(listOfProducts[phones.galaxys8]);
-            break;
-        case "lgv30":
-            customer.shoppingList.push(listOfProducts[phones.lgv30]);
-            break;    
-        default:
-            console.log("No such product found to add to the shopping list!");
-            break;
-    }
+    phoneTitle = this.id;
+    customer.shoppingList.push(listOfProducts[listOfProducts.findIndex(phoneTitleMatch, this.id)]);
     numberOfItemsInShoppingList = customer.shoppingList.length;
     itemQuantity.innerHTML = numberOfItemsInShoppingList;
     window.localStorage.setItem('activeCustomer', JSON.stringify(customer));
@@ -141,8 +120,6 @@ function createItemsDiv(item){
     `;   
 }
 
-navShoppingCartBtn.addEventListener("click",function(){
-    displayShoppingCart()
-})
-
-
+function phoneTitleMatch(phone){
+    return phone.title.split(" ").join("").toLowerCase() == this
+}
