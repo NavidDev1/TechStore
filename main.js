@@ -20,8 +20,7 @@ function loadProducts() {
         addProductsToWebpage();
         addToShoppingCartBtns = document.getElementsByClassName("addToShoppingCartBtn");    
         addPutToShoppingCartBtnListners();
-        removeItemFromCurrentList();
-
+        navShoppingCartBtn.addEventListener("click", displayShoppingCart);
     });
 }
 
@@ -39,10 +38,13 @@ function initSite() {
             "shoppingList": shoppingList
         }
         window.localStorage.setItem('activeCustomer', JSON.stringify(customer));
+        window.localStorage.setItem("numberOfItems", holderOfItems);
     }
+    itemQuantity.innerHTML = window.localStorage.getItem("numberOfItems");
     customer = JSON.parse(window.localStorage.getItem('activeCustomer'));
     numberOfItemsInShoppingList = customer.shoppingList.length;
     console.log(`Number of items in shopping list is: ${numberOfItemsInShoppingList}`);
+    
    
 }
 
@@ -82,7 +84,10 @@ function addToShoppingCart(){
     phoneTitle = this.id;
     customer.shoppingList.push(listOfProducts[listOfProducts.findIndex(phoneTitleMatch, this.id)]);
     numberOfItemsInShoppingList = customer.shoppingList.length;
+
     itemQuantity.innerHTML = numberOfItemsInShoppingList;
+    var holderOfItems =itemQuantity.innerHTML;
+    window.localStorage.setItem("numberOfItems", holderOfItems);
     window.localStorage.setItem('activeCustomer', JSON.stringify(customer));
     console.log(`Number of items in shopping list after adding to basket is: ${numberOfItemsInShoppingList}`);
     console.log(customer.shoppingList);
@@ -103,7 +108,6 @@ function createUlFromShoppingCartList(){
         item.innerHTML = createItemsDiv(phone);
         list.appendChild(item);
     }
-    console.log(list);
     return list;
 }
 
@@ -123,3 +127,6 @@ function createItemsDiv(item){
 function phoneTitleMatch(phone){
     return phone.title.split(" ").join("").toLowerCase() == this
 }
+
+
+
