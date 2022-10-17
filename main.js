@@ -26,17 +26,7 @@ function loadProducts() {
         addProductsToWebpage();
         addToShoppingCartBtns = document.getElementsByClassName("addToShoppingCartBtn");    
         addPutToShoppingCartBtnListners();
-        if (!window.localStorage.getItem('activeCustomer')){
-            customerId = Math.floor(Math.random()*999999) + 1000000;
-            customer = {
-                "customerId": customerId,
-                "shoppingList": shoppingList
-            }
-            window.localStorage.setItem('activeCustomer', JSON.stringify(customer));
-        }
-        customer = JSON.parse(window.localStorage.getItem('activeCustomer'));
-        numberOfItemsInShoppingList = customer.shoppingList.length;
-        console.log(`Number of items in shopping list is: ${numberOfItemsInShoppingList}`);
+        
 
     });
 }
@@ -44,6 +34,17 @@ function loadProducts() {
 function initSite() {
     loadProducts();
     // This would also be a good place to initialize other parts of the UI
+    if (!window.localStorage.getItem('activeCustomer')){
+        customerId = Math.floor(Math.random()*999999) + 1000000;
+        customer = {
+            "customerId": customerId,
+            "shoppingList": shoppingList
+        }
+        window.localStorage.setItem('activeCustomer', JSON.stringify(customer));
+    }
+    customer = JSON.parse(window.localStorage.getItem('activeCustomer'));
+    numberOfItemsInShoppingList = customer.shoppingList.length;
+    console.log(`Number of items in shopping list is: ${numberOfItemsInShoppingList}`);
 }
 
 /** Uses the loaded products data to create a visible product list on the website */
@@ -106,8 +107,6 @@ function displayShoppingCart(){
     let list = createUlFromShoppingCartList()
     containerOfPhones.replaceChildren(list);
     containerOfPhones.className = "containerOfShoppingCart";
-    document.querySelector(".ofItems").style.height = "50vh";
-
 }
 
 function createUlFromShoppingCartList(){
@@ -128,7 +127,7 @@ function createItemsDiv(item){
         <div class="cartItem">            
             <img src = "assets/${item.image}"></img>
             <h1>${item.title}</h1>
-            <h2>${item.price}</h2>
+            <h2>${item.price} kr</h2>
             <button id=${btnId} class="removeFromShoppingCartBtn">Ta bort</button>
         </div>
     `;   
