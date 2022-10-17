@@ -7,6 +7,8 @@ const phones = {
 const navShoppingCartBtn =  document.querySelector("#shoppingcart");
 let itemQuantity = document.querySelector(".item_quantity");
 
+
+
 let containerOfPhones = document.querySelector(".containerOfPhones");
 let customerId;
 let addToShoppingCartBtns;
@@ -14,6 +16,7 @@ let shoppingList = [];
 let numberOfItemsInShoppingList;
 var listOfProducts;
 let customer = {};
+
 
 /** Get products from the json file and store it in a gobal variable */
 function loadProducts() {
@@ -142,4 +145,5 @@ function createItemsDiv(item){
 console.log(navShoppingCartBtn)
 navShoppingCartBtn.addEventListener("click",function(){
     displayShoppingCart()
+    document.querySelector(".containerOfShoppingCart")
 })

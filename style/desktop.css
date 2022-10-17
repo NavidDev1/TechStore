@@ -114,10 +114,38 @@ nav { background-color: var(--blacknav); }
 
 .containerOfShoppingCart {
   text-align: center;
-  display: flex;
+  display:flex;
+  flex-direction: row;
+  
 }
 
-.containerOfPhones h1, .containerOfShoppingCart h1 {  
+.containerOfShoppingCart ul{
+  text-align: center;
+  display:flex;
+  flex-direction: row;
+  justify-content: center;
+  
+  
+}
+
+.cartItem{
+  border: solid 6px;
+  border-radius: 3px;
+  border-color: var(--blueframe);
+  background-color: var(--backgroundtwo);
+  
+}
+
+.removeFromShoppingCartBtn{
+  background-color: var(--red);
+  color: white;
+  height: 2.5rem;
+  width: 9rem;
+  border-radius: 0.5rem;
+  margin-bottom: 2rem;
+}
+
+.containerOfPhones h1 , .containerOfShoppingCart h1 {  
   font-size: 2.5rem;  
 }
 
