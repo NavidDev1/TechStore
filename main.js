@@ -75,23 +75,7 @@ function addPutToShoppingCartBtnListners(){
 
 function addToShoppingCart(){
     phoneTitle = this.id;
-    switch (this.id) {        
-        case "iphonex":
-            customer.shoppingList.push(listOfProducts[listOfProducts.findIndex(phoneTitleMatch, this.id)]);
-            break;
-        case "oneplus5":
-            customer.shoppingList.push(listOfProducts[listOfProducts.findIndex(phoneTitleMatch, this.id)]);
-            break;
-        case "galaxys8":
-            customer.shoppingList.push(listOfProducts[listOfProducts.findIndex(phoneTitleMatch, this.id)]);
-            break;
-        case "lgv30":
-            customer.shoppingList.push(listOfProducts[listOfProducts.findIndex(phoneTitleMatch, this.id)]);
-            break;    
-        default:
-            console.log("No such product found to add to the shopping list!");
-            break;
-    }
+    customer.shoppingList.push(listOfProducts[listOfProducts.findIndex(phoneTitleMatch, this.id)]);
     numberOfItemsInShoppingList = customer.shoppingList.length;
     window.localStorage.setItem('activeCustomer', JSON.stringify(customer));
     console.log(`Number of items in shopping list after adding to basket is: ${numberOfItemsInShoppingList}`);
