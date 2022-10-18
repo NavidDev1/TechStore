@@ -8,12 +8,37 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         
         <!-- Visit www.fontawesome.com on how to add font icons to your project -->
-        <!-- Link your stylesheet file/files, do NOT write styles in the html file! -->
+        <link rel="stylesheet" href="/style/desktop.css">
+        <link rel="stylesheet" href="/style/mobile.css">
+        <link rel="stylesheet" href="/style/tablet.css">
+
+        <script src="https://kit.fontawesome.com/90b3871c83.js" crossorigin="anonymous"></script>
+        <style>
+            @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500;600&display=swap');
+            </style>
         <script src="./main.js"></script>
     </head>
     <body onload="initSite()">
         <header>
             <!-- Your header title and shopping cart button goes here  -->
+            
+            <div id="navcontainer">
+                <ul class="navbar-left">
+                    <li class="hederlogo">
+                        <a href="index.html">TechStore</a>
+                    </li>
+                </ul>
+                    
+                <ul class="navbar-right">
+                    <li class="item-quantity">
+                        <!--Få siffran att ändra sig-->
+                        <a></a>
+                         <!--LÄNKA TILL SHOPPINGCART-->
+                        <i class="fa-solid fa-cart-shopping"></i>
+                    </li>
+                    
+                </ul>
+            </div>  
         </header>
 
         <main>
