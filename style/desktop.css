@@ -1,5 +1,3 @@
-
-
 :root {
     --backgroundone: rgba(248,248,248,255);
     --backgroundtwo: rgba(254,254,254,255);
@@ -16,8 +14,7 @@
   }
   
   body { background-color: var(--backgroundone); }
-  header { background-color: var(--blacknav); }
-
+  #navcontainer { background-color: var(--blacknav); }
 
 * { 
     padding: 0;
@@ -25,34 +22,61 @@
     box-sizing: border-box;
 }
 
-header {
-    height: 4rem;
-    display: fixed;
-}
-
 body {
     font-family: 'Poppins', normal;
     font-size: 16px;
 }
 
+header {
+    position: fixed;
+}
+
+#navcontainer {
+    overflow: hidden;
+    position: fixed;
+    display: flex;
+    top:0;
+    width: 100%;
+    justify-content: space-between;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+}
+
 .navbar-left, .navbar-right {
     list-style: none;
     flex-direction: row;
+    display: flex;
     margin-top: 0.75rem;
     color: white;
-    font-family: 'Poppins', 900;
-    font-size: 28px;
-    font-weight: bolder;
+
 }
 
 .navbar-left {
-float: left;
-margin-left: 1.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 2rem;
+    font-family: 'Poppins', normal;
+    font-weight: 600;
+    font-size: 44px;
 }
 
 .navbar-right {
-float: right;
-margin-right: 1.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.item-quantity {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: right;
+    width: 7rem;
+    margin-right: 2rem;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: 500;
+    font-size: 44px;
 }
 
 a {
@@ -60,6 +84,9 @@ a {
     text-decoration: none;
 }
 
+i {
+    font-size: 85%;
+}
 /*
 rgba(248,248,248,255) - bakgrund 1
 
