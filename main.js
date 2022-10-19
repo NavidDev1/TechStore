@@ -1,3 +1,4 @@
+"use strict";
 const navShoppingCartBtn =  document.querySelector("#shoppingcart");
 let itemQuantity = document.querySelector(".item_quantity");
 
@@ -81,7 +82,7 @@ function addPutToShoppingCartBtnListners(){
 }
 
 function addToShoppingCart(){
-    phoneTitle = this.id;
+    let phoneTitle = this.id;
     customer.shoppingList.push(listOfProducts[listOfProducts.findIndex(phoneTitleMatch, this.id)]);
     numberOfItemsInShoppingList = customer.shoppingList.length;
 
@@ -104,7 +105,7 @@ function displayShoppingCart(){
 function createUlFromShoppingCartList(){
     let list = document.createElement('ul');
     for(const phone of customer.shoppingList){
-        item = document.createElement('li');
+        let item = document.createElement('li');
         item.innerHTML = createItemsDiv(phone);
         list.appendChild(item);
     }
