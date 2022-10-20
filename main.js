@@ -8,6 +8,7 @@ let shoppingList = [];
 let numberOfItemsInShoppingList;
 var listOfProducts;
 let customer = {};
+let removeFromShoppingCartBtns;
 
 /** Get products from the json file and store it in a gobal variable */
 function loadProducts() {
@@ -18,9 +19,11 @@ function loadProducts() {
     .then(function(products) {
         listOfProducts = products;
         addProductsToWebpage();
-        addToShoppingCartBtns = document.getElementsByClassName("addToShoppingCartBtn");    
+        addToShoppingCartBtns = document.getElementsByClassName("addToShoppingCartBtn");   
         addPutToShoppingCartBtnListners();
         navShoppingCartBtn.addEventListener("click", displayShoppingCart);
+        removeFromShoppingCartBtns = document.getElementsByClassName("removeFromShoppingCartBtns") ;
+        removeItemFromShoppingCartListner();
     });
 }
 
@@ -44,7 +47,6 @@ function initSite() {
     customer = JSON.parse(window.localStorage.getItem('activeCustomer'));
     numberOfItemsInShoppingList = customer.shoppingList.length;
     console.log(`Number of items in shopping list is: ${numberOfItemsInShoppingList}`);
-    
    
 }
 
@@ -76,7 +78,7 @@ function addProductsToWebpage() {
 
 function addPutToShoppingCartBtnListners(){
     for (const btn of addToShoppingCartBtns){
-        btn.addEventListener("click", addToShoppingCart)
+        btn.addEventListener("click", addToShoppingCart);
     }
 }
 
@@ -91,7 +93,7 @@ function addToShoppingCart(){
     window.localStorage.setItem('activeCustomer', JSON.stringify(customer));
     console.log(`Number of items in shopping list after adding to basket is: ${numberOfItemsInShoppingList}`);
     console.log(customer.shoppingList);
-    createUlFromShoppingCartList()
+    createUlFromShoppingCartList();
     
 }
 
@@ -112,14 +114,14 @@ function createUlFromShoppingCartList(){
 }
 
 function createItemsDiv(item){
-    let title = item.title
+    let title = item.title;
     let btnId = `btnRemove${title.split(" ").join("").toLowerCase()}`
     return `  
         <div class="cartItem">            
             <img src = "assets/${item.image}"></img>
             <h1>${item.title}</h1>
             <h2>${item.price} kr</h2>
-            <button id=${btnId} class="removeFromShoppingCartBtn">Ta bort</button>
+            <button id=${btnId} class="removeFromShoppingCartBtns">Ta bort</button>
         </div>
     `;   
 }
@@ -129,4 +131,16 @@ function phoneTitleMatch(phone){
 }
 
 
+function removeItemFromShoppingCartListner(){
+    for (const btn of removeFromShoppingCartBtns){
+        btn.addEventListener("click", removeItemFromShoppingCart);
+    }
+}
 
+
+function removeItemFromShoppingCart(){
+    phoneTitle = this.id;
+    customer.shoppingList.splice(findIndex(phoneTitleMatch,this.id));
+    numberOfItemsInShoppingList = customer.shoppingList.length;
+    itemQuantity.innerHTML = numberOfItemsInShoppingList;
+}
