@@ -125,15 +125,14 @@ body {
 #shoppingcart:hover{
   cursor: pointer;
 }
-.containerOfPhones {   
-  margin-top: 80px;  
+.containerOfPhones {  
+  margin-top: 80px; 
   text-align: center;
-  height: 90vh;
+  height: 100vh;
   width:auto;
-  display: flex;
-  justify-content: center;
-  align-items: center;
   overflow: scroll;
+  display:grid;
+  place-items: center;
 }
 
 .containerOfPhones h1, .containerOfShoppingCart h1 {  
@@ -142,11 +141,8 @@ body {
 
 .ofItems {
   padding: 3rem;
-  height: 70vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
+  height: 100vh;
+  width:100%;
 }
 
 .ofItems h1, p, img, h2, button{
@@ -191,7 +187,7 @@ body {
 }
 
 .ofItems img{
-  height: 30vh;
+  height: 60vh;
 }
 
 .containerOfShoppingCart {
