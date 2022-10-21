@@ -1,25 +1,25 @@
 :root {
-    --backgroundone: rgba(248,248,248,255);
-    --backgroundtwo: rgba(254,254,254,255);
+  --backgroundone: rgba(248,248,248,255);
+  --backgroundtwo: rgba(254,254,254,255);
 
+  --blue: rgba(85,150,244,255);
+  --red: rgba(229,79,80,255);
+  --blacknav: rgba(34,32,28,255);
+  --blackparagraf: rgba(32,34,32,255);
+  
+  --blueframe: rgba(76,123,195,255);
+  --framebackgroundcolor: rgba(245,245,245,255);
+}
+@import url('https://fonts.googleapis.com/css2?family=Noto+Emoji:wght@400&family=Poppins:wght@300&display=swap');
 
-    --blue: rgba(229,79,80,255);
-    --red: rgba(229,79,80,255);
-    --blacknav: rgba(34,32,28,255);
-    --blackparagraf: rgba(32,34,32,255);
-    
-    --blueframe: rgba(76,123,195,255);
-    --framebackgroundcolor: rgba(245,245,245,255);
-
-  }
+  
   
   body { background-color: var(--backgroundone); }
   #navcontainer { background-color: var(--blacknav); }
 
-* { 
-    padding: 0;
-    margin:0;
-    box-sizing: border-box;
+.body {
+  height:100vh;
+  display: inline-block;
 }
 
 body {
@@ -87,24 +87,62 @@ a {
 i {
     font-size: 85%;
 }
-/*
-rgba(248,248,248,255) - bakgrund 1
+.containerOfPhones {  
+  text-align: center;
+}
 
-rgba(254,254,254,255) - bakgrund 2
+.containerOfPhones h1 {  
+  font-size: 2.5rem;  
+}
+
+.ofItems {
+  height:100vh;
+  padding: 3rem;
+}
+
+.ofItems p, h1, h2 {
+  padding: 12px;
+}
+
+.ofItems h2 {
+  padding-top: 0px;
+  padding-bottom: 16px;
+}
+
+.ofItems p {
+  font-size: 1.2rem;
+  font-weight:bold;
+  letter-spacing: -0.5px;
+}
+
+.ofItems button i {
+  margin-right: 22px;
+}
+
+.ofItems button {
+  background-color: var(--blue);
+  color: white;
+  border: none;
+  padding: 15px 32px;
+  font-size: 1.5rem;
+  border-radius: 12px;
+}
+
+.ofItems:nth-child(odd) {
+  background-color: var(--backgroundtwo);
+}
+
+.ofItems img{
+  height: 80%;
+}
+  
 
 
 
-rgba(85,150,244,255) - blåa knappen för köp
-
-rgba(229,79,80,255) - röda knappen för ta bort
-
-rgba(34,32,28,255) - navigationbar bakgrund
-
-rgba(32,34,32,255) - paragrafer och headlines för telefonerna
 
 
 
-rgba(76,123,195,255) - blåa ramen runt telefonerna i kundvagnsläget
 
-rgba(245,245,245,255) - bakgrunden som displayar skärmarna (den med blåa ramen)
-*/  
+
+
+
