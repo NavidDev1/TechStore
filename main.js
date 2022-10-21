@@ -143,4 +143,5 @@ function removeItemFromShoppingCart(){
     customer.shoppingList.splice(findIndex(phoneTitleMatch,this.id));
     numberOfItemsInShoppingList = customer.shoppingList.length;
     itemQuantity.innerHTML = numberOfItemsInShoppingList;
+    //testing
 }
