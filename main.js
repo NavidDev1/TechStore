@@ -67,7 +67,7 @@ function addProductsToWebpage() {
             <p>${product.description}</p>
             <img src = "assets/${product.image}"></img>
             <h2>${product.price} kr</h2>
-            <button id=${btnId} class="addToShoppingCartBtn">Lägg till i kundvagnen</button>
+            <button id=${btnId} class="addToShoppingCartBtn"><i class="fa-solid fa-cart-arrow-down"></i>Lägg till i kundvagnen</button>
         </div>
     `
     }
@@ -120,7 +120,7 @@ function createItemsDiv(item){
             <img src = "assets/${item.image}"></img>
             <h1>${item.title}</h1>
             <h2>${item.price} kr</h2>
-            <button id=${btnId} class="removeFromShoppingCartBtn">Ta bort</button>
+            <button id=${btnId} class="removeFromShoppingCartBtn"><i class="fa-regular fa-trash-can <i class="fa-regular fa-distribute-spacing-horizontal"></i>Ta bort</button>
         </div>
     `;   
 }
