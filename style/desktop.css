@@ -237,3 +237,121 @@ body {
 .cartItem i {
   margin: 0 1rem 0 0;
 }
+
+
+
+
+.loginModal {
+  margin-top: 100px;
+  display: flex;
+  height: calc(100vh - 100px);
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  text-align: center;
+  border: red solid 4px;
+}
+
+form {
+  display:flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  text-align: center;
+  height: 50%;
+  width: 50%;
+  border: blue solid 4px;
+}
+
+form > * {
+  padding: 10%;
+}
+
+
+
+input,
+.btn, .error_msg_box {
+  padding: 0.5rem;
+  margin-bottom: 0.5rem;
+  width: 50%;
+  width: clamp(80%, 80%, 850px);
+  border: 0.1rem solid transparent;
+  border-radius: 5px;
+}
+
+form .field {
+  background-color: #f9f2f2;
+}
+
+
+form .field:focus {
+  background-color: #aee75a21;
+}
+
+
+.btn {
+  background-color: #037468cc;
+  color: #fff;
+  line-height: 1rem;
+  cursor: pointer;
+}
+
+.btn:hover,
+.btn:active {
+  background-color: #26cfcf;
+  border: 0.1rem solid #1F78B4;
+  cursor: pointer;
+}
+
+.container{
+  background-color: rgba(7, 98, 25, 0.152);
+  margin: 10rem auto;
+  padding: 2rem;
+  width: clamp(300px, 90%, 900px); /* clamp(MIN, VAL, MAX) */
+  height: 50%;
+  border-radius: 10px;
+  justify-content: center;
+  text-align: center;
+
+}
+
+.container h1 {
+  color: rgba(245, 250, 251, 0.799);
+  font-size: 2rem;
+  margin: 2rem;
+  text-align: center;
+  text-shadow: 0px 0px 5px rgb(1, 31, 31);
+}
+
+input:invalid {
+  border: 2px dashed rgb(255, 42, 42);
+  background-image: linear-gradient(to right, rgb(255, 255, 255), rgb(240, 188, 255));
+}
+
+.error_msg_box{
+  visibility: hidden;
+  font-size: 0.5rem;
+  margin-left: auto;
+  margin-right: auto;
+  background-color: rgb(255, 157, 157);
+
+  animation-name: hidden;
+  animation-duration: 10s;
+  animation-timing-function: linear;
+}
+
+@keyframes show {
+  0%   {background-color:rgb(255, 255, 255); left:0px; top:0px; visibility: hidden;}
+  100% {background-color:rgb(255, 84, 84); left:0px; top:0px; visibility: visible;}
+}
+
+@keyframes hide {
+  0% {background-color:red; left:0px; top:0px; visibility: visible;}
+  100%   {background-color:rgb(255, 255, 255); left:0px; top:0px; visibility: hidden;}
+
+}
+
+@keyframes hidden {
+  100% {visibility: hidden;}
+}
+

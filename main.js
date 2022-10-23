@@ -1,5 +1,6 @@
 "use strict";
 const navShoppingCartBtn =  document.querySelector("#shoppingcart");
+const userBtnE = document.getElementById("user");
 let itemQuantity = document.querySelector(".item_quantity");
 
 let containerOfPhones = document.querySelector(".containerOfPhones");
@@ -129,5 +130,18 @@ function phoneTitleMatch(phone){
     return phone.title.split(" ").join("").toLowerCase() == this
 }
 
-
+userBtnE.addEventListener("click", ()=>{
+    let mainE = document.querySelector("main");
+    mainE.className = "loginModal";
+    mainE.innerHTML = `
+    <h1>Login</h1>
+      <form id="my_form" action="javascript:void(0);">
+          <input type="text" placeholder="Username" class="field" id="username" pattern="[A-Z,a-z,0-9]{1,10}">
+          <div class="error_msg_box" id="e_name">"error message"</div>
+          <input type="password" placeholder="Password" class="field" id="password" pattern="[A-Z,a-z,0-9]{1,10}"> 
+          <div class="error_msg_box" id="e_pass">"error message"</div>             
+          <button type="submit" value="Submit" class="btn" id="login_btn">Login</button>
+          <button class="btn" id="new_user">New user</button>
+      </from>`;
+});
 
