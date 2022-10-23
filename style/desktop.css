@@ -250,3 +250,287 @@ body {
   border-radius: 12px;
   cursor: pointer;
 }
+
+
+/* 
+
+.containerOfShoppingCart {
+  margin-top: 0;
+  height: 100%;
+  overflow: hidden;
+  align-items: center;
+  width: fit-content;
+}
+.containerOfShoppingCart ul {
+  align-items: center;
+
+}
+.cartItem {
+  margin-left: 0;
+}
+ */
+
+
+/*
+rgba(248,248,248,255) - bakgrund 1
+
+rgba(254,254,254,255) - bakgrund 2
+
+
+
+rgba(85,150,244,255) - blåa knappen för köp
+
+rgba(229,79,80,255) - röda knappen för ta bort
+
+rgba(34,32,28,255) - navigationbar bakgrund
+
+rgba(32,34,32,255) - paragrafer och headlines för telefonerna
+
+
+
+rgba(76,123,195,255) - blåa ramen runt telefonerna i kundvagnsläget
+
+rgba(245,245,245,255) - bakgrunden som displayar skärmarna (den med blåa ramen)
+*/  
+/* 
+
+
+:root {
+  --backgroundone: rgba(248,248,248,255);
+  --backgroundtwo: rgba(254,254,254,255);
+
+
+  --blue: rgba(85,150,244,255);
+  --lighterblue: rgb(116, 168, 250);
+  --red: rgba(229,79,80,255);
+  --darkred: rgb(224, 37, 34);
+  --blacknav: rgba(34,32,28,255);
+  --blackparagraf: rgba(32,34,32,255);
+  
+  --blueframe: rgba(76,123,195,255);
+  --framebackgroundcolor: rgba(245,245,245,255);
+
+} */
+
+/*   
+
+
+* {
+box-sizing: border-box;
+margin:0px;
+padding:0px;  
+ font-family: 'Gill Sans', Helvetica, sans-serif; 
+font-family: 'Poppins', sans-serif;
+}
+*/
+
+
+
+
+
+
+
+/* body { background-color: var(--backgroundone); }
+#navcontainer { background-color: var(--blacknav); }
+
+
+* { 
+  padding: 0;
+  margin:0;
+  box-sizing: border-box;
+}
+
+header {
+position: fixed;
+}
+
+body {
+  font-family: 'Poppins', normal;
+  font-size: 16px;
+}
+
+#navcontainer {
+overflow: hidden;
+position: fixed;
+display: flex;
+top:0;
+width: 100%;
+justify-content: space-between;
+padding-top: 0.5rem;
+padding-bottom: 0.5rem;
+height: 80px;
+}
+.navbar-left, .navbar-right{
+list-style: none;
+}
+
+.navbar-left {
+display: flex;
+justify-content: center;
+align-items: center;
+margin-left: 2rem;
+font-family: 'Poppins', normal;
+font-weight: 600;
+font-size: 44px;
+}
+
+.navbar-right {
+display: flex;
+justify-content: center;
+align-items: center;
+}
+
+
+.item-quantity {
+display: flex;
+justify-content: space-evenly;
+align-items: right;
+width: 7rem;
+margin-right: 2rem;
+font-family: Arial, Helvetica, sans-serif;
+font-weight: 500;
+font-size: 44px;
+}
+
+#navcontainer a {
+color: white;
+text-decoration: none;
+}
+
+#navcontainer i {
+font-size: 2rem;
+margin-right: 20px;
+}
+
+#shoppingcart:hover{
+cursor: pointer;
+}
+.containerOfPhones {  
+margin-top: 80px; 
+text-align: center;
+height: 100vh;
+width:auto;
+overflow: scroll;
+display:grid;
+place-items: center;
+}
+
+.containerOfPhones h1, .containerOfShoppingCart h1 {  
+font-size: 2.5rem;  
+}
+
+.ofItems {
+padding: 3rem;
+height: 100vh;
+width:100%;
+}
+
+.ofItems h1, p, img, h2, button{
+flex-shrink: 3;
+}
+
+.ofItems p, h1, h2 {
+padding: 12px;
+}
+
+.ofItems h2 {
+padding-top: 0px;
+padding-bottom: 16px;
+}
+
+.ofItems p {
+font-size: 1.2rem;
+font-weight:bold;
+letter-spacing: -0.5px;
+}
+
+.ofItems button i {
+margin-right: 22px;
+}
+
+.ofItems button {
+background-color: var(--blue);
+color: white;
+border: none;
+padding: 15px 32px;
+font-size: 1.5rem;
+border-radius: 12px;
+cursor: pointer;
+}
+
+.ofItems button:hover{
+background-color: var(--lighterblue);
+}
+
+.ofItems:nth-child(odd) {
+background-color: var(--backgroundtwo);
+}
+
+.ofItems img{
+height: 60vh;
+}
+
+.containerOfShoppingCart {
+margin-top: 0;
+text-align: center;
+display: flex;
+flex-direction: row;
+justify-content: center;
+height: 100%;
+overflow: hidden;
+align-items: center;
+width: fit-content;
+}
+
+.containerOfShoppingCart ul{
+text-align: center;
+display: flex;
+flex-direction: row;
+justify-content: center;
+height: 60vh;
+align-items: center;
+}
+
+.containerOfShoppingCart li{
+text-align: center;
+display: flex;
+flex-direction: row;
+justify-content: center;
+height: 50vh;
+}
+
+.cartItem{
+text-align: center;
+padding: 20px;
+margin-left: 0;
+}
+
+.cartItem img{
+width:auto;
+text-align: center;
+display: flex;
+flex-direction: column;
+justify-content: center;
+height: 30vh;
+}
+
+
+.cartItem button {
+background-color: var(--red);
+color: white;
+border: none;
+padding: 15px 32px;
+font-size: 1.5rem;
+border-radius: 12px;
+cursor: pointer;
+}
+
+.cartItem button:hover {
+background-color: var(--darkred);
+color: white;
+border: none;
+padding: 15px 32px;
+font-size: 1.5rem;
+border-radius: 12px;
+cursor: pointer;
+} */
