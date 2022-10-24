@@ -1,92 +1,3 @@
-:root {
-  --backgroundone: rgba(248,248,248,255);
-  --backgroundtwo: rgba(254,254,254,255);
-
-
-  --blue: rgba(229,79,80,255);
-  --red: rgba(229,79,80,255);
-  --blacknav: rgba(34,32,28,255);
-  --blackparagraf: rgba(32,34,32,255);
-  
-  --blueframe: rgba(76,123,195,255);
-  --framebackgroundcolor: rgba(245,245,245,255);
-
-}
-
-body { background-color: var(--backgroundone); }
-#navcontainer { background-color: var(--blacknav); }
-
-* { 
-  padding: 0;
-  margin:0;
-  box-sizing: border-box;
-}
-
-body {
-  font-family: 'Poppins', normal;
-  font-size: 16px;
-}
-
-header {
-  position: fixed;
-}
-
-#navcontainer {
-  overflow: hidden;
-  position: fixed;
-  display: flex;
-  top:0;
-  width: 100%;
-  justify-content: space-between;
-  padding-top: 0.5rem;
-  padding-bottom: 0.5rem;
-}
-
-.navbar-left, .navbar-right {
-  list-style: none;
-  flex-direction: row;
-  display: flex;
-  margin-top: 0.75rem;
-  color: white;
-
-}
-
-.navbar-left {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-left: 2rem;
-  font-family: 'Poppins', normal;
-  font-weight: 600;
-  font-size: 44px;
-}
-
-.navbar-right {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-
-.item-quantity {
-  display: flex;
-  justify-content: space-evenly;
-  align-items: right;
-  width: 7rem;
-  margin-right: 2rem;
-  font-family: Arial, Helvetica, sans-serif;
-  font-weight: 500;
-  font-size: 44px;
-}
-
-a {
-  color: white;
-  text-decoration: none;
-}
-
-i {
-  font-size: 85%;
-}
 /*
 rgba(248,248,248,255) - bakgrund 1
 
@@ -107,4 +18,23 @@ rgba(32,34,32,255) - paragrafer och headlines för telefonerna
 rgba(76,123,195,255) - blåa ramen runt telefonerna i kundvagnsläget
 
 rgba(245,245,245,255) - bakgrunden som displayar skärmarna (den med blåa ramen)
-*/  
+*/
+/* :root {
+    --backgroundone: rgba(248,248,248,255);
+    --backgroundtwo: rgba(254,254,254,255);
+
+
+    --blue: rgba(229,79,80,255);
+    --red: rgba(229,79,80,255);
+    --blacknav: rgba(34,32,28,255);
+    --blackparagraf: rgba(32,34,32,255);
+    
+    --blueframe: rgba(76,123,195,255);
+    --framebackgroundcolor: rgba(245,245,245,255);
+
+
+  }
+  
+  body { background-color: var(--backgroundone); }
+  
+  nav { background-color: var(--blacknav); } */
