@@ -123,7 +123,7 @@ function createItemsDiv(item){
             <img src = "assets/${item.image}"></img>
             <h1>${item.title}</h1>
             <h2>${item.price} kr</h2>
-            <button id=${btnId} class="removeFromShoppingCartBtn"><i class="fa-regular fa-trash-can <i class="fa-regular fa-distribute-spacing-horizontal"></i>Ta bort</button>
+            <button id=${btnId} class="removeFromShoppingCartBtns"><i class="fa-regular fa-trash-can <i class="fa-regular fa-distribute-spacing-horizontal"></i>Ta bort</button>
         </div>
     `;   
 }
@@ -145,6 +145,10 @@ function removeItemFromShoppingCart(){
     
     customer.shoppingList.splice(holder,1);
     localStorage.setItem("activeCustomer", JSON.stringify(customer));
+    localStorage.setItem("numberOfItems",itemQuantity.innerHTML);
+    itemQuantity.innerHTML = customer.shoppingList.length;
     displayShoppingCart();
     //testing
 }
+
+
