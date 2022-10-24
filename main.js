@@ -22,8 +22,7 @@ function loadProducts() {
         addToShoppingCartBtns = document.getElementsByClassName("addToShoppingCartBtn");   
         addPutToShoppingCartBtnListners();
         navShoppingCartBtn.addEventListener("click", displayShoppingCart);
-        removeFromShoppingCartBtns = document.getElementsByClassName("removeFromShoppingCartBtns") ;
-        removeItemFromShoppingCartListner();
+        
     });
 }
 
@@ -101,6 +100,8 @@ function displayShoppingCart(){
     let list = createUlFromShoppingCartList()
     containerOfPhones.replaceChildren(list);
     containerOfPhones.className = "containerOfShoppingCart";
+    removeFromShoppingCartBtns = document.getElementsByClassName("removeFromShoppingCartBtns") ;
+    removeItemFromShoppingCartListner();
 }
 
 function createUlFromShoppingCartList(){
@@ -139,9 +140,8 @@ function removeItemFromShoppingCartListner(){
 //hej
 
 function removeItemFromShoppingCart(){
-    phoneTitle = this.id;
-    customer.shoppingList.splice(findIndex(phoneTitleMatch,this.id));
-    numberOfItemsInShoppingList = customer.shoppingList.length;
-    itemQuantity.innerHTML = numberOfItemsInShoppingList;
+    var holder = customer.shoppingList.findIndex(phoneTitleMatch, this.id);
+    
+    customer.shoppingList.splice(holder,1);
     //testing
 }
