@@ -136,7 +136,7 @@ function removeItemFromShoppingCartListner(){
         btn.addEventListener("click", removeItemFromShoppingCart);
     }
 }
-
+//hej
 
 function removeItemFromShoppingCart(){
     phoneTitle = this.id;
