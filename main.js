@@ -143,5 +143,7 @@ function removeItemFromShoppingCart(){
     var holder = customer.shoppingList.findIndex(phoneTitleMatch, this.id);
     
     customer.shoppingList.splice(holder,1);
+    localStorage.setItem("activeCustomer", JSON.stringify(customer));
+    displayShoppingCart();
     //testing
 }
