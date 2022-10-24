@@ -12,47 +12,71 @@
 }
 @import url('https://fonts.googleapis.com/css2?family=Noto+Emoji:wght@400&family=Poppins:wght@300&display=swap');
 
-* {
-  box-sizing: border-box;
-  margin:0;
-  padding:0; 
-  font-family: 'Poppins', sans-serif;
-}
-
-body { background-color: var(--backgroundone); }
-
-nav { background-color: var(--blacknav); }
+  
+  
+  body { background-color: var(--backgroundone); }
+  #navcontainer { background-color: var(--blacknav); }
 
 .body {
   height:100vh;
   display: inline-block;
 }
 
+body {
+    font-family: 'Poppins', normal;
+    font-size: 16px;
+}
+
 header {
-    height: 4rem;
-    display: fixed;
+    position: fixed;
+}
+
+#navcontainer {
+    overflow: hidden;
+    position: fixed;
+    display: flex;
+    top:0;
+    width: 100%;
+    justify-content: space-between;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
 }
 
 .navbar-left, .navbar-right {
     list-style: none;
     flex-direction: row;
+    display: flex;
     margin-top: 0.75rem;
     color: white;
-    font-family: 'Poppins', 900;
-    font-size: 28px;
-    font-weight: bolder;
-    font-family: 'Poppins', normal;
-    font-size: 16px;
+
 }
 
 .navbar-left {
-float: left;
-margin-left: 1.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 2rem;
+    font-family: 'Poppins', normal;
+    font-weight: 600;
+    font-size: 44px;
 }
 
 .navbar-right {
-float: right;
-margin-right: 1.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.item-quantity {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: right;
+    width: 7rem;
+    margin-right: 2rem;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: 500;
+    font-size: 44px;
 }
 
 a {
@@ -60,6 +84,9 @@ a {
     text-decoration: none;
 }
 
+i {
+    font-size: 85%;
+}
 .containerOfPhones {  
   text-align: center;
 }
@@ -109,7 +136,7 @@ a {
   height: 80%;
 }
   
-=======
+
 
 
 
