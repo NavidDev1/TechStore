@@ -1,65 +1,3 @@
-
-
-:root {
-    --backgroundone: rgba(248,248,248,255);
-    --backgroundtwo: rgba(254,254,254,255);
-
-
-    --blue: rgba(229,79,80,255);
-    --red: rgba(229,79,80,255);
-    --blacknav: rgba(34,32,28,255);
-    --blackparagraf: rgba(32,34,32,255);
-    
-    --blueframe: rgba(76,123,195,255);
-    --framebackgroundcolor: rgba(245,245,245,255);
-
-  }
-  
-  body { background-color: var(--backgroundone); }
-  header { background-color: var(--blacknav); }
-
-
-* { 
-    padding: 0;
-    margin:0;
-    box-sizing: border-box;
-}
-
-header {
-    height: 4rem;
-    display: fixed;
-}
-
-body {
-    font-family: 'Poppins', normal;
-    font-size: 16px;
-}
-
-.navbar-left, .navbar-right {
-    list-style: none;
-    flex-direction: row;
-    margin-top: 0.75rem;
-    color: white;
-    font-family: 'Poppins', 900;
-    font-size: 28px;
-    font-weight: bolder;
-}
-
-.navbar-left {
-float: left;
-margin-left: 1.5rem;
-}
-
-.navbar-right {
-float: right;
-margin-right: 1.5rem;
-}
-
-a {
-    color: white;
-    text-decoration: none;
-}
-
 /*
 rgba(248,248,248,255) - bakgrund 1
 
@@ -81,40 +19,102 @@ rgba(76,123,195,255) - blåa ramen runt telefonerna i kundvagnsläget
 
 rgba(245,245,245,255) - bakgrunden som displayar skärmarna (den med blåa ramen)
 */  
+
+
+
 :root {
-  --backgroundone: rgba(248,248,248,255);
-  --backgroundtwo: rgba(254,254,254,255);
+    --backgroundone: rgba(248,248,248,255);
+    --backgroundtwo: rgba(254,254,254,255);
 
-  --blue: rgba(85,150,244,255);
-  --darkblue: rgb(41, 54, 228);
-  --red: rgba(229,79,80,255);
-  --blacknav: rgba(34,32,28,255);
-  --blackparagraf: rgba(32,34,32,255);
+
+    --blue: rgba(85,150,244,255);
+    --lighterblue: rgb(116, 168, 250);
+    --red: rgba(229,79,80,255);
+    --darkred: rgb(224, 37, 34);
+    --blacknav: rgba(34,32,28,255);
+    --blackparagraf: rgba(32,34,32,255);
+    
+    --blueframe: rgba(76,123,195,255);
+    --framebackgroundcolor: rgba(245,245,245,255);
+
+  }
   
-  --blueframe: rgba(76,123,195,255);
-  --framebackgroundcolor: rgba(245,245,245,255);
-}
-@import url('https://fonts.googleapis.com/css2?family=Noto+Emoji:wght@400&family=Poppins:wght@300&display=swap');
-
-* {
-  box-sizing: border-box;
-  margin:0px;
-  padding:0px;  
-  /* font-family: 'Gill Sans', Helvetica, sans-serif; */
-  font-family: 'Poppins', sans-serif;
-}
-
 body { background-color: var(--backgroundone); }
+#navcontainer { background-color: var(--blacknav); }
 
-nav { background-color: var(--blacknav); }
 
-.containerOfPhones {     
-  text-align: center;
+* { 
+    padding: 0;
+    margin:0;
+    box-sizing: border-box;
 }
 
-.containerOfShoppingCart {
-  text-align: center;
+header {
+  position: fixed;
+}
+
+body {
+    font-family: 'Poppins', normal;
+    font-size: 16px;
+}
+
+#navcontainer {
+  overflow: hidden;
+  position: fixed;
   display: flex;
+  top:0;
+  width: 100%;
+  justify-content: space-between;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  height: 80px;
+}
+.navbar-left, .navbar-right{
+  list-style: none;
+}
+
+.navbar-left {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: 2rem;
+  font-family: 'Poppins', normal;
+  font-weight: 600;
+  font-size: 44px;
+}
+
+.navbar-right {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.item-quantity {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: right;
+  width: 7rem;
+  margin-right: 2rem;
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: 500;
+  font-size: 44px;
+}
+
+#navcontainer a {
+  color: white;
+  text-decoration: none;
+}
+
+#navcontainer i {
+  font-size: 2rem;
+  margin-right: 20px;
+}
+
+#shoppingcart:hover{
+  cursor: pointer;
+}
+.containerOfPhones {  
+  margin-top: 80px; 
 }
 
 .containerOfPhones h1, .containerOfShoppingCart h1 {  
@@ -122,27 +122,21 @@ nav { background-color: var(--blacknav); }
 }
 
 .ofItems {
-  padding: 3rem;
-  height: 100vh;
+  height: calc(100vh - 80px);
+  padding: 4%;
+  width:100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
 }
 
-.ofItems p, h1, h2 {
-  padding: 12px;
-}
-
-.ofItems h2 {
-  padding-top: 0px;
-  padding-bottom: 16px;
-}
-
-.ofItems p {
-  font-size: 1.2rem;
-  font-weight:bold;
-  letter-spacing: -0.5px;
+.ofItems h1, p, img, h2, button{
+  padding: 5px 0px;
 }
 
 .ofItems button i {
-  margin-right: 22px;
+  margin-right: 1rem;
 }
 
 .ofItems button {
@@ -156,7 +150,7 @@ nav { background-color: var(--blacknav); }
 }
 
 .ofItems button:hover{
-  background-color: var(--darkblue);
+  background-color: var(--lighterblue);
 }
 
 .ofItems:nth-child(odd) {
@@ -164,6 +158,73 @@ nav { background-color: var(--blacknav); }
 }
 
 .ofItems img{
-  height: 80%;
+  height: 60%;
 }
+
+.containerOfShoppingCart {
+  margin-top: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: calc(100vh - 100px);
+}
+
+.containerOfShoppingCart ul{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items:center;
+  width: 100vw;
+  margin: auto;
+  flex-wrap: wrap;
+  list-style: none;
+  gap:20px;  
+}
+
+.cartItem{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  text-align: center;
+  padding: 20px;
+  height:50vh;
+  border: 3px solid var(--blue);
+  border-radius: 15px;
+  height: 50%;
+}
+
+.cartItem img{
+  width:auto;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 30vh;
+}
+
+
+.cartItem button {
+  background-color: var(--red);
+  color: white;
+  border: none;
+  padding: 15px 32px;
+  font-size: 1.3rem;
+  border-radius: 12px;
+  cursor: pointer;
   
+}
+
+.cartItem button:hover {
+  background-color: var(--darkred);
+  color: white;
+  border: none;
+  padding: 15px 32px;
+  font-size: 1.5rem;
+  border-radius: 12px;
+  cursor: pointer;
+}
+
+.cartItem i {
+  margin: 0 1rem 0 0;
+}

@@ -1,3 +1,4 @@
+"use strict";
 const navShoppingCartBtn =  document.querySelector("#shoppingcart");
 let itemQuantity = document.querySelector(".item_quantity");
 
@@ -67,7 +68,7 @@ function addProductsToWebpage() {
             <p>${product.description}</p>
             <img src = "assets/${product.image}"></img>
             <h2>${product.price} kr</h2>
-            <button id=${btnId} class="addToShoppingCartBtn">Lägg till i kundvagnen</button>
+            <button id=${btnId} class="addToShoppingCartBtn"><i class="fa-solid fa-cart-arrow-down"></i>Lägg till i kundvagnen</button>
         </div>
     `
     }
@@ -82,7 +83,7 @@ function addPutToShoppingCartBtnListners(){
 }
 
 function addToShoppingCart(){
-    phoneTitle = this.id;
+    let phoneTitle = this.id;
     customer.shoppingList.push(listOfProducts[listOfProducts.findIndex(phoneTitleMatch, this.id)]);
     numberOfItemsInShoppingList = customer.shoppingList.length;
 
@@ -107,7 +108,7 @@ function displayShoppingCart(){
 function createUlFromShoppingCartList(){
     let list = document.createElement('ul');
     for(const phone of customer.shoppingList){
-        item = document.createElement('li');
+        let item = document.createElement('li');
         item.innerHTML = createItemsDiv(phone);
         list.appendChild(item);
     }
@@ -122,7 +123,7 @@ function createItemsDiv(item){
             <img src = "assets/${item.image}"></img>
             <h1>${item.title}</h1>
             <h2>${item.price} kr</h2>
-            <button id=${btnId} class="removeFromShoppingCartBtns">Ta bort</button>
+            <button id=${btnId} class="removeFromShoppingCartBtn"><i class="fa-regular fa-trash-can <i class="fa-regular fa-distribute-spacing-horizontal"></i>Ta bort</button>
         </div>
     `;   
 }
