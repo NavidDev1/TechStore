@@ -11,6 +11,8 @@ var listOfProducts;
 let customer = {};
 let removeFromShoppingCartBtns;
 let headerofcart;
+let confirmPurchase;
+let totalSum
 
 /** Get products from the json file and store it in a gobal variable */
 function loadProducts() {
@@ -105,7 +107,19 @@ function displayShoppingCart(){
     let headerofcart = document.createElement("h1");
     headerofcart.innerHTML = `<i class="fa-solid fa-cart-shopping"></i>` + "Kundvagn" ;
     list.insertAdjacentElement("beforebegin", headerofcart);
-    console.log(headerofcart);
+    
+
+
+    confirmPurchase = document.createElement("button")
+    confirmPurchase.innerHTML = `<i class="fa-solid fa-check"></i>` + " " + "Slutför ditt köp"
+    list.insertAdjacentElement("afterend", confirmPurchase)
+    totalSum = document.createElement("p")
+    totalSum.innerHTML = "total pris"
+    list.insertAdjacentElement("afterend", totalSum)
+
+    
+
+    
     
     removeFromShoppingCartBtns = document.getElementsByClassName("removeFromShoppingCartBtns") ;
     removeItemFromShoppingCartListner();
@@ -163,4 +177,6 @@ function removeItemFromShoppingCart(){
 }
 
 
-
+function totalCart (){
+    numberOfItemsInShoppingList
+}
