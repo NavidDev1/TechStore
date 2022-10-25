@@ -10,6 +10,9 @@ let numberOfItemsInShoppingList;
 var listOfProducts;
 let customer = {};
 let removeFromShoppingCartBtns;
+let headerofcart;
+let confirmPurchase;
+let totalSum
 
 /** Get products from the json file and store it in a gobal variable */
 function loadProducts() {
@@ -101,8 +104,30 @@ function displayShoppingCart(){
     let list = createUlFromShoppingCartList()
     containerOfPhones.replaceChildren(list);
     containerOfPhones.className = "containerOfShoppingCart";
+    let headerofcart = document.createElement("h1");
+    headerofcart.innerHTML = `<i class="fa-solid fa-cart-shopping"></i>` + "Kundvagn" ;
+    list.insertAdjacentElement("beforebegin", headerofcart);
+    
+
+
+    confirmPurchase = document.createElement("button")
+    confirmPurchase.innerHTML = `<i class="fa-solid fa-check"></i>` + " " + "Slutför ditt köp"
+    list.insertAdjacentElement("afterend", confirmPurchase)
+    totalSum = document.createElement("p")
+    totalSum.innerHTML = totalCart ()
+    list.insertAdjacentElement("afterend", totalSum)
+
+    
+
+    
+    
     removeFromShoppingCartBtns = document.getElementsByClassName("removeFromShoppingCartBtns") ;
     removeItemFromShoppingCartListner();
+
+    //function totalsum of items
+    //create button purchase
+    //clear all localstorage after purchase.
+    //header text...
 }
 
 function createUlFromShoppingCartList(){
@@ -152,3 +177,14 @@ function removeItemFromShoppingCart(){
 }
 
 
+
+function totalCart (){
+let array = [];    
+for (const object of customer.shoppingList){
+       array.push(object.price)
+      
+    }
+    console.log(array)
+    const totalValue = array.reduce((prev,next) => prev + next, 0);
+    return "Totalt Pris:" + " " + totalValue + " " + "kr"
+}
