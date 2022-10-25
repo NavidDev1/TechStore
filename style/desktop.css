@@ -39,6 +39,7 @@ rgba(245,245,245,255) - bakgrunden som displayar skärmarna (den med blåa ramen
 
   }
   
+
 body { background-color: var(--backgroundone); }
 #navcontainer { background-color: var(--blacknav); }
 
@@ -51,9 +52,12 @@ body { background-color: var(--backgroundone); }
 
 header {
   position: fixed;
+
 }
 
 body {
+    height:100vh;
+    display: inline-block;
     font-family: 'Poppins', normal;
     font-size: 16px;
 }
