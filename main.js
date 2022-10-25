@@ -10,6 +10,7 @@ let numberOfItemsInShoppingList;
 var listOfProducts;
 let customer = {};
 let removeFromShoppingCartBtns;
+let headerofcart;
 
 /** Get products from the json file and store it in a gobal variable */
 function loadProducts() {
@@ -101,6 +102,11 @@ function displayShoppingCart(){
     let list = createUlFromShoppingCartList()
     containerOfPhones.replaceChildren(list);
     containerOfPhones.className = "containerOfShoppingCart";
+    let headerofcart = document.createElement("h1");
+    headerofcart.innerText = "Kundvagn";
+    list.insertAdjacentElement("beforebegin", headerofcart);
+    console.log(headerofcart);
+    
     removeFromShoppingCartBtns = document.getElementsByClassName("removeFromShoppingCartBtns") ;
     removeItemFromShoppingCartListner();
 
