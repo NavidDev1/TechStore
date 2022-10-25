@@ -114,7 +114,7 @@ function displayShoppingCart(){
     confirmPurchase.innerHTML = `<i class="fa-solid fa-check"></i>` + " " + "Slutför ditt köp"
     list.insertAdjacentElement("afterend", confirmPurchase)
     totalSum = document.createElement("p")
-    totalSum.innerHTML = "total pris"
+    totalSum.innerHTML = totalCart ()
     list.insertAdjacentElement("afterend", totalSum)
 
     
@@ -177,6 +177,14 @@ function removeItemFromShoppingCart(){
 }
 
 
+
 function totalCart (){
-    numberOfItemsInShoppingList
+let array = [];    
+for (const object of customer.shoppingList){
+       array.push(object.price)
+      
+    }
+    console.log(array)
+    const totalValue = array.reduce((prev,next) => prev + next, 0);
+    return "Totalt Pris:" + " " + totalValue + " " + "kr"
 }
