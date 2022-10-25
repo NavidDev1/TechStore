@@ -113,7 +113,7 @@ function displayShoppingCart(){
     //function totalsum of items
     //create button purchase
     //clear all localstorage after purchase.
-    //header text
+    //header text...
 }
 
 function createUlFromShoppingCartList(){
