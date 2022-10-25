@@ -103,6 +103,11 @@ function displayShoppingCart(){
     containerOfPhones.className = "containerOfShoppingCart";
     removeFromShoppingCartBtns = document.getElementsByClassName("removeFromShoppingCartBtns") ;
     removeItemFromShoppingCartListner();
+
+    //function totalsum of items
+    //create button purchase
+    //clear all localstorage after purchase.
+    //header text
 }
 
 function createUlFromShoppingCartList(){
@@ -150,5 +155,6 @@ function removeItemFromShoppingCart(){
     displayShoppingCart();
     //test
 }
+
 
 
