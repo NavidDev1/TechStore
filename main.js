@@ -148,7 +148,7 @@ function removeItemFromShoppingCart(){
     localStorage.setItem("numberOfItems",itemQuantity.innerHTML);
     itemQuantity.innerHTML = customer.shoppingList.length;
     displayShoppingCart();
-    //testing
+    //test
 }
 
 
