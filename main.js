@@ -48,9 +48,9 @@ function initSite() {
     }
     itemQuantity.innerHTML = window.localStorage.getItem("numberOfItems");
     customer = JSON.parse(window.localStorage.getItem('activeCustomer'));
-    numberOfItemsInShoppingList = customer.shoppingList.length;
+    numberOfItemsInShoppingList = customer.shoppingList.length; // we could also put itemQuantity.innerHTML directly here mby?
     console.log(`Number of items in shopping list is: ${numberOfItemsInShoppingList}`);
-   
+    itemQuantity.innerHTML = customer.shoppingList.length;
 }
 
 
@@ -170,7 +170,7 @@ function removeItemFromShoppingCart(){
     
     customer.shoppingList.splice(holder,1);
     localStorage.setItem("activeCustomer", JSON.stringify(customer));
-    localStorage.setItem("numberOfItems",itemQuantity.innerHTML);
+    localStorage.setItem("numberOfItems", customer.shoppingList.length);
     itemQuantity.innerHTML = customer.shoppingList.length;
     displayShoppingCart();
     //test
