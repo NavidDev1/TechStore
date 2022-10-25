@@ -103,7 +103,7 @@ function displayShoppingCart(){
     containerOfPhones.replaceChildren(list);
     containerOfPhones.className = "containerOfShoppingCart";
     let headerofcart = document.createElement("h1");
-    headerofcart.innerText = "Kundvagn";
+    headerofcart.innerHTML = `<i class="fa-solid fa-cart-shopping"></i>` + "Kundvagn" ;
     list.insertAdjacentElement("beforebegin", headerofcart);
     console.log(headerofcart);
     
