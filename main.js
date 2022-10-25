@@ -9,6 +9,7 @@ let shoppingList = [];
 let numberOfItemsInShoppingList;
 var listOfProducts;
 let customer = {};
+let removeFromShoppingCartBtns;
 
 /** Get products from the json file and store it in a gobal variable */
 function loadProducts() {
@@ -19,9 +20,10 @@ function loadProducts() {
     .then(function(products) {
         listOfProducts = products;
         addProductsToWebpage();
-        addToShoppingCartBtns = document.getElementsByClassName("addToShoppingCartBtn");    
+        addToShoppingCartBtns = document.getElementsByClassName("addToShoppingCartBtn");   
         addPutToShoppingCartBtnListners();
         navShoppingCartBtn.addEventListener("click", displayShoppingCart);
+        
     });
 }
 
@@ -45,7 +47,6 @@ function initSite() {
     customer = JSON.parse(window.localStorage.getItem('activeCustomer'));
     numberOfItemsInShoppingList = customer.shoppingList.length;
     console.log(`Number of items in shopping list is: ${numberOfItemsInShoppingList}`);
-    
    
 }
 
@@ -77,7 +78,7 @@ function addProductsToWebpage() {
 
 function addPutToShoppingCartBtnListners(){
     for (const btn of addToShoppingCartBtns){
-        btn.addEventListener("click", addToShoppingCart)
+        btn.addEventListener("click", addToShoppingCart);
     }
 }
 
@@ -92,7 +93,7 @@ function addToShoppingCart(){
     window.localStorage.setItem('activeCustomer', JSON.stringify(customer));
     console.log(`Number of items in shopping list after adding to basket is: ${numberOfItemsInShoppingList}`);
     console.log(customer.shoppingList);
-    createUlFromShoppingCartList()
+    createUlFromShoppingCartList();
     
 }
 
@@ -100,6 +101,8 @@ function displayShoppingCart(){
     let list = createUlFromShoppingCartList()
     containerOfPhones.replaceChildren(list);
     containerOfPhones.className = "containerOfShoppingCart";
+    removeFromShoppingCartBtns = document.getElementsByClassName("removeFromShoppingCartBtns") ;
+    removeItemFromShoppingCartListner();
 }
 
 function createUlFromShoppingCartList(){
@@ -113,14 +116,14 @@ function createUlFromShoppingCartList(){
 }
 
 function createItemsDiv(item){
-    let title = item.title
+    let title = item.title;
     let btnId = `btnRemove${title.split(" ").join("").toLowerCase()}`
     return `  
         <div class="cartItem">            
             <img src = "assets/${item.image}"></img>
             <h1>${item.title}</h1>
             <h2>${item.price} kr</h2>
-            <button id=${btnId} class="removeFromShoppingCartBtn"><i class="fa-regular fa-trash-can <i class="fa-regular fa-distribute-spacing-horizontal"></i>Ta bort</button>
+            <button id=${btnId} class="removeFromShoppingCartBtns"><i class="fa-regular fa-trash-can <i class="fa-regular fa-distribute-spacing-horizontal"></i>Ta bort</button>
         </div>
     `;   
 }
@@ -129,5 +132,23 @@ function phoneTitleMatch(phone){
     return phone.title.split(" ").join("").toLowerCase() == this
 }
 
+
+function removeItemFromShoppingCartListner(){
+    for (const btn of removeFromShoppingCartBtns){
+        btn.addEventListener("click", removeItemFromShoppingCart);
+    }
+}
+//hej
+
+function removeItemFromShoppingCart(){
+    var holder = customer.shoppingList.findIndex(phoneTitleMatch, this.id);
+    
+    customer.shoppingList.splice(holder,1);
+    localStorage.setItem("activeCustomer", JSON.stringify(customer));
+    localStorage.setItem("numberOfItems",itemQuantity.innerHTML);
+    itemQuantity.innerHTML = customer.shoppingList.length;
+    displayShoppingCart();
+    //test
+}
 
 
