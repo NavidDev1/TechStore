@@ -254,7 +254,13 @@ body {
   justify-content: center;
   text-align: center;
   padding: 2rem;
+  background-image: url(../assets/login_bg.jpg);
+  filter: grayscale(50%);      
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
 }
+
 
 /* .login-container{
   background-color: rgba(7, 98, 25, 0.152);
@@ -278,6 +284,7 @@ form {
   height: 50%;
   width: clamp(300px, 50%, 850px);
   border-radius: 15px;
+  backdrop-filter: blur(1px);
 }
 
 form > * {

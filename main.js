@@ -35,22 +35,24 @@ function initSite() {
         customerId = Math.floor(Math.random()*999999) + 1000000;
         customer = {
             "customerId": customerId,
-            "shoppingList": shoppingList
+            "shoppingList": shoppingList,
+            "username": "",
+            "password": ""
         }
         window.localStorage.setItem('activeCustomer', JSON.stringify(customer));
-        window.localStorage.setItem("numberOfItems", holderOfItems);
+        window.localStorage.setItem("numberOfItems", customer.shoppingList.length);
     }
-    itemQuantity.innerHTML = window.localStorage.getItem("numberOfItems");
     customer = JSON.parse(window.localStorage.getItem('activeCustomer'));
-    numberOfItemsInShoppingList = customer.shoppingList.length;
-    console.log(`Number of items in shopping list is: ${numberOfItemsInShoppingList}`);
+    itemQuantity.innerHTML = customer.shoppingList.length;    
+    numberOfItemsInShoppingList = customer.shoppingList.length; //tas bort?
+    console.log(`Number of items in shopping list is: ${numberOfItemsInShoppingList}`); //tas bort?
     
    
 }
 
 
 /** Uses the loaded products data to create a visible product list on the website */
-function addProductsToWebpage() {
+function addProductsToWebpage(container=containerOfPhones) {
     
     /************let Output för att vi vill ange ett värde som vi sen ska deklarera in i vår main page (containerOfPhones)*********/
     let output = "";
@@ -71,7 +73,8 @@ function addProductsToWebpage() {
     `
     }
     /**************EFTER ATT LOOPEN HAR GÅTT IGENOM SÅ LÄGGER VI IN INFORMATIONEN I CONTAINER*********/
-    containerOfPhones.innerHTML = output;    
+    container.innerHTML = output;
+    container.className = "containerOfPhones"; 
 }
 
 function addPutToShoppingCartBtnListners(){
@@ -128,21 +131,12 @@ function phoneTitleMatch(phone){
     return phone.title.split(" ").join("").toLowerCase() == this
 }
 
+// Get to the Login Page
+
 userBtnE.addEventListener("click", ()=>{
     let mainE = document.querySelector("main");
     mainE.className = "login-container";
     changeModalToLoginView({loginF: loginForm, container: mainE});
-    // mainE.className = "login-container";
-    // mainE.innerHTML = `
-    // <h1>Login</h1>
-    //   <form id="my_form" action="javascript:void(0);">
-    //       <input type="text" placeholder="Username" class="field" id="username" pattern="[A-Z,a-z,0-9]{1,10}">
-    //       <div class="error_msg_box" id="e_name">"error message"</div>
-    //       <input type="password" placeholder="Password" class="field" id="password" pattern="[A-Z,a-z,0-9]{1,10}"> 
-    //       <div class="error_msg_box" id="e_pass">"error message"</div>             
-    //       <button type="submit" value="Submit" class="btn" id="login_btn">Login</button>
-    //       <button class="btn" id="new_user">New user</button>
-    //   </from>`;
 });
 
 //// Login page //////////////////////////////////
@@ -165,22 +159,12 @@ const loginForm = `
       <button type="submit" value="Submit" class="btn" id="login_btn">Login</button>
       <button class="btn" id="new_user">New user</button>
   </from>`;
-const navLogoutOption = `<div class="navbar_options">
-        <div id="logout">Logout</div>
-    </div>`;
-const navLoginOption = `<div class="navbar_options">
-        <div id="login">Login</div>
-    </div>`;
-const navCreateUserOption = `
-<div class="navbar_options">
-    <div id="nav_new_user">Create a new user</div>
-</div>`;
 
 
 
-const newUserBtn = document.getElementById("new_user");
 
-const loginBtn = document.getElementById("login_btn");
+
+let loginBtn;
 const containerFormElement = document.querySelector(".container");
 const formElement = document.getElementById("my_form");
 const nameTakenMessage = "That user name is already taken!"
@@ -244,10 +228,8 @@ function changeModalToLoginView({pointer = "", loginF = loginForm, container = c
 
   changeModal(loginF, container);
   const newUserBtn2 = document.getElementById("new_user");
-  const navNewUserBtn2 = document.getElementById("nav_new_user");
   const loginBtn2 = document.getElementById("login_btn");
   newUserBtn2.addEventListener("click", changeModalToNewUser);
-  navNewUserBtn2.addEventListener("click", changeModalToNewUser);
   loginBtn2.addEventListener("click", login);
 }
 
@@ -281,18 +263,37 @@ function createUser() {
     eNameE.style.animationName = "show";
     cPasswordE.addEventListener("change", function(){ return hidden(eNameE); });
   }
+  let newUser;
   if (validUsername && validPassword && freeUsername) {
-    const newUser = {
-      username: cUsername,
-      password: cPassword,
+    let freeUser = false;
+    while(!freeUser){
+      customerId = Math.floor(Math.random()*999999) + 1000000;
+      setTimeout(20);
+      freeUser = window.localStorage.getItem(customerId)? false : true;
+    }
+    newUser = {
+      "customerId": customerId,
+      "shoppingList": [],
+      "username": cUsername,
+      "password": cPassword,
     };
-    window.localStorage.setItem(newUser.username, JSON.stringify(newUser));
-    window.localStorage.setItem("current_user", JSON.stringify(newUser));
-    const newUserForm = document.getElementById("my_form");
-    changeLoginModalToLoggedInUser(newUser, containerFormElement, newUserForm);
-    changeNavbar();
-    logOutBtn = document.getElementById("logout");
-    logOutBtn.addEventListener("click", logOutUser);
+    
+    if(customer.shoppingList.length > 0){
+      let text = "Vill du lägga till varorna som du har i lagt i korgen\nin i din användares kundvagn";
+      if (confirm(text) == true) {
+        newUser.shoppingList.push(...customer.shoppingList)
+      } else {
+        console.log(`Earliers active customer shopping list is not merged with logged in user: ${currentUser.shoppingList}`);
+      }
+    }
+    window.localStorage.setItem(newUser.customerId, JSON.stringify(newUser));
+    window.localStorage.setItem("activeCustomer", JSON.stringify(newUser));
+    
+    const loginContainerE = document.querySelector(".login-container");
+    addProductsToWebpage(loginContainerE);
+    addPutToShoppingCartBtnListners();
+    
+    
   }
 }
 
@@ -336,31 +337,42 @@ function login() {
     inputPasswordElement.addEventListener("change", function(){ return hidden(ePassE); });
     return;
   }
+  currentUser = JSON.parse(window.localStorage.getItem('activeCustomer'));
+  
+  if (currentUser && currentUser.shoppingList.length > 0) {
+    let text = "Vill du lägga till varorna som du har i lagt i korgen\nin i din användares kundvagn";
+    if (confirm(text) == true) {
+      userObject.shoppingList.push(...currentUser.shoppingList)
+    } else {
+      console.log(`Earliers active customer shopping list is not merged with logged in user: ${currentUser.shoppingList}`);
+    }
+  }
+  console.log(`new shoppinglist: ${userObject.shoppingList}`);
+  
+  window.localStorage.setItem("activeCustomer", JSON.stringify(userObject));
 
-  window.localStorage.setItem("current_user", JSON.stringify(userObject));
-
-  changeLoginModalToLoggedInUser(userObject);
-  changeNavbar();
-
-  logOutBtn = document.getElementById("logout");
-  logOutBtn.addEventListener("click", logOutUser);
+  addProductsToWebpage();
+  addToShoppingCartBtns = document.getElementsByClassName(
+    "addToShoppingCartBtn"
+  );
+  addPutToShoppingCartBtnListners();
+  navShoppingCartBtn.addEventListener("click", displayShoppingCart);
 }
 
 function changeModalToNewUser() {
-  let navbar = document.querySelector("nav");
-  changeNavbar(navLoginOption, navbar);
-
+  const containerFormElement = document.querySelector(".login-container");
   containerFormElement.innerHTML = newUserForm;
 
-  const navLoginBtn = document.getElementById("login");
-  navOptionElement = document.querySelector(".navbar_options");
+  const navShoppingCartBtn = document.getElementById("shoppingcart");
+  navShoppingCartBtn.addEventListener("click", displayShoppingCart);
 
-  navLoginBtn.addEventListener("click", changeModalToLoginView);
+  const navLoginOpt = document.getElementById("user");
+  navLoginOpt.addEventListener("click", changeModalToLoginView);
 
-  const creatBtn = document.getElementById("createBtn");
-  creatBtn.addEventListener("click", createUser);
+  const createUserBtn = document.getElementById("createBtn");
+  createUserBtn.addEventListener("click", createUser);
 }
 
 // loginBtn.addEventListener("click", login);
-// newUserBtn.addEventListener("click", changeModalToNewUser);
+//newUserBtn.addEventListener("click", changeModalToNewUser);
 // navNewUserBtn.addEventListener("click", changeModalToNewUser);
