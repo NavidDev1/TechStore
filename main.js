@@ -105,15 +105,18 @@ function displayShoppingCart(){
     containerOfPhones.replaceChildren(list);
     containerOfPhones.className = "containerOfShoppingCart";
     let headerofcart = document.createElement("h1");
+    headerofcart.className = "cartHeader"
     headerofcart.innerHTML = `<i class="fa-solid fa-cart-shopping"></i>` + "Kundvagn" ;
     list.insertAdjacentElement("beforebegin", headerofcart);
     
 
 
     confirmPurchase = document.createElement("button")
+    confirmPurchase.className = "confirmBtn"
     confirmPurchase.innerHTML = `<i class="fa-solid fa-check"></i>` + " " + "Slutför ditt köp"
     list.insertAdjacentElement("afterend", confirmPurchase)
     totalSum = document.createElement("p")
+    totalSum.className = "totalSum"
     totalSum.innerHTML = totalCart ()
     list.insertAdjacentElement("afterend", totalSum)
 
