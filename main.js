@@ -44,12 +44,10 @@ function initSite() {
             "shoppingList": shoppingList
         }
         window.localStorage.setItem('activeCustomer', JSON.stringify(customer));
-        window.localStorage.setItem("numberOfItems", holderOfItems);
+        window.localStorage.setItem("numberOfItems", itemQuantity.innerHTML);
     }
     itemQuantity.innerHTML = window.localStorage.getItem("numberOfItems");
     customer = JSON.parse(window.localStorage.getItem('activeCustomer'));
-    numberOfItemsInShoppingList = customer.shoppingList.length; // we could also put itemQuantity.innerHTML directly here mby?
-    console.log(`Number of items in shopping list is: ${numberOfItemsInShoppingList}`);
     itemQuantity.innerHTML = customer.shoppingList.length;
 }
 
@@ -86,7 +84,7 @@ function addPutToShoppingCartBtnListners(){
 }
 
 function addToShoppingCart(){
-    let phoneTitle = this.id;
+    let phoneTitle = this.id; //no needed because we asign it to this.id instead?
     customer.shoppingList.push(listOfProducts[listOfProducts.findIndex(phoneTitleMatch, this.id)]);
     numberOfItemsInShoppingList = customer.shoppingList.length;
 
@@ -124,10 +122,6 @@ function displayShoppingCart(){
     removeFromShoppingCartBtns = document.getElementsByClassName("removeFromShoppingCartBtns") ;
     removeItemFromShoppingCartListner();
 
-    //function totalsum of items
-    //create button purchase
-    //clear all localstorage after purchase.
-    //header text...
 }
 
 function createUlFromShoppingCartList(){
@@ -163,7 +157,6 @@ function removeItemFromShoppingCartListner(){
         btn.addEventListener("click", removeItemFromShoppingCart);
     }
 }
-//hej
 
 function removeItemFromShoppingCart(){
     var holder = customer.shoppingList.findIndex(phoneTitleMatch, this.id);
@@ -173,7 +166,6 @@ function removeItemFromShoppingCart(){
     localStorage.setItem("numberOfItems", customer.shoppingList.length);
     itemQuantity.innerHTML = customer.shoppingList.length;
     displayShoppingCart();
-    //test
 }
 
 
