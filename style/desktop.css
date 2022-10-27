@@ -233,3 +233,8 @@ body {
 .cartItem i {
   margin: 0 1rem 0 0;
 }
+
+#alert {
+  background-color: aqua;
+}
+
