@@ -47,13 +47,11 @@ function initSite() {
             "shoppingList": shoppingList
         }
         window.localStorage.setItem('activeCustomer', JSON.stringify(customer));
-        window.localStorage.setItem("numberOfItems", holderOfItems);
+        window.localStorage.setItem("numberOfItems", itemQuantity.innerHTML);
     }
     itemQuantity.innerHTML = window.localStorage.getItem("numberOfItems");
     customer = JSON.parse(window.localStorage.getItem('activeCustomer'));
-    numberOfItemsInShoppingList = customer.shoppingList.length;
-    console.log(`Number of items in shopping list is: ${numberOfItemsInShoppingList}`);
-   
+    itemQuantity.innerHTML = customer.shoppingList.length;
 }
 
 
@@ -89,7 +87,7 @@ function addPutToShoppingCartBtnListners(){
 }
 
 function addToShoppingCart(){
-    let phoneTitle = this.id;
+    let phoneTitle = this.id; //no needed because we asign it to this.id instead?
     customer.shoppingList.push(listOfProducts[listOfProducts.findIndex(phoneTitleMatch, this.id)]);
     numberOfItemsInShoppingList = customer.shoppingList.length;
 
@@ -126,6 +124,7 @@ function displayShoppingCart(){
     removeItemFromShoppingCartListner();
 
 
+
     confirmPurchase.addEventListener("click", () => {
         Swal.fire({
             position: "center",
@@ -142,6 +141,7 @@ function displayShoppingCart(){
           }) 
       });
     
+
 }
 
 
@@ -180,16 +180,15 @@ function removeItemFromShoppingCartListner(){
     }
 }
 
-
 function removeItemFromShoppingCart(){
     var holder = customer.shoppingList.findIndex(phoneTitleMatch, this.id);
     
     customer.shoppingList.splice(holder,1);
     localStorage.setItem("activeCustomer", JSON.stringify(customer));
-    localStorage.setItem("numberOfItems",itemQuantity.innerHTML);
+    localStorage.setItem("numberOfItems", customer.shoppingList.length);
     itemQuantity.innerHTML = customer.shoppingList.length;
     displayShoppingCart();
-    
+
 }
 
 
