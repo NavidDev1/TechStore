@@ -32,12 +32,19 @@ function initSite() {
     loadProducts();
     // This would also be a good place to initialize other parts of the UI
     if (!window.localStorage.getItem('activeCustomer')){
-        customerId = Math.floor(Math.random()*999999) + 1000000;
-        customer = {
-            "customerId": customerId,
+        let tempUsername;
+        let freeUsername = false;
+        while(!freeUsername){
+          tempUsername = Math.floor(Math.random()*999999) + 1000000;
+          setTimeout(20);
+          freeUsername = window.localStorage.getItem(tempUsername)? false : true;
+        }
+
+        customer = {            
+            "username": tempUsername,
+            "password": cPassword,
             "shoppingList": shoppingList,
-            "username": "",
-            "password": ""
+            "orders": []
         }
         window.localStorage.setItem('activeCustomer', JSON.stringify(customer));
         window.localStorage.setItem("numberOfItems", customer.shoppingList.length);
@@ -75,6 +82,7 @@ function addProductsToWebpage(container=containerOfPhones) {
     /**************EFTER ATT LOOPEN HAR GÅTT IGENOM SÅ LÄGGER VI IN INFORMATIONEN I CONTAINER*********/
     container.innerHTML = output;
     container.className = "containerOfPhones"; 
+    
 }
 
 function addPutToShoppingCartBtnListners(){
@@ -131,6 +139,10 @@ function phoneTitleMatch(phone){
     return phone.title.split(" ").join("").toLowerCase() == this
 }
 
+function displayQuantityOfShoppingCartItems(){
+  itemQuantity.innerHTML = window.localStorage.getItem("activeCustomer") ? JSON.parse(window.localStorage.getItem("activeCustomer")).shoppingList.length : 0;
+}
+
 // Get to the Login Page
 
 userBtnE.addEventListener("click", ()=>{
@@ -140,7 +152,7 @@ userBtnE.addEventListener("click", ()=>{
 });
 
 //// Login page //////////////////////////////////
-
+//Bild av Adrien Olichon: https://www.pexels.com/sv-se/foto/svartvitt-konst-monster-design-3137058/
 
 const newUserForm = `<h1>New user</h1><form id="my_form" action="javascript:void(0);">
     <input type="text" placeholder="Choose username" id="c_username" class="field" pattern="[A-Z,a-z,0-9]{1,10}">
@@ -265,17 +277,11 @@ function createUser() {
   }
   let newUser;
   if (validUsername && validPassword && freeUsername) {
-    let freeUser = false;
-    while(!freeUser){
-      customerId = Math.floor(Math.random()*999999) + 1000000;
-      setTimeout(20);
-      freeUser = window.localStorage.getItem(customerId)? false : true;
-    }
-    newUser = {
-      "customerId": customerId,
-      "shoppingList": [],
+    newUser = {      
       "username": cUsername,
       "password": cPassword,
+      "shoppingList": [],
+      "orders": []
     };
     
     if(customer.shoppingList.length > 0){
@@ -286,7 +292,7 @@ function createUser() {
         console.log(`Earliers active customer shopping list is not merged with logged in user: ${currentUser.shoppingList}`);
       }
     }
-    window.localStorage.setItem(newUser.customerId, JSON.stringify(newUser));
+    window.localStorage.setItem(newUser.username, JSON.stringify(newUser));
     window.localStorage.setItem("activeCustomer", JSON.stringify(newUser));
     
     const loginContainerE = document.querySelector(".login-container");
@@ -300,6 +306,10 @@ function createUser() {
 function login() {
   const inputUsernameElement = document.getElementById("username");
   const inputPasswordElement = document.getElementById("password");
+
+  const eNameE = document.getElementById("e_name");
+  const ePassE = document.getElementById("e_pass");
+
   let inputUsername = inputUsernameElement.value;
   let inputPassword = inputPasswordElement.value;
 
@@ -339,7 +349,7 @@ function login() {
   }
   currentUser = JSON.parse(window.localStorage.getItem('activeCustomer'));
   
-  if (currentUser && currentUser.shoppingList.length > 0) {
+  if (currentUser.username != inputUsername && currentUser.shoppingList.length > 0) {
     let text = "Vill du lägga till varorna som du har i lagt i korgen\nin i din användares kundvagn";
     if (confirm(text) == true) {
       userObject.shoppingList.push(...currentUser.shoppingList)
@@ -352,6 +362,7 @@ function login() {
   window.localStorage.setItem("activeCustomer", JSON.stringify(userObject));
 
   addProductsToWebpage();
+  displayQuantityOfShoppingCartItems();
   addToShoppingCartBtns = document.getElementsByClassName(
     "addToShoppingCartBtn"
   );
