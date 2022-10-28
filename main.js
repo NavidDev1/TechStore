@@ -127,18 +127,21 @@ function displayShoppingCart(){
 
 
     confirmPurchase.addEventListener("click", () => {
-        alert("Ditt köp lyckadess");
-        window.location.href = "index.html";
-        itemQuantity.innerHTML = window.localStorage.removeItem("numberOfItems");
-        customer = JSON.parse(window.localStorage.removeItem('activeCustomer'));
-        
+        Swal.fire({
+            position: "center",
+            icon: "success",
+            title: "Ditt köp lyckades!",
+            showConfirmButton: true,
+            timer: 5000,
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href = "index.html";
+                itemQuantity.innerHTML = window.localStorage.removeItem("numberOfItems");
+                customer = JSON.parse(window.localStorage.removeItem('activeCustomer'));
+            } 
+          }) 
       });
     
-
-    //function totalsum of items
-    //create button purchase
-    //clear all localstorage after purchase.
-    //header text...
 }
 
 
@@ -176,7 +179,7 @@ function removeItemFromShoppingCartListner(){
         btn.addEventListener("click", removeItemFromShoppingCart);
     }
 }
-//hej
+
 
 function removeItemFromShoppingCart(){
     var holder = customer.shoppingList.findIndex(phoneTitleMatch, this.id);
@@ -186,7 +189,7 @@ function removeItemFromShoppingCart(){
     localStorage.setItem("numberOfItems",itemQuantity.innerHTML);
     itemQuantity.innerHTML = customer.shoppingList.length;
     displayShoppingCart();
-    //test
+    
 }
 
 
