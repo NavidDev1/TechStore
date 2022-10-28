@@ -12,7 +12,10 @@ let customer = {};
 let removeFromShoppingCartBtns;
 let headerofcart;
 let confirmPurchase;
-let totalSum
+let totalSum;
+let confirmPurchaseBtn;
+let popUp;
+
 
 /** Get products from the json file and store it in a gobal variable */
 function loadProducts() {
@@ -111,18 +114,37 @@ function displayShoppingCart(){
     confirmPurchase = document.createElement("button")
     confirmPurchase.innerHTML = `<i class="fa-solid fa-check"></i>` + " " + "Slutför ditt köp"
     list.insertAdjacentElement("afterend", confirmPurchase)
+    
+
     totalSum = document.createElement("p")
     totalSum.innerHTML = totalCart ()
     list.insertAdjacentElement("afterend", totalSum)
 
-    
-
-    
-    
     removeFromShoppingCartBtns = document.getElementsByClassName("removeFromShoppingCartBtns") ;
     removeItemFromShoppingCartListner();
 
+
+
+    confirmPurchase.addEventListener("click", () => {
+        Swal.fire({
+            position: "center",
+            icon: "success",
+            title: "Ditt köp lyckades!",
+            showConfirmButton: true,
+            timer: 5000,
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href = "index.html";
+                itemQuantity.innerHTML = window.localStorage.removeItem("numberOfItems");
+                customer = JSON.parse(window.localStorage.removeItem('activeCustomer'));
+            } 
+          }) 
+      });
+    
+
 }
+
+
 
 function createUlFromShoppingCartList(){
     let list = document.createElement('ul');
@@ -166,6 +188,7 @@ function removeItemFromShoppingCart(){
     localStorage.setItem("numberOfItems", customer.shoppingList.length);
     itemQuantity.innerHTML = customer.shoppingList.length;
     displayShoppingCart();
+
 }
 
 
@@ -180,3 +203,7 @@ for (const object of customer.shoppingList){
     const totalValue = array.reduce((prev,next) => prev + next, 0);
     return "Totalt Pris:" + " " + totalValue + " " + "kr"
 }
+
+
+
+
