@@ -108,7 +108,6 @@ function displayShoppingCart(){
     headerofcart.className = "cartHeader"
     headerofcart.innerHTML = `<i class="fa-solid fa-cart-shopping"></i>` + "Kundvagn" ;
     list.insertAdjacentElement("beforebegin", headerofcart);
-    
 
 
     confirmPurchase = document.createElement("button")
