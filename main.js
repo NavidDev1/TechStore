@@ -8,10 +8,11 @@ let containerOfPhones = document.querySelector(".containerOfPhones");
 let customerId;
 let addToShoppingCartBtns;
 let shoppingList = [];
-let numberOfItemsInShoppingList;
+//let numberOfItemsInShoppingList;
 var listOfProducts;
 let customer = {};
-
+let productsLoaded = false;
+let productsLoadedResolve;
 
 /** Get products from the json file and store it in a gobal variable */
 function loadProducts() {
@@ -21,42 +22,63 @@ function loadProducts() {
     })
     .then(function(products) {
         listOfProducts = products;
-        addProductsToWebpage();
-        addToShoppingCartBtns = document.getElementsByClassName("addToShoppingCartBtn");    
-        addPutToShoppingCartBtnListners();
-        navShoppingCartBtn.addEventListener("click", displayShoppingCart);
-    });
+        productsLoaded = true; 
+        productsLoadedResolve();       
+    })
+    //.then(addProductsToWebpage)
 }
 
 function initSite() {
     loadProducts();
+    waitForPoductsLoaded().then(addProductsToWebpage);
+    // displayProducts();
     // This would also be a good place to initialize other parts of the UI
+    //addProductsToWebpage();
+    
     if (!window.localStorage.getItem('activeCustomer')){
-        let tempUsername;
-        let freeUsername = false;
-        while(!freeUsername){
-          tempUsername = Math.floor(Math.random()*999999) + 1000000;
-          setTimeout(20);
-          freeUsername = window.localStorage.getItem(tempUsername)? false : true;
-        }
-
-        customer = {            
-            "username": tempUsername,
-            "password": cPassword,
-            "shoppingList": shoppingList,
-            "orders": []
-        }
-        window.localStorage.setItem('activeCustomer', JSON.stringify(customer));
-        window.localStorage.setItem("numberOfItems", customer.shoppingList.length);
+      createNewActiveCustomer();
+        //window.localStorage.setItem("numberOfItems", customer.shoppingList.length);
     }
     customer = JSON.parse(window.localStorage.getItem('activeCustomer'));
-    itemQuantity.innerHTML = customer.shoppingList.length;    
-    numberOfItemsInShoppingList = customer.shoppingList.length; //tas bort?
-    console.log(`Number of items in shopping list is: ${numberOfItemsInShoppingList}`); //tas bort?
+    //itemQuantity.innerHTML = customer.shoppingList.length;    
+    displayQuantityOfShoppingCartItems();
+    //numberOfItemsInShoppingList = customer.shoppingList.length; //tas bort?
+    
+    
     
    
 }
 
+// async function displayProducts(){
+//   await loadProducts();
+//   addProductsToWebpage();
+// }
+
+async function waitForPoductsLoaded(){
+  if(!productsLoaded){
+    await new Promise((resolve) => {
+      productsLoadedResolve = resolve;
+    })//.then(addProductsToWebpage);
+  }
+}
+
+function createNewActiveCustomer() {
+  let tempUsername;
+    let freeUsername = false;
+    while(!freeUsername){
+      tempUsername = Math.floor(Math.random()*999999) + 1000000;
+      setTimeout(20);
+      freeUsername = window.localStorage.getItem(tempUsername)? false : true;
+    }
+
+    customer = {            
+        "username": tempUsername,
+        "password": cPassword,
+        "shoppingList": shoppingList,
+        "orders": []
+    }
+    window.localStorage.setItem('activeCustomer', JSON.stringify(customer));
+}
 
 /** Uses the loaded products data to create a visible product list on the website */
 function addProductsToWebpage(container=containerOfPhones) {
@@ -82,7 +104,10 @@ function addProductsToWebpage(container=containerOfPhones) {
     /**************EFTER ATT LOOPEN HAR GÅTT IGENOM SÅ LÄGGER VI IN INFORMATIONEN I CONTAINER*********/
     container.innerHTML = output;
     container.className = "containerOfPhones"; 
-    
+
+    addToShoppingCartBtns = document.getElementsByClassName("addToShoppingCartBtn");    
+    addPutToShoppingCartBtnListners();
+    navShoppingCartBtn.addEventListener("click", displayShoppingCart);
 }
 
 function addPutToShoppingCartBtnListners(){
@@ -94,13 +119,13 @@ function addPutToShoppingCartBtnListners(){
 function addToShoppingCart(){
     let phoneTitle = this.id;
     customer.shoppingList.push(listOfProducts[listOfProducts.findIndex(phoneTitleMatch, this.id)]);
-    numberOfItemsInShoppingList = customer.shoppingList.length;
 
-    itemQuantity.innerHTML = numberOfItemsInShoppingList;
+    itemQuantity.innerHTML = customer.shoppingList.length;
     var holderOfItems =itemQuantity.innerHTML;
     window.localStorage.setItem("numberOfItems", holderOfItems);
     window.localStorage.setItem('activeCustomer', JSON.stringify(customer));
-    console.log(`Number of items in shopping list after adding to basket is: ${numberOfItemsInShoppingList}`);
+    window.localStorage.setItem(customer.username, JSON.stringify(customer));
+    //console.log(`Number of items in shopping list after adding to basket is: ${numberOfItemsInShoppingList}`);
     console.log(customer.shoppingList);
     createUlFromShoppingCartList()
     
@@ -141,6 +166,8 @@ function phoneTitleMatch(phone){
 
 function displayQuantityOfShoppingCartItems(){
   itemQuantity.innerHTML = window.localStorage.getItem("activeCustomer") ? JSON.parse(window.localStorage.getItem("activeCustomer")).shoppingList.length : 0;
+  console.log(`Number of items in customer shopping list is: ${customer.shoppingList.length}`);
+  console.log(`Number of items in activeCustomer shopping list is: ${JSON.parse(window.localStorage.getItem("activeCustomer")).shoppingList.length}`);
 }
 
 // Get to the Login Page
@@ -148,7 +175,7 @@ function displayQuantityOfShoppingCartItems(){
 userBtnE.addEventListener("click", ()=>{
     let mainE = document.querySelector("main");
     mainE.className = "login-container";
-    changeModalToLoginView({loginF: loginForm, container: mainE});
+    changeModalToLoginView(loginForm, mainE);
 });
 
 //// Login page //////////////////////////////////
@@ -236,7 +263,7 @@ function hidden(element){
   element.style.animationName = "hidden";
 }
 
-function changeModalToLoginView({pointer = "", loginF = loginForm, container = containerFormElement}) {
+function changeModalToLoginView(loginF, container) {
 
   changeModal(loginF, container);
   const newUserBtn2 = document.getElementById("new_user");
@@ -289,15 +316,16 @@ function createUser() {
       if (confirm(text) == true) {
         newUser.shoppingList.push(...customer.shoppingList)
       } else {
-        console.log(`Earliers active customer shopping list is not merged with logged in user: ${currentUser.shoppingList}`);
+        console.log(`Earliers active customer shopping list is not merged with logged in user`);
       }
     }
     window.localStorage.setItem(newUser.username, JSON.stringify(newUser));
     window.localStorage.setItem("activeCustomer", JSON.stringify(newUser));
-    
+    setActiveCustomerToCustomerObject();
     const loginContainerE = document.querySelector(".login-container");
     addProductsToWebpage(loginContainerE);
     addPutToShoppingCartBtnListners();
+    displayQuantityOfShoppingCartItems();
     
     
   }
@@ -360,7 +388,7 @@ function login() {
   console.log(`new shoppinglist: ${userObject.shoppingList}`);
   
   window.localStorage.setItem("activeCustomer", JSON.stringify(userObject));
-
+  setActiveCustomerToCustomerObject();
   addProductsToWebpage();
   displayQuantityOfShoppingCartItems();
   addToShoppingCartBtns = document.getElementsByClassName(
@@ -370,6 +398,11 @@ function login() {
   navShoppingCartBtn.addEventListener("click", displayShoppingCart);
 }
 
+
+
+function setActiveCustomerToCustomerObject(){
+  customer = JSON.parse(window.localStorage.getItem("activeCustomer"));
+}
 function changeModalToNewUser() {
   const containerFormElement = document.querySelector(".login-container");
   containerFormElement.innerHTML = newUserForm;
