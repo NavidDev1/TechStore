@@ -35,21 +35,13 @@ export default class LoginPage {
 
   hideElement = (element) =>  element.style.animationName = "hidden";
 
-  checkValidUsername = () => this.inputFieldRegexPattern.test(this.getInputFieldUserNameE().value)
+  isValidUsernameFormat = () => this.inputFieldRegexPattern.test(this.getInputFieldUserNameE().value)
   
-  checkValidPassword = () => this.inputFieldRegexPattern.test(this.getInputFieldPasswordE().value)
+  isValidPasswordFormat = () => this.inputFieldRegexPattern.test(this.getInputFieldPasswordE().value)
 
   displayNotValidUsernameErrorMsg = () => {
     const nameErrorDivE = this.getErrorDivForNameFieldE();
     nameErrorDivE.textContent = this.notValidNameErrorMsg;
-    nameErrorDivE.style.animationName = "show";
-    const inputUsernameElement = this.getInputFieldUserNameE();
-    inputUsernameElement.addEventListener("change", () => this.hideElement(nameErrorDivE));
-  }
-
-  displayUsernameNotFoundErrorMsg = () => {
-    const nameErrorDivE = this.getErrorDivForNameFieldE();
-    nameErrorDivE.textContent = this.noUserFoundMsg;
     nameErrorDivE.style.animationName = "show";
     const inputUsernameElement = this.getInputFieldUserNameE();
     inputUsernameElement.addEventListener("change", () => this.hideElement(nameErrorDivE));
@@ -61,6 +53,79 @@ export default class LoginPage {
     passErrorDivE.style.animationName = "show";
     const inputPasswordElement = this.getInputFieldPasswordE();
     inputPasswordElement.addEventListener("change", () => this.hideElement(passErrorDivE));
+  }
+
+  displayUsernameNotFoundErrorMsg = () => {
+    const nameErrorDivE = this.getErrorDivForNameFieldE();
+    nameErrorDivE.textContent = this.noUserFoundMsg;
+    nameErrorDivE.style.animationName = "show";
+    const inputUsernameElement = this.getInputFieldUserNameE();
+    inputUsernameElement.addEventListener("change", () => this.hideElement(nameErrorDivE));
+  }
+
+  displayWrongPassword = () => {
+    const passErrorDivE = this.getErrorDivForPassFieldE();
+    passErrorDivE.textContent = this.wrongPasswordMsg;
+    passErrorDivE.style.animationName = "show";
+    const inputPasswordElement = this.getInputFieldPasswordE();
+    inputPasswordElement.addEventListener("change", () => this.hideElement(passErrorDivE));
+  }
+
+  displayNameTakenMsg = () => {
+    const nameErrorDivE = this.getErrorDivForNameFieldE();
+    nameErrorDivE.textContent = this.nameTakenMessage;
+    nameErrorDivE.style.animationName = "show";
+    const inputUsernameElement = this.getInputFieldUserNameE();
+    inputUsernameElement.addEventListener("change", () => this.hideElement(nameErrorDivE));
+  }
+
+  getCustomer = () => {
+    let foundUser = window.localStorage.getItem(getInputFieldUserNameE().value);
+    return JSON.parse(foundUser);
+  }
+
+  getActiveCustomer = () => JSON.parse(window.localStorage.getItem("activeCustomer"));
+  
+
+  isCorrectPassword = (cust) => cust.password == getInputFieldPasswordE().value;
+
+  isCustomer = (customerName) => window.localStorage.getItem(customerName) ? true : false
+
+  loginUser = () => {
+    if (!this.isValidUsernameFormat()) 
+    {
+      this.displayNotValidUsernameErrorMsg();
+      return;
+    }
+
+    if(!this.isValidPasswordFormat())
+    {
+      this.displayNotValidPasswordErrorMsg();
+      return;
+    }
+
+    if(!isCustomer(getInputFieldUserNameE()))
+    {
+      this.displayUsernameNotFoundErrorMsg();
+      return;
+    }
+
+    const customer = getCustomer();
+
+    if(!this.isCorrectPassword(customer))
+    {
+      this.displayWrongPassword();
+      return;
+    }
+
+    const activeCustomer = getActiveCustomer();
+
+    if(customer.username != activeCustomer.username && activeCustomer.shoppingList.length > 0){
+      let text = "Vill du lägga till varorna som du har i lagt i korgen\nin i din användares kundvagn";
+      if (confirm(text) == true) customer.shoppingList.push(...activeCustomer.shoppingList)
+    }
+
+    window.localStorage.setItem("activeCustomer", JSON.stringify(customer));
   }
 }
 
