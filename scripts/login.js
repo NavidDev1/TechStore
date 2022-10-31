@@ -1,3 +1,4 @@
+"use strict";
 export default class LoginPage {
   constructor() {
     this.inputFieldRegexPattern = /^[a-z,A-Z,0-9]{1,10}$/;
@@ -80,14 +81,13 @@ export default class LoginPage {
   }
 
   getCustomer = () => {
-    let foundUser = window.localStorage.getItem(getInputFieldUserNameE().value);
+    let foundUser = window.localStorage.getItem(this.getInputFieldUserNameE().value);
     return JSON.parse(foundUser);
   }
 
   getActiveCustomer = () => JSON.parse(window.localStorage.getItem("activeCustomer"));
-  
-
-  isCorrectPassword = (cust) => cust.password == getInputFieldPasswordE().value;
+      
+  isCorrectPassword = (cust) => cust.password == this.getInputFieldPasswordE().value;
 
   isCustomer = (customerName) => window.localStorage.getItem(customerName) ? true : false
 
@@ -104,13 +104,13 @@ export default class LoginPage {
       return;
     }
 
-    if(!isCustomer(getInputFieldUserNameE()))
+    if(!this.isCustomer(this.getInputFieldUserNameE().value))
     {
       this.displayUsernameNotFoundErrorMsg();
       return;
     }
 
-    const customer = getCustomer();
+    const customer = this.getCustomer();
 
     if(!this.isCorrectPassword(customer))
     {
@@ -118,7 +118,7 @@ export default class LoginPage {
       return;
     }
 
-    const activeCustomer = getActiveCustomer();
+    const activeCustomer = this.getActiveCustomer();
 
     if(customer.username != activeCustomer.username && activeCustomer.shoppingList.length > 0){
       let text = "Vill du lägga till varorna som du har i lagt i korgen\nin i din användares kundvagn";
@@ -126,6 +126,7 @@ export default class LoginPage {
     }
 
     window.localStorage.setItem("activeCustomer", JSON.stringify(customer));
+
   }
 }
 
