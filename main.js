@@ -3,7 +3,7 @@ const navShoppingCartBtn =  document.querySelector("#shoppingcart");
 let itemQuantity = document.querySelector(".item_quantity");
 
 let containerOfPhones = document.querySelector(".containerOfPhones");
-let customerId;
+let tempUsername;
 let addToShoppingCartBtns;
 let shoppingList = [];
 let numberOfItemsInShoppingList;
@@ -41,10 +41,13 @@ function initSite() {
     loadProducts();
     // This would also be a good place to initialize other parts of the UI
     if (!window.localStorage.getItem('activeCustomer')){
-        customerId = Math.floor(Math.random()*999999) + 1000000;
+        tempUsername = (Math.floor(Math.random()*999999) + 1000000).toString();
         customer = {
-            "customerId": customerId,
-            "shoppingList": shoppingList
+            "username": tempUsername,
+            "shoppingList": shoppingList,
+            "password": "",
+            "orders": [],
+
         }
         window.localStorage.setItem('activeCustomer', JSON.stringify(customer));
         window.localStorage.setItem("numberOfItems", itemQuantity.innerHTML);
@@ -98,7 +101,7 @@ function addToShoppingCart(){
     console.log(`Number of items in shopping list after adding to basket is: ${numberOfItemsInShoppingList}`);
     console.log(customer.shoppingList);
     createUlFromShoppingCartList();
-    
+    displayOrders();
 }
 
 function displayShoppingCart(){
@@ -133,12 +136,20 @@ function displayShoppingCart(){
             icon: "success",
             title: "Ditt köp lyckades!",
             showConfirmButton: true,
-            timer: 5000,
         }).then((result) => {
             if (result.isConfirmed) {
                 window.location.href = "index.html";
                 itemQuantity.innerHTML = window.localStorage.removeItem("numberOfItems");
-                customer = JSON.parse(window.localStorage.removeItem('activeCustomer'));
+               //customer = JSON.parse(window.localStorage.removeItem('activeCustomer'));
+               //windows.localStorage.setItem(customer.username, JSON.stringify(customer))
+               let totalSumString = totalCart();
+               let order = {
+                "items":customer.shoppingList,
+                "totalPrice":totalSumString,
+               }
+               console.log("jag har körts");
+               customer.orders.push(order);
+               windows.localStorage.setItem("activeCustomer", JSON.stringify(customer))
             } 
           }) 
       });
@@ -207,5 +218,61 @@ for (const object of customer.shoppingList){
 }
 
 
+function displayOrders() {
+  let date = new Date();
+  let actualDate = date.toISOString();
+  let totalSumString = totalCart();
+
+  let order = {
+    items: customer.shoppingList,
+    totalPrice: totalSumString,
+    date: actualDate,
+  };
+  customer.orders.push(order);
+  window.localStorage.setItem("activeCustomer", JSON.stringify(customer));
+  let container = document.querySelector("main");
+  container.className = "orderPage";
+
+  let orderList = [];
+  for (const order of customer.orders) {
+    for (const product of order.items) {
+      let prod = {
+        title: product.title,
+        price: product.price,
+        date: order.date,
+      };
+      orderList.push(prod);
+    }
+  }
+ let orderUl = createUlFromList(orderList);
+  
+let page = document.querySelector("main");
+page.replaceChildren(orderUl); 
+  
+ 
+}
+
+function createUlFromList(list){
+  let listUl = document.createElement('ul');
+  for(const itemX of list){
+      let item = document.createElement('li');
+      item.innerHTML = createOrderDiv(itemX);
+      listUl.appendChild(item);
+  }
+  return list;
+}
+function createOrderDiv(item){
+    let title = item.title;
+    let price = item.price;
+    let date = item.date;
+    return `  
+    <div class="ofItems">
+        <h1>Din order:</h1>
+        <p>${title}</p>
+        <p>${price}</p>
+        <p>${date}</p>
+    </div>
+`;   
+}
 
 
