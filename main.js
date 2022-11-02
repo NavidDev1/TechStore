@@ -228,7 +228,7 @@ function displayOrders() {
   let order = {
     items: customer.shoppingList,
     totalPrice: totalSumString,
-    date: actualDate,
+    date: date,
   };
   customer = JSON.parse(localStorage.getItem("activeCustomer"));
   let orderList = [];
@@ -249,7 +249,6 @@ function displayOrders() {
         date: order.date,
       };
       orderList.push(prod);
-      console.log(orderList);
     }
   
 
@@ -267,41 +266,12 @@ order.innerHTML = output;
 listOfOrdItems.appendChild(order);
 } 
 
-console.log(listOfOrdItems);
-container.replaceChildren(listOfOrdItems);
-    
-
+container.replaceChildren(listOfOrdItems);    
 container.className = "orderPage";
 
-    
-
-
-
-  
  
 }
 
-// function createUlFromList(list){
-//   let listUl = document.createElement('ul');
-//   for(const itemX of list){
-//       let item = document.createElement('li');
-//       item.innerHTML = createOrderDiv(itemX);
-//       listUl.appendChild(item);
-//   }
-//   return list;
-// }
-// function createOrderDiv(item){
-//     let title = item.title;
-//     let price = item.price;
-//     let date = item.date;
-//     return `  
-//     <div class="ofItems">
-//         <h1>Din order:</h1>
-//         <p>${title}</p>
-//         <p>${price}</p>
-//         <p>${date}</p>
-//     </div>
-// `;   
-// }
+
 
 
