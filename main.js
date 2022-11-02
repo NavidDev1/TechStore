@@ -137,7 +137,7 @@ function displayShoppingCart(){
             if (result.isConfirmed) {
                 window.location.href = "index.html";
                 itemQuantity.innerHTML = window.localStorage.removeItem("numberOfItems");
-                customer = JSON.parse(window.localStorage.removeItem('activeCustomer'));
+                customer = window.localStorage.removeItem('activeCustomer');
             } 
           }) 
       });
