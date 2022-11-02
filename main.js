@@ -219,22 +219,29 @@ for (const object of customer.shoppingList){
 
 
 function displayOrders() {
+    let container = document.querySelector("main");
+
   let date = new Date();
   let actualDate = date.toISOString();
   let totalSumString = totalCart();
-
+  let output="";
   let order = {
     items: customer.shoppingList,
     totalPrice: totalSumString,
     date: actualDate,
   };
-  customer.orders.push(order);
-  window.localStorage.setItem("activeCustomer", JSON.stringify(customer));
-  let container = document.querySelector("main");
-  container.className = "orderPage";
-
+  customer = JSON.parse(localStorage.getItem("activeCustomer"));
   let orderList = [];
-  for (const order of customer.orders) {
+
+  customer.orders.push(order);
+
+  window.localStorage.setItem("activeCustomer", JSON.stringify(customer));
+
+ 
+
+  let listOfOrdItems = document.createElement("ul");
+ 
+  
     for (const product of order.items) {
       let prod = {
         title: product.title,
@@ -242,37 +249,59 @@ function displayOrders() {
         date: order.date,
       };
       orderList.push(prod);
+      console.log(orderList);
     }
-  }
- let orderUl = createUlFromList(orderList);
   
-let page = document.querySelector("main");
-page.replaceChildren(orderUl); 
+
+    for (const odr of orderList) {
+      output = `
+      <div class="ofItems">
+        <h1>Din order:</h1>
+        <p>${odr.title}</p>
+        <p>${odr.price} kr</p>
+        <p>${odr.date}</p>
+    </div>
+`;
+let order = document.createElement("li");
+order.innerHTML = output;
+listOfOrdItems.appendChild(order);
+} 
+
+console.log(listOfOrdItems);
+container.replaceChildren(listOfOrdItems);
+    
+
+container.className = "orderPage";
+
+    
+
+
+
   
  
 }
 
-function createUlFromList(list){
-  let listUl = document.createElement('ul');
-  for(const itemX of list){
-      let item = document.createElement('li');
-      item.innerHTML = createOrderDiv(itemX);
-      listUl.appendChild(item);
-  }
-  return list;
-}
-function createOrderDiv(item){
-    let title = item.title;
-    let price = item.price;
-    let date = item.date;
-    return `  
-    <div class="ofItems">
-        <h1>Din order:</h1>
-        <p>${title}</p>
-        <p>${price}</p>
-        <p>${date}</p>
-    </div>
-`;   
-}
+// function createUlFromList(list){
+//   let listUl = document.createElement('ul');
+//   for(const itemX of list){
+//       let item = document.createElement('li');
+//       item.innerHTML = createOrderDiv(itemX);
+//       listUl.appendChild(item);
+//   }
+//   return list;
+// }
+// function createOrderDiv(item){
+//     let title = item.title;
+//     let price = item.price;
+//     let date = item.date;
+//     return `  
+//     <div class="ofItems">
+//         <h1>Din order:</h1>
+//         <p>${title}</p>
+//         <p>${price}</p>
+//         <p>${date}</p>
+//     </div>
+// `;   
+// }
 
 
