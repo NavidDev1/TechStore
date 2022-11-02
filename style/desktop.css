@@ -57,7 +57,7 @@ header {
 
 body {
     height:100vh;
-    display: inline-block;
+    display: block;
     font-family: 'Poppins', normal;
     font-size: 16px;
 }
