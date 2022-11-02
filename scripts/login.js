@@ -72,13 +72,6 @@ export default class LoginPage {
     inputPasswordElement.addEventListener("change", () => this.hideElement(passErrorDivE));
   }
 
-  displayNameTakenMsg = () => {
-    const nameErrorDivE = this.getErrorDivForNameFieldE();
-    nameErrorDivE.textContent = this.nameTakenMessage;
-    nameErrorDivE.style.animationName = "show";
-    const inputUsernameElement = this.getInputFieldUserNameE();
-    inputUsernameElement.addEventListener("change", () => this.hideElement(nameErrorDivE));
-  }
 
   getCustomer = () => {
     let foundUser = window.localStorage.getItem(this.getInputFieldUserNameE().value);
