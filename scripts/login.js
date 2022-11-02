@@ -8,9 +8,10 @@ export default class LoginPage {
     this.wrongPassMsg = "Worng password!";
   }
 
-  getLoginForm = () => {
-     
-    return `
+  getMainE = () => document.querySelector("main");
+
+  renderLoginPage = () => {
+    this.getMainE().innerHTML = `
     <h1>Login</h1>
       <form id="my_form" action="javascript:void(0);">
           <input type="text" placeholder="Username" class="field" id="username" pattern="[A-Z,a-z,0-9]{1,10}">
@@ -20,8 +21,8 @@ export default class LoginPage {
           <button type="submit" value="Submit" class="btn" id="login_btn">Login</button>
           <button class="btn" id="new_user">New user</button>
       </from>`;
-    }
-  
+  }
+
   getLoginBtnEFromPage = () => document.getElementById("login_btn");
 
   getNewUserBtnEFromPage = () => document.getElementById("new_user");

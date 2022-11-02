@@ -2,19 +2,20 @@
 import LoginPage from "./login.js"
 import SignUpPage from "./sign_up_page.js";
 
+let loginPage = new LoginPage();
+let signUpPage = new SignUpPage();
 const navShoppingCartBtn =  document.querySelector("#shoppingcart");
 const userBtnE = document.getElementById("user");
+const mainE = document.querySelector("main");
 let itemQuantity = document.querySelector(".item_quantity");
-
 let containerOfPhones = document.querySelector(".containerOfPhones");
-let customerId;
 let addToShoppingCartBtns;
 let shoppingList = [];
-//let numberOfItemsInShoppingList;
 var listOfProducts;
 let customer = {};
 let productsLoaded = false;
 let productsLoadedResolve;
+
 
 /** Get products from the json file and store it in a gobal variable */
 function loadProducts() {
@@ -27,41 +28,26 @@ function loadProducts() {
         productsLoaded = true; 
         productsLoadedResolve();       
     })
-    //.then(addProductsToWebpage)
 }
 
 function initSite() {
     loadProducts();
     waitForPoductsLoaded().then(addProductsToWebpage);
-    // displayProducts();
-    // This would also be a good place to initialize other parts of the UI
-    //addProductsToWebpage();
     
     if (!window.localStorage.getItem('activeCustomer')){
       createNewActiveCustomer();
-        //window.localStorage.setItem("numberOfItems", customer.shoppingList.length);
     }
-    customer = JSON.parse(window.localStorage.getItem('activeCustomer'));
-    //itemQuantity.innerHTML = customer.shoppingList.length;    
-    displayQuantityOfShoppingCartItems();
-    //numberOfItemsInShoppingList = customer.shoppingList.length; //tas bort?
-    
-    
-    
-   
+    customer = JSON.parse(window.localStorage.getItem('activeCustomer'));  
+    displayQuantityOfShoppingCartItems(); 
 }
 
 window.initSite = initSite;
-// async function displayProducts(){
-//   await loadProducts();
-//   addProductsToWebpage();
-// }
 
 async function waitForPoductsLoaded(){
   if(!productsLoaded){
     await new Promise((resolve) => {
       productsLoadedResolve = resolve;
-    })//.then(addProductsToWebpage);
+    })
   }
 }
 
@@ -125,11 +111,8 @@ function addToShoppingCart(){
     cust.shoppingList.push(listOfProducts[listOfProducts.findIndex(phoneTitleMatch, this.id)]);
 
     itemQuantity.innerHTML = cust.shoppingList.length;
-    // var holderOfItems =itemQuantity.innerHTML;
-    // window.localStorage.setItem("numberOfItems", holderOfItems);
     window.localStorage.setItem('activeCustomer', JSON.stringify(cust));
     window.localStorage.setItem(cust.username, JSON.stringify(cust));
-    //console.log(`Number of items in shopping list after adding to basket is: ${numberOfItemsInShoppingList}`);
     console.log(`cust.shoppingList.lenght: ${cust.shoppingList.length}`);
     
 }
@@ -176,95 +159,21 @@ function displayQuantityOfShoppingCartItems(){
 
 // Get to the Login Page
 
-userBtnE.addEventListener("click", ()=>{
+userBtnE.addEventListener("click", ({lp=loginPage, sup=signUpPage})=>{
     let mainE = document.querySelector("main");
     mainE.className = "login-container";
-    changeModalToLoginView(loginForm, mainE);
+    // changeModalToLoginView(loginForm, mainE);
+    lp.renderLoginPage();
+    const newUserBtn2 = document.getElementById("new_user");
+    const loginBtn2 = document.getElementById("login_btn");
+    newUserBtn2.addEventListener("click", sup.renderSignUpPage);
+    loginBtn2.addEventListener("click", login);
 });
 
-//// Login page //////////////////////////////////
 //Bild av Adrien Olichon: https://www.pexels.com/sv-se/foto/svartvitt-konst-monster-design-3137058/
 
-const newUserForm = `<h1>New user</h1><form id="my_form" action="javascript:void(0);">
-    <input type="text" placeholder="Choose username" id="c_username" class="field" pattern="[A-Z,a-z,0-9]{1,10}">
-    <div class="error_msg_box" id="e_name">"error message"</div>
-    <input type="password" placeholder="Choose password" id="c_password" class="field" pattern="[A-Z,a-z,0-9]{1,10}">
-    <div class="error_msg_box" id="e_pass">"error message"</div>
-    <button type="submit" value="Create user" id="createBtn" class="btn">Create user</button>
-    </form>`;
-const loginForm = `
-<h1>Login</h1>
-  <form id="my_form" action="javascript:void(0);">
-      <input type="text" placeholder="Username" class="field" id="username" pattern="[A-Z,a-z,0-9]{1,10}">
-      <div class="error_msg_box" id="e_name">"error message"</div>
-      <input type="password" placeholder="Password" class="field" id="password" pattern="[A-Z,a-z,0-9]{1,10}"> 
-      <div class="error_msg_box" id="e_pass">"error message"</div>             
-      <button type="submit" value="Submit" class="btn" id="login_btn">Login</button>
-      <button class="btn" id="new_user">New user</button>
-  </from>`;
-
-
-
-
-
-let loginBtn;
-const containerFormElement = document.querySelector(".container");
-const formElement = document.getElementById("my_form");
-const nameTakenMessage = "That user name is already taken!"
-const nameErrorMessage = "Not a valid username! Valid characters are a-z, A-Z, 0-9 and 1 to 10 in size!"
-const passErrorMessage = "Not a valid password! Valid characters are a-z, A-Z, 0-9 and 1 to 10 in size!"
-const noUserFound = "Not user with that name is found!"
-const wrongPass = "Worng password!"
-const regexPattern = /^[a-z,A-Z,0-9]{1,10}$/;
-
-let currentUser = window.localStorage.getItem("current_user");
-let eNameE = document.getElementById("e_name");
-let ePassE = document.getElementById("e_pass");
-
-// for (const user of users) {
-//   window.localStorage.setItem(user.username, JSON.stringify(user));
-// }
-
-if (currentUser) {
-  //If we have a current in memory then we display the logged in view for the user
-  let cu = JSON.parse(currentUser);
-  changeNavbar(navLogoutOption);
-  changeLoginModalToLoggedInUser(cu, containerFormElement);
-
-  logOutBtn = document.getElementById("logout");
-  logOutBtn.addEventListener("click", logOutUser);
-}
-
-function changeModal(newOption, modal = containerFormElement) {
+function changeModal(newOption, modal = mainE) {
   modal.innerHTML = newOption;
-}
-
-function changeLoginModalToLoggedInUser(currentUser, loginM = containerFormElement) {
-  /**
-   * Changes the login modal to the welcome user view
-   */
-
-  const loggedInUserH1 = `<h1>Welcome ${currentUser.username}</h1>`;
-  loginM.innerHTML = loggedInUserH1;
-}
-
-function changeNavbar(newOption = navLogoutOption, nav = navbarElement) {
-  /**
-   * Changes the navbar to different views/options
-   */
-
-  nav.innerHTML = newOption;
-}
-// pointer="", loginF=loginForm, container=containerFormElement, navLoginOpt=navCreateUserOption
-function logOutUser() {
-  /**
-   * Logs out user by removing them from local storage memory and displaying the login modal
-   */
-  window.localStorage.removeItem("current_user");
-  changeModalToLoginView();
-}
-function hidden(element){
-  element.style.animationName = "hidden";
 }
 
 function changeModalToLoginView(loginF, container) {
@@ -275,81 +184,27 @@ function changeModalToLoginView(loginF, container) {
   newUserBtn2.addEventListener("click", changeModalToNewUser);
   loginBtn2.addEventListener("click", login);
 }
-let setActiveCustomerToCustomerObject = customer => customer = JSON.parse(window.localStorage.getItem("activeCustomer"));
 
 function createUser() {
+  /**
+   * Create a new user and ads it to local storage as new user and active customer
+   *
+   */
   let signUpPage = new SignUpPage();
   signUpPage.createUser();
   const loginContainerE = document.querySelector(".login-container");
   addProductsToWebpage(loginContainerE);
   addPutToShoppingCartBtnListners();
-  displayQuantityOfShoppingCartItems();
-  // const cuserNameE = document.getElementById("c_username");
-  // const cPasswordE = document.getElementById("c_password");
-  // const cUsername = cuserNameE.value;
-  // const cPassword = cPasswordE.value;
-
-  // let eNameE = document.getElementById("e_name");
-  // let ePassE = document.getElementById("e_pass");
-
-
-  // let validUsername = regexPattern.test(cUsername);
-  // let validPassword = regexPattern.test(cPassword);
-  // let freeUsername = window.localStorage.getItem(cUsername) ? false : true;
-
-  // if (!validUsername) {
-  //   eNameE.textContent = nameErrorMessage;
-  //   console.log("this was printed");
-  //   eNameE.style.animationName = "show";
-  //   cuserNameE.addEventListener("change", function(){ return hidden(eNameE); });
-  // }
-  // if (!validPassword){
-  //   ePassE.textContent = passErrorMessage;
-  //   ePassE.style.animationName = "show";
-  //   cPasswordE.addEventListener("change", function(){ return hidden(ePassE); });
-  // }
-  // if (!freeUsername){
-  //   eNameE.textContent = nameTakenMessage;
-  //   eNameE.style.animationName = "show";
-  //   cPasswordE.addEventListener("change", function(){ return hidden(eNameE); });
-  // }
-  // let newUser;
-  // if (validUsername && validPassword && freeUsername) {
-  //   newUser = {      
-  //     "username": cUsername,
-  //     "password": cPassword,
-  //     "shoppingList": [],
-  //     "orders": []
-  //   };
-    
-  //   if(customer.shoppingList.length > 0){
-  //     let text = "Vill du lägga till varorna som du har i lagt i korgen\nin i din användares kundvagn";
-  //     if (confirm(text) == true) {
-  //       newUser.shoppingList.push(...customer.shoppingList)
-  //     } else {
-  //       console.log(`Earliers active customer shopping list is not merged with logged in user`);
-  //     }
-  //   }
-  //   window.localStorage.setItem(newUser.username, JSON.stringify(newUser));
-  //   window.localStorage.setItem("activeCustomer", JSON.stringify(newUser));
-    // setActiveCustomerToCustomerObject();
-    // const loginContainerE = document.querySelector(".login-container");
-    // addProductsToWebpage(loginContainerE);
-    // addPutToShoppingCartBtnListners();
-    // displayQuantityOfShoppingCartItems();
-    
-    
-  
+  displayQuantityOfShoppingCartItems();  
 }
 
-
-function login() {
+function login({lp=loginPage}) {
   /**
-   * Logs in user by adding them to local storage
+   * Logs in user by adding them to local storage as active customer
    *
    */
-  let loginPage = new LoginPage();
-  loginPage.loginUser();
+
+  lp.loginUser();
   customer = JSON.parse(window.localStorage.getItem("activeCustomer"));
   addProductsToWebpage();
   displayQuantityOfShoppingCartItems();
@@ -357,84 +212,10 @@ function login() {
     "addToShoppingCartBtn"
   );
   addPutToShoppingCartBtnListners();
-  // navShoppingCartBtn.addEventListener("click", displayShoppingCart);
-
-
-  // const inputUsernameElement = document.getElementById("username");
-  // const inputPasswordElement = document.getElementById("password");
-
-  // const eNameE = document.getElementById("e_name");
-  // const ePassE = document.getElementById("e_pass");
-
-  // let inputUsername = inputUsernameElement.value;
-  // let inputPassword = inputPasswordElement.value;
-
-  // let usernameSave = regexPattern.test(inputUsername);
-  // let passwordSave = regexPattern.test(inputPassword);
-
-  // eNameE.textContent = nameErrorMessage;
-  // ePassE.textContent = passErrorMessage;
-
-  // if (!usernameSave) {
-  //   eNameE.textContent = nameErrorMessage;
-  //   eNameE.style.animationName = "show";
-  //   inputUsernameElement.addEventListener("change", function(){ return hidden(eNameE); });
-  // }
-  // else if (!window.localStorage.getItem(inputUsername)){
-  //   eNameE.textContent = noUserFound;
-  //   eNameE.style.animationName = "show";
-  //   inputUsernameElement.addEventListener("change", function(){ return hidden(eNameE); });
-  // }
-
-  // if (!passwordSave) {
-  //   ePassE.textContent = passErrorMessage;
-  //   if(!ePassE.style.animationName=="show") ePassE.style.animationName = "show";
-  //   ePassE.style.animationName = "show";
-  //   inputPasswordElement.addEventListener("change", function(){ return hidden(ePassE); });
-  // }
-  
-  // let foundUser = window.localStorage.getItem(inputUsername);
-  // let userObject = JSON.parse(foundUser);
-  // let correctPass = userObject.password == inputPassword;
-
-  // if (!correctPass) {
-  //   ePassE.textContent = wrongPass;
-  //   ePassE.style.animationName = "show";
-  //   inputPasswordElement.addEventListener("change", function(){ return hidden(ePassE); });
-  //   return;
-  // }
-  // currentUser = JSON.parse(window.localStorage.getItem('activeCustomer'));
-  
-  // if (currentUser.username != inputUsername && currentUser.shoppingList.length > 0) {
-  //   let text = "Vill du lägga till varorna som du har i lagt i korgen\nin i din användares kundvagn";
-  //   if (confirm(text) == true) {
-  //     userObject.shoppingList.push(...currentUser.shoppingList)
-  //   } else {
-  //     console.log(`Earliers active customer shopping list is not merged with logged in user: ${currentUser.shoppingList}`);
-  //   }
-  // }
-  // console.log(`new shoppinglist: ${userObject.shoppingList}`);
-  
-  // window.localStorage.setItem("activeCustomer", JSON.stringify(userObject));
-  // setActiveCustomerToCustomerObject();
-  // addProductsToWebpage();
-  // displayQuantityOfShoppingCartItems();
-  // addToShoppingCartBtns = document.getElementsByClassName(
-  //   "addToShoppingCartBtn"
-  // );
-  // addPutToShoppingCartBtnListners();
-  // navShoppingCartBtn.addEventListener("click", displayShoppingCart);
 }
 
-
-
-// function setActiveCustomerToCustomerObject(){
-//   customer = JSON.parse(window.localStorage.getItem("activeCustomer"));
-// }
-
-function changeModalToNewUser() {
-  const containerFormElement = document.querySelector(".login-container");
-  containerFormElement.innerHTML = newUserForm;
+function changeModalToNewUser({sup = signUpPage}) {
+  sup.renderSignUpPage();
 
   const navShoppingCartBtn = document.getElementById("shoppingcart");
   navShoppingCartBtn.addEventListener("click", displayShoppingCart);
@@ -445,7 +226,3 @@ function changeModalToNewUser() {
   const createUserBtn = document.getElementById("createBtn");
   createUserBtn.addEventListener("click", createUser);
 }
-
-// loginBtn.addEventListener("click", login);
-//newUserBtn.addEventListener("click", changeModalToNewUser);
-// navNewUserBtn.addEventListener("click", changeModalToNewUser);

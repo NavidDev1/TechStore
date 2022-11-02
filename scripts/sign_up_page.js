@@ -13,6 +13,16 @@ export default class SignUpPage {
 
   getMainE = () => document.querySelector("main");
 
+  renderSignUpPage = () => {
+    this.getMainE().innerHTML = `<h1>New user</h1><form id="my_form" action="javascript:void(0);">
+    <input type="text" placeholder="Choose username" id="c_username" class="field" pattern="[A-Z,a-z,0-9]{1,10}">
+    <div class="error_msg_box" id="e_name">"error message"</div>
+    <input type="password" placeholder="Choose password" id="c_password" class="field" pattern="[A-Z,a-z,0-9]{1,10}">
+    <div class="error_msg_box" id="e_pass">"error message"</div>
+    <button type="submit" value="Create user" id="createBtn" class="btn">Create user</button>
+    </form>`;
+  }
+
   hideElement = (element) =>  element.style.animationName = "hidden";
 
   isValidUsernameFormat = () => this.inputFieldRegexPattern.test(this.getInputFieldCreateUserNameE().value)
