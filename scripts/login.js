@@ -120,7 +120,6 @@ export default class LoginPage {
     }
 
     window.localStorage.setItem("activeCustomer", JSON.stringify(customer));
-
   }
 }
 

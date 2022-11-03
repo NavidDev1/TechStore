@@ -159,14 +159,14 @@ function displayQuantityOfShoppingCartItems(){
 
 // Get to the Login Page
 
-userBtnE.addEventListener("click", ({lp=loginPage, sup=signUpPage})=>{
+userBtnE.addEventListener("click", ({lp=loginPage})=>{
     let mainE = document.querySelector("main");
     mainE.className = "login-container";
-    // changeModalToLoginView(loginForm, mainE);
     lp.renderLoginPage();
+    
     const newUserBtn2 = document.getElementById("new_user");
     const loginBtn2 = document.getElementById("login_btn");
-    newUserBtn2.addEventListener("click", sup.renderSignUpPage);
+    newUserBtn2.addEventListener("click", changeModalToNewUser);    
     loginBtn2.addEventListener("click", login);
 });
 
@@ -206,12 +206,24 @@ function login({lp=loginPage}) {
 
   lp.loginUser();
   customer = JSON.parse(window.localStorage.getItem("activeCustomer"));
-  addProductsToWebpage();
-  displayQuantityOfShoppingCartItems();
-  addToShoppingCartBtns = document.getElementsByClassName(
-    "addToShoppingCartBtn"
-  );
-  addPutToShoppingCartBtnListners();
+  if(confirm("Vill du se dina tidigare köp?") == true){
+    console.log("Byt denna text mot en funktion för att visa tidigare kör");
+  }
+  else{
+    renderShoppingPage();
+}
+}
+let renderShoppingPage = () => {
+  /**
+   * Render the shopping page
+   *
+   */
+   addProductsToWebpage();
+   displayQuantityOfShoppingCartItems();
+   addToShoppingCartBtns = document.getElementsByClassName(
+     "addToShoppingCartBtn"
+   );
+   addPutToShoppingCartBtnListners();
 }
 
 function changeModalToNewUser({sup = signUpPage}) {
