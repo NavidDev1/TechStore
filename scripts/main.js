@@ -2,11 +2,12 @@
 import LoginPage from "./login.js"
 import SignUpPage from "./sign_up_page.js";
 
-let loginPage = new LoginPage();
-let signUpPage = new SignUpPage();
+
 const navShoppingCartBtn =  document.querySelector("#shoppingcart");
 const userBtnE = document.getElementById("user");
 const mainE = document.querySelector("main");
+let loginPage = new LoginPage();
+let signUpPage = new SignUpPage();
 let itemQuantity = document.querySelector(".item_quantity");
 let containerOfPhones = document.querySelector(".containerOfPhones");
 let addToShoppingCartBtns;
@@ -15,6 +16,13 @@ var listOfProducts;
 let customer = {};
 let productsLoaded = false;
 let productsLoadedResolve;
+let removeFromShoppingCartBtns;
+let headerofcart;
+let confirmPurchase;
+let totalSum;
+let confirmPurchaseBtn;
+let popUp;
+
 
 
 /** Get products from the json file and store it in a gobal variable */
@@ -106,21 +114,50 @@ function addPutToShoppingCartBtnListners(){
 }
 
 function addToShoppingCart(){
-    let phoneTitle = this.id;
     let cust = JSON.parse(window.localStorage.getItem("activeCustomer"));
     cust.shoppingList.push(listOfProducts[listOfProducts.findIndex(phoneTitleMatch, this.id)]);
 
     itemQuantity.innerHTML = cust.shoppingList.length;
     window.localStorage.setItem('activeCustomer', JSON.stringify(cust));
     window.localStorage.setItem(cust.username, JSON.stringify(cust));
-    console.log(`cust.shoppingList.lenght: ${cust.shoppingList.length}`);
-    
+    console.log(`cust.shoppingList.lenght: ${cust.shoppingList.length}`);    
 }
 
 function displayShoppingCart(){
     let list = createUlFromShoppingCartList()
     containerOfPhones.replaceChildren(list);
     containerOfPhones.className = "containerOfShoppingCart";
+
+    let headerofcart = document.createElement("h1");
+    headerofcart.className = "cartHeader"
+    headerofcart.innerHTML = `<i class="fa-solid fa-cart-shopping"></i>` + "Kundvagn" ;
+    list.insertAdjacentElement("beforebegin", headerofcart);
+
+    confirmPurchase = document.createElement("button")
+    confirmPurchase.className = "confirmBtn"
+    confirmPurchase.innerHTML = `<i class="fa-solid fa-check"></i>` + " " + "Slutför ditt köp"
+    list.insertAdjacentElement("afterend", confirmPurchase)
+    
+    totalSum = document.createElement("p")
+    totalSum.className = "totalSum"
+    totalSum.innerHTML = totalCart ()
+    list.insertAdjacentElement("afterend", totalSum)
+
+    removeFromShoppingCartBtns = document.getElementsByClassName("removeFromShoppingCartBtn");
+    removeItemFromShoppingCartListner();
+
+    confirmPurchase.addEventListener("click", () => {
+        Swal.fire({
+            position: "center",
+            icon: "success",
+            title: "Ditt köp lyckades!",
+            showConfirmButton: true,
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href = "index.html";
+            } 
+          }) 
+      });
 }
 
 function createUlFromShoppingCartList(){
@@ -151,10 +188,37 @@ function phoneTitleMatch(phone){
     return phone.title.split(" ").join("").toLowerCase() == this
 }
 
+function removeItemFromShoppingCartListner(){
+  for (const btn of removeFromShoppingCartBtns){
+      btn.addEventListener("click", removeItemFromShoppingCart);
+  }
+}
+
+function removeItemFromShoppingCart(){
+  var holder = customer.shoppingList.findIndex(phoneTitleMatch, this.id);
+  
+  customer.shoppingList.splice(holder,1);
+  localStorage.setItem("activeCustomer", JSON.stringify(customer));
+  localStorage.setItem("numberOfItems", customer.shoppingList.length);
+  itemQuantity.innerHTML = customer.shoppingList.length;
+  displayShoppingCart();
+}
+
 function displayQuantityOfShoppingCartItems(){
   itemQuantity.innerHTML = window.localStorage.getItem("activeCustomer") ? JSON.parse(window.localStorage.getItem("activeCustomer")).shoppingList.length : 0;
   console.log(`Number of items in customer shopping list is: ${customer.shoppingList.length}`);
   console.log(`Number of items in activeCustomer shopping list is: ${JSON.parse(window.localStorage.getItem("activeCustomer")).shoppingList.length}`);
+}
+
+function totalCart() {
+  let aCust = JSON.parse(window.localStorage.getItem("activeCustomer"));
+  let array = [];
+  for (const object of aCust.shoppingList) {
+    array.push(object.price);
+  }
+  console.log(array);
+  const totalValue = array.reduce((prev, next) => prev + next, 0);
+  return "Totalt Pris:" + " " + totalValue + " " + "kr";
 }
 
 // Get to the Login Page

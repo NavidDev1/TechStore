@@ -19,5 +19,35 @@
         "description": "Super nice and beautiful smartphone from LG.",
         "image": "LGV30.png",
         "price": 7495
+    },{
+        "title": "iPhone 13",
+        "description": "With a major upgrade, Apple does the only right thing.",
+        "image": "iPhone13.png",
+        "price": 11095
+    },{
+        "title": "iPhone 13 mini",
+        "description": "Mini is a real powerhouse",
+        "image": "iPhone13_mini.png",
+        "price": 8301
+    },{
+        "title": "iPhone14 PRO MAX",
+        "description": "Pro Max a fun experience. Much better camera.",
+        "image": "iPhone14PRO.png",
+        "price": 14490
+    },{
+        "title": "Samsung S22",
+        "description": "Compact top mobile with quality in every detail.",
+        "image": "SamsungS22.png",
+        "price": 7825
+    },{
+        "title": "Samsung Galaxy Z Flip 4",
+        "description": "Flip has matured and can now be refined.",
+        "image": "SamsungFlip4.png",
+        "price": 12290
+    },{
+        "title": "Xiaomi 12 Pro",
+        "description": "Xiaomi's new flagship is the fastest Android mobile to date.",
+        "image": "Xiamo12PRO.png",
+        "price": 9990
     }
 ]

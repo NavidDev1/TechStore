@@ -51,9 +51,15 @@ body { background-color: var(--backgroundone); }
 
 header {
   position: fixed;
+
 }
 
 body {
+    height:100vh;
+
+    width: 100%;
+    display: inline-block;
+
     font-family: 'Poppins', normal;
     font-size: 16px;
 }
@@ -68,6 +74,7 @@ body {
   padding-top: 0.5rem;
   padding-bottom: 0.5rem;
   height: 80px;
+  margin-bottom: 80px;
 }
 .navbar-left, .navbar-right{
   list-style: none;
@@ -173,8 +180,9 @@ body {
 .containerOfShoppingCart {
   margin-top: 100px;
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: center;
+  
   height: calc(100vh - 100px);
 }
 
@@ -185,7 +193,7 @@ body {
   align-items:center;
   width: 100vw;
   margin: auto;
-  flex-wrap: wrap;
+  flex-wrap:wrap;
   list-style: none;
   gap:20px;  
 }
@@ -269,6 +277,7 @@ body {
   
   height: 50%;
   
+
   justify-content: center;
   text-align: center;
 
@@ -368,4 +377,33 @@ input:invalid {
 @keyframes hidden {
   100% {visibility: hidden;}
 }
+
+
+
+.confirmBtn {
+  background-color: var(--blue);
+  color: white;
+  border: none;
+  padding: 15px 32px;
+  font-size: 1.5rem;
+  border-radius: 12px;
+  cursor: pointer;
+  margin-bottom: 5rem;
+}
+
+.totalSum{
+  font-weight: bolder;
+  font-size: 1.5rem;
+  margin-bottom: 2rem;
+  margin-top: 2rem;
+}
+
+.cartHeader {
+
+ margin-top: 80px;
+ margin-bottom: 80px;; 
+}
+
+
+
 
