@@ -101,7 +101,7 @@ function addToShoppingCart(){
     console.log(`Number of items in shopping list after adding to basket is: ${numberOfItemsInShoppingList}`);
     console.log(customer.shoppingList);
     createUlFromShoppingCartList();
-    displayOrders();
+    
 }
 
 function displayShoppingCart(){
@@ -222,7 +222,7 @@ function displayOrders() {
     let container = document.querySelector("main");
 
   let date = new Date();
-  let actualDate = date.toISOString();
+//   let actualDate = date.toISOString();
   let totalSumString = totalCart();
   let output="";
   let order = {
@@ -230,7 +230,7 @@ function displayOrders() {
     totalPrice: totalSumString,
     date: date,
   };
-  customer = JSON.parse(localStorage.getItem("activeCustomer"));
+  
   let orderList = [];
 
   customer.orders.push(order);
@@ -240,7 +240,9 @@ function displayOrders() {
  
 
   let listOfOrdItems = document.createElement("ul");
- 
+  var TotalOrderString = document.createElement("h1");
+  TotalOrderString.innerText= "Din order:";
+  listOfOrdItems.appendChild(TotalOrderString);
   
     for (const product of order.items) {
       let prod = {
@@ -255,7 +257,6 @@ function displayOrders() {
     for (const odr of orderList) {
       output = `
       <div class="ofItems">
-        <h1>Din order:</h1>
         <p>${odr.title}</p>
         <p>${odr.price} kr</p>
         <p>${odr.date}</p>
@@ -269,7 +270,8 @@ listOfOrdItems.appendChild(order);
 container.replaceChildren(listOfOrdItems);    
 container.className = "orderPage";
 
- 
+
+ /*************** displayOrders() - Connect it with the login  ************' */
 }
 
 
