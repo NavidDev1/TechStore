@@ -70,7 +70,7 @@ function createNewActiveCustomer() {
 
     customer = {            
         "username": tempUsername,
-        "password": cPassword,
+        "password": "",
         "shoppingList": shoppingList,
         "orders": []
     }
@@ -154,13 +154,17 @@ function displayShoppingCart(){
             showConfirmButton: true,
         }).then((result) => {
             if (result.isConfirmed) {
+              displayOrders();
               let aCustomer =JSON.parse(localStorage.getItem("activeCustomer"));
               aCustomer.shoppingList =  [];
-              localStorage.setItem(aCustomer.name, aCustomer);
+              if(localStorage.getItem(aCustomer.username)){
+              localStorage.setItem(aCustomer.username, JSON.stringify(aCustomer));
+              } 
+              localStorage.setItem("activeCustomer", JSON.stringify(aCustomer));
               // JSON.stringify(aCustomer);
               // localStorage.removeItem("numberOfItems");
               
-              displayOrders();
+              
             } 
           }) 
       });
@@ -211,7 +215,7 @@ function removeItemFromShoppingCart(){
 }
 
 function displayQuantityOfShoppingCartItems(){
-  itemQuantity.innerHTML = window.localStorage.getItem("activeCustomer") ? JSON.parse(window.localStorage.getItem("activeCustomer")).shoppingList.length : 0;
+  itemQuantity.innerHTML =window.localStorage.getItem("activeCustomer") ? JSON.parse(window.localStorage.getItem("activeCustomer")).shoppingList.length : 0;
   console.log(`Number of items in customer shopping list is: ${customer.shoppingList.length}`);
   console.log(`Number of items in activeCustomer shopping list is: ${JSON.parse(window.localStorage.getItem("activeCustomer")).shoppingList.length}`);
 }
@@ -363,5 +367,4 @@ container.replaceChildren(listOfOrdItems);
 container.className = "orderPage";
 
 
-/*************** displayOrders() - Connect it with the login  ************' */
 }
