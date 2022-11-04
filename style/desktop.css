@@ -38,7 +38,6 @@ rgba(245,245,245,255) - bakgrunden som displayar skärmarna (den med blåa ramen
     --framebackgroundcolor: rgba(245,245,245,255);
 
   }
-  
 
 body { background-color: var(--backgroundone); }
 #navcontainer { background-color: var(--blacknav); }
@@ -92,9 +91,14 @@ body {
 }
 
 .navbar-right {
+  gap: 0.5rem;
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.navbar-right a{
+  font-size: 1.5rem;
 }
 
 .item-quantity {
@@ -104,8 +108,11 @@ body {
   width: 7rem;
   margin-right: 2rem;
   font-family: Arial, Helvetica, sans-serif;
-  font-weight: 500;
-  font-size: 44px;
+  
+}
+
+#user:hover {
+  cursor: pointer;
 }
 
 #navcontainer a {
@@ -114,6 +121,7 @@ body {
 }
 
 #navcontainer i {
+  color: white;
   font-size: 2rem;
   margin-right: 20px;
 }
@@ -237,6 +245,139 @@ body {
 .cartItem i {
   margin: 0 1rem 0 0;
 }
+
+
+
+
+.login-container {
+  margin-top: 80px;
+  display: flex;
+  height: calc(100vh - 80px);
+  /* width: clamp(300px, 90%, 900px);  */
+  /* clamp(MIN, VAL, MAX) */
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  text-align: center;
+  justify-content: center;
+  text-align: center;
+  padding: 2rem;
+  background-image: url(../assets/login_bg.jpg);
+  filter: grayscale(50%);      
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+
+/* .login-container{
+  background-color: rgba(7, 98, 25, 0.152);
+
+ 
+  
+  height: 50%;
+  
+
+  justify-content: center;
+  text-align: center;
+
+} */
+
+form {
+  background-color: #83848472;
+  display:flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  text-align: center;
+  height: 50%;
+  width: clamp(300px, 50%, 850px);
+  border-radius: 15px;
+  backdrop-filter: blur(1px);
+}
+
+form > * {
+  padding: 10%;
+}
+
+
+
+input,
+.btn, .error_msg_box {
+  padding: 0.5rem;
+  margin-bottom: 0.5rem;
+  width: 50%;
+  width: clamp(80%, 80%, 300px);
+  border: 0.1rem solid transparent;
+  border-radius: 5px;
+}
+
+form .field {
+  background-color: #f9f2f2;
+}
+
+
+form .field:focus {
+  background-color: #e3fac0d4;
+}
+
+
+.btn {
+  background-color: var(--blue);
+  color: #fff;
+  line-height: 1rem;
+  cursor: pointer;
+}
+
+.btn:hover,
+.btn:active {
+  background-color: var(--lighterblue);
+  border: 0.1rem solid #1F78B4;
+  cursor: pointer;
+}
+
+
+
+.login-container h1 {
+  color: rgba(245, 250, 251, 0.799);
+  font-size: 2rem;
+  margin: 2rem;
+  text-align: center;
+  text-shadow: 0px 0px 5px rgb(1, 31, 31);
+}
+
+input:invalid {
+  border: 2px dashed rgb(255, 42, 42);
+  background-image: linear-gradient(to right, rgb(255, 255, 255), rgb(240, 188, 255));
+}
+
+.error_msg_box{
+  visibility: hidden;
+  font-size: 0.5rem;
+  margin-left: auto;
+  margin-right: auto;
+  background-color: rgb(255, 157, 157);
+
+  animation-name: hidden;
+  animation-duration: 10s;
+  animation-timing-function: linear;
+}
+
+@keyframes show {
+  0%   {background-color:rgb(255, 255, 255); left:0px; top:0px; visibility: hidden;}
+  100% {background-color:rgb(255, 84, 84); left:0px; top:0px; visibility: visible;}
+}
+
+@keyframes hide {
+  0% {background-color:red; left:0px; top:0px; visibility: visible;}
+  100%   {background-color:rgb(255, 255, 255); left:0px; top:0px; visibility: hidden;}
+
+}
+
+@keyframes hidden {
+  100% {visibility: hidden;}
+}
+
 
 
 .confirmBtn {
