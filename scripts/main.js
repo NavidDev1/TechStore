@@ -19,34 +19,44 @@ let removeFromShoppingCartBtns;
 let confirmPurchase;
 let totalSum;
 
-Object.assign(LoginPage.prototype, isValidInputFormat);
-Object.assign(LoginPage.prototype, hideElement);
-Object.assign(LoginPage.prototype, getErrorDivForNameFieldE);
-Object.assign(LoginPage.prototype, getErrorDivForPassFieldE);
-Object.assign(LoginPage.prototype, displayNotValidInputErrorMsg);
-Object.assign(LoginPage.prototype, getCustomerObject);
-Object.assign(LoginPage.prototype, isCustomer);
-Object.assign(LoginPage.prototype, getMainE);
-
-let isValidInputFormat = (inputValue) => /^[a-z,A-Z,0-9]{1,10}$/.test(inputValue);
-
-let hideElement = (element) =>  element.style.animationName = "hidden";
-
-let getErrorDivForNameFieldE = () => document.getElementById("e_name");
-
-let getErrorDivForPassFieldE = () => document.getElementById("e_pass");
-
-let displayNotValidInputErrorMsg = (errorDiv, errorMsg, inputField) => {
-  errorDiv.innerText = errorMsg;
-  errorDiv.style.animationName = "show";
-  inputField.addEventListener("change", () => this.hideElement(nameErrorDivE));
+const fieldValidator = {
+  isValidInputFormat (inputValue) { return /^[a-z,A-Z,0-9]{1,10}$/.test(inputValue) }
+}
+const elementHider = {
+  hideElement (element){ element.style.animationName = "hidden" }
+}
+const elementGetterErrorDivUsername = { 
+  getErrorDivForNameFieldE(){ return document.getElementById("e_name") }
+}
+const elementGetterErrorDivPassword = { 
+  getErrorDivForPassFieldE(){ return document.getElementById("e_pass") }
+}
+const displayerOfNotValidInputErrorMsg = { 
+  displayNotValidInputErrorMsg(errorDiv, errorMsg, inputField){
+    errorDiv.innerText = errorMsg;
+    errorDiv.style.animationName = "show";
+    inputField.addEventListener("change", () => this.hideElement(errorDiv));
+  }
+}
+const customerObjectGetter = { 
+  getCustomerObject(name){return window.localStorage.getItem(name) ? JSON.parse(window.localStorage.getItem(name)) : null}
+}
+const customerChecker = { 
+  isCustomer(customerName){return window.localStorage.getItem(customerName) ? true : false}
+}
+const mainElementGetter = { 
+  getMainE(){return document.querySelector("main")}
 }
 
-let getCustomerObject = (name) => window.localStorage.getItem(name) ? JSON.parse(window.localStorage.getItem(name)) : null;
+Object.assign(LoginPage.prototype, fieldValidator);
+Object.assign(LoginPage.prototype, elementHider);
+Object.assign(LoginPage.prototype, elementGetterErrorDivUsername);
+Object.assign(LoginPage.prototype, elementGetterErrorDivPassword);
+Object.assign(LoginPage.prototype, displayerOfNotValidInputErrorMsg);
+Object.assign(LoginPage.prototype, customerObjectGetter);
+Object.assign(LoginPage.prototype, customerChecker);
+Object.assign(LoginPage.prototype, mainElementGetter);
 
-let isCustomer = (customerName) => window.localStorage.getItem(customerName) ? true : false
-
-let getMainE = () => document.querySelector("main");
 
 /** Get products from the json file and store it in a gobal variable */
 function loadProducts() {
@@ -268,7 +278,7 @@ function totalCart() {
   return "Totalt Pris:" + " " + totalValue + " " + "kr";
 }
 
-userBtnE.addEventListener("click", ({ lp = loginPage }) => {
+userBtnE.addEventListener("click", ({ lp = loginPage }) => {  
   let mainE = document.querySelector("main");
   mainE.className = "login-container";
   lp.renderLoginPage();
@@ -312,7 +322,8 @@ function login({ lp = loginPage }) {
    *
    */
 
-  lp.loginUser();
+  const userIsLoggedIn = lp.loginUser();
+  if (!userIsLoggedIn) {return}
   customer = JSON.parse(window.localStorage.getItem("activeCustomer"));
   if (confirm("Vill du se dina tidigare köp?") == true) {
     displayOrders();
