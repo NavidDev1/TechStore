@@ -19,6 +19,35 @@ let removeFromShoppingCartBtns;
 let confirmPurchase;
 let totalSum;
 
+Object.assign(LoginPage.prototype, isValidInputFormat);
+Object.assign(LoginPage.prototype, hideElement);
+Object.assign(LoginPage.prototype, getErrorDivForNameFieldE);
+Object.assign(LoginPage.prototype, getErrorDivForPassFieldE);
+Object.assign(LoginPage.prototype, displayNotValidInputErrorMsg);
+Object.assign(LoginPage.prototype, getCustomerObject);
+Object.assign(LoginPage.prototype, isCustomer);
+Object.assign(LoginPage.prototype, getMainE);
+
+let isValidInputFormat = (inputValue) => /^[a-z,A-Z,0-9]{1,10}$/.test(inputValue);
+
+let hideElement = (element) =>  element.style.animationName = "hidden";
+
+let getErrorDivForNameFieldE = () => document.getElementById("e_name");
+
+let getErrorDivForPassFieldE = () => document.getElementById("e_pass");
+
+let displayNotValidInputErrorMsg = (errorDiv, errorMsg, inputField) => {
+  errorDiv.innerText = errorMsg;
+  errorDiv.style.animationName = "show";
+  inputField.addEventListener("change", () => this.hideElement(nameErrorDivE));
+}
+
+let getCustomerObject = (name) => window.localStorage.getItem(name) ? JSON.parse(window.localStorage.getItem(name)) : null;
+
+let isCustomer = (customerName) => window.localStorage.getItem(customerName) ? true : false
+
+let getMainE = () => document.querySelector("main");
+
 /** Get products from the json file and store it in a gobal variable */
 function loadProducts() {
   fetch("./products.json")
