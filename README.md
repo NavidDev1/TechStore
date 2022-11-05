@@ -20,8 +20,7 @@ localStorage sparar nya användare samt gjorda beställningar.
 Vi satsar på VG!
 
 Avvikelser från mockups:
-    - Vi valde att sätta in en user-symbol så att kunden kan trycka på den för att skapa en ny användare eller logga in
-      med en befintlig användare.
+    - Vi valde att sätta in en user-symbol i navigationsbaren så att kunden kan trycka på den för att skapa en ny användare eller logga in med en befintlig användare.
 
 länk till Github repot: https://github.com/NavidDev1/TechStore.git
 
