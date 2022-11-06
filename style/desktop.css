@@ -36,7 +36,7 @@ rgba(245,245,245,255) - bakgrunden som displayar skärmarna (den med blåa ramen
     
     --blueframe: rgba(76,123,195,255);
     --framebackgroundcolor: rgba(245,245,245,255);
-
+    --navtext: rgba(255,255,254,255);
   }
 
 body { background-color: var(--backgroundone); }
@@ -114,12 +114,12 @@ body {
 }
 
 #navcontainer a {
-  color: white;
+  color: var(--navtext);
   text-decoration: none;
 }
 
 #navcontainer i {
-  color: white;
+  color: var(--navtext);
   font-size: 2rem;
   margin-right: 20px;
 }
@@ -289,7 +289,8 @@ form {
   justify-content: center;
   flex-direction: column;
   text-align: center;
-  height: 50%;
+  height: clamp(300px, 50%, 80%);
+  padding: 10px;
   width: clamp(300px, 50%, 850px);
   border-radius: 15px;
   backdrop-filter: blur(1px);

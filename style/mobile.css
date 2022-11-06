@@ -1,41 +1,406 @@
-/*
-rgba(248,248,248,255) - bakgrund 1
-
-rgba(254,254,254,255) - bakgrund 2
-
+:root {
+  --backgroundone: rgba(248,248,248,255);
+  --backgroundtwo: rgba(254,254,254,255);
 
 
-rgba(85,150,244,255) - blåa knappen för köp
+  --blue: rgba(85,150,244,255);
+  --lighterblue: rgb(116, 168, 250);
+  --red: rgba(229,79,80,255);
+  --darkred: rgb(224, 37, 34);
+  --blacknav: rgba(34,32,28,255);
+  --blackparagraf: rgba(32,34,32,255);
+  
+  --blueframe: rgba(76,123,195,255);
+  --framebackgroundcolor: rgba(245,245,245,255);
+  --navtext: rgba(255,255,254,255);
 
-rgba(229,79,80,255) - röda knappen för ta bort
-
-rgba(34,32,28,255) - navigationbar bakgrund
-
-rgba(32,34,32,255) - paragrafer och headlines för telefonerna
-
-
-
-rgba(76,123,195,255) - blåa ramen runt telefonerna i kundvagnsläget
-
-rgba(245,245,245,255) - bakgrunden som displayar skärmarna (den med blåa ramen)
-*/
-/* :root {
-    --backgroundone: rgba(248,248,248,255);
-    --backgroundtwo: rgba(254,254,254,255);
+}
 
 
-    --blue: rgba(229,79,80,255);
-    --red: rgba(229,79,80,255);
-    --blacknav: rgba(34,32,28,255);
-    --blackparagraf: rgba(32,34,32,255);
+
+body { background-color: var(--backgroundone); }
+#navcontainer { background-color: var(--blacknav); }
+
+ /****LANDSCAPE-ORIENTATION****/
+ @media only screen and (max-height: 400px) {
+
+
+
+* { 
+  padding: 0;
+  margin:0;
+  box-sizing: border-box;
+
+}
+
+header {
+  position: fixed;
+
+}
+
+body {
+    height:100vh;
+    width: 100%;
+    display: inline-block;
+    font-family: 'Poppins', normal;
+    font-size: 16px;
     
-    --blueframe: rgba(76,123,195,255);
-    --framebackgroundcolor: rgba(245,245,245,255);
+}
+
+#navcontainer {
+  overflow: hidden;
+  position: fixed;
+  display: flex;
+  top:0;
+  width: 100%;
+  justify-content: space-between;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  height: 80px;
+  margin-bottom: 80px;
+}
+.navbar-left, .navbar-right{
+  list-style: none;
+}
+
+.navbar-left {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: 2rem;
+  font-family: 'Poppins', normal;
+  font-weight: 600;
+  font-size: 44px;
+}
+
+.navbar-right {
+  gap: 0.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.navbar-right a{
+  font-size: 1.5rem;
+}
+
+.item-quantity {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: right;
+  width: 7rem;
+  margin-right: 2rem;
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: 500;
+  font-size: 44px;
+}
+
+#user:hover {
+  cursor: pointer;
+}
+
+#navcontainer a {
+  color: var(--navtext);
+  text-decoration: none;
+}
+
+#navcontainer i {
+  color: var(--navtext);
+  font-size: 2rem;
+  margin-right: 20px;
+}
+
+#shoppingcart:hover{
+  cursor: pointer;
+}
+.containerOfPhones {  
+  margin-top: 80px;
+  text-align: center; 
+}
+
+.containerOfPhones h1, .containerOfShoppingCart h1 {  
+  font-size: 1.5rem;  
+}
+
+.ofItems {
+  height: calc(100vh - 80px);
+  padding: 4%;
+  width:100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  margin-bottom: 2rem;
+  
+}
+
+.ofItems h1, p, img, h2, button{
+  padding: 5px 0px;
+}
+
+.ofItems button i {
+  margin-right: 1rem;
+}
+
+.ofItems button {
+  background-color: var(--blue);
+  color: white;
+  border: none;
+  padding: 15px 32px;
+  font-size: 1.5rem;
+  border-radius: 12px;
+  cursor: pointer;
+}
+
+.ofItems button:hover{
+  background-color: var(--lighterblue);
+}
+
+.ofItems:nth-child(odd) {
+  background-color: var(--backgroundtwo);
+}
+
+.ofItems img{
+  height: 60%;
+}
+
+.containerOfShoppingCart {
+  margin-top: 100px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  
+  height: calc(100vh - 100px);
+}
+
+.containerOfShoppingCart ul{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items:center;
+  width: 100vw;
+  margin: auto;
+  flex-wrap:wrap;
+  list-style: none;
+  gap:20px;  
+}
+
+.cartItem{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  text-align: center;
+  padding: 20px;
+  height:50vh;
+  border: 3px solid var(--blue);
+  border-radius: 15px;
+  height: 50%;
+}
+
+.cartItem img{
+  width:auto;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 30vh;
+}
 
 
+.cartItem button {
+  background-color: var(--red);
+  color: white;
+  border: none;
+  padding: 15px 32px;
+  font-size: 1.3rem;
+  border-radius: 12px;
+  cursor: pointer;
+  
+}
+
+.cartItem button:hover {
+  background-color: var(--darkred);
+  color: white;
+  border: none;
+  padding: 15px 32px;
+  font-size: 1.5rem;
+  border-radius: 12px;
+  cursor: pointer;
+}
+
+.cartItem i {
+  margin: 0 1rem 0 0;
+}
+
+
+.cartHeader {
+
+ margin-top: 80px;
+ margin-bottom: 80px;; 
+}
+
+form {
+  background-color: #83848472;
+  display:flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  text-align: center;
+  height: clamp(300px, 50%, 80%);
+  padding: 10px;
+  width: clamp(300px, 50%, 850px);
+  border-radius: 15px;
+  backdrop-filter: blur(1px);
+}
+
+form > * {
+  padding: 10%;
+}
+
+
+
+input,
+.btn, .error_msg_box {
+  padding: 0.5rem;
+  margin-bottom: 0.5rem;
+  width: 50%;
+  width: clamp(80%, 80%, 300px);
+  border: 0.1rem solid transparent;
+  border-radius: 5px;
+}
+
+form .field {
+  background-color: #f9f2f2;
+}
+
+
+form .field:focus {
+  background-color: #e3fac0d4;
+}
+
+
+.btn {
+  background-color: var(--blue);
+  color: #fff;
+  line-height: 1rem;
+  cursor: pointer;
+}
+
+.btn:hover,
+.btn:active {
+  background-color: var(--lighterblue);
+  border: 0.1rem solid #1F78B4;
+  cursor: pointer;
+}
+
+
+
+.login-container h1 {
+  color: rgba(245, 250, 251, 0.799);
+  font-size: 2rem;
+  margin: 2rem;
+  text-align: center;
+  text-shadow: 0px 0px 5px rgb(1, 31, 31);
+}
+
+input:invalid {
+  border: 2px dashed rgb(255, 42, 42);
+  background-image: linear-gradient(to right, rgb(255, 255, 255), rgb(240, 188, 255));
+}
+
+.error_msg_box{
+  visibility: hidden;
+  font-size: 0.5rem;
+  margin-left: auto;
+  margin-right: auto;
+  background-color: rgb(255, 157, 157);
+
+  animation-name: hidden;
+  animation-duration: 10s;
+  animation-timing-function: linear;
+}
+
+@keyframes show {
+  0%   {background-color:rgb(255, 255, 255); left:0px; top:0px; visibility: hidden;}
+  100% {background-color:rgb(255, 84, 84); left:0px; top:0px; visibility: visible;}
+}
+
+@keyframes hide {
+  0% {background-color:red; left:0px; top:0px; visibility: visible;}
+  100%   {background-color:rgb(255, 255, 255); left:0px; top:0px; visibility: hidden;}
+
+}
+
+@keyframes hidden {
+  100% {visibility: hidden;}
+}
+
+
+
+.confirmBtn {
+  background-color: var(--blue);
+  color: white;
+  border: none;
+  padding: 15px 32px;
+  font-size: 1.5rem;
+  border-radius: 12px;
+  cursor: pointer;
+  margin-bottom: 5rem;
+}
+
+.totalSum{
+  font-weight: bolder;
+  font-size: 1.5rem;
+  margin-bottom: 2rem;
+  margin-top: 2rem;
+}
+
+.cartHeader {
+
+ margin-top: 80px;
+ margin-bottom: 80px;; 
+}
+.orderPage{
+  display:flex;
+  flex-direction: row;
+}
+
+.orderPage h1 {
+  margin-top:100px;
+  text-align: center;
+  width:100%;
+}
+
+.orderPage ul {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items:center;
+  width: 100vw;
+  margin: auto;
+  flex-wrap:wrap;
+  list-style: none;
+  gap:20px;
+}
+
+.orderPage .ofItems{
+  height:10%;
+}
+.orderPage .ofItems p {
+  font-size:20px;
+  border-bottom: 1px solid black;
+  text-align: center;
+}
+}
+@media only screen and (max-height: 700px) {
+  form{
+    height:100%;
   }
-  
-  body { background-color: var(--backgroundone); }
-  
-  nav { background-color: var(--blacknav); } */
-
+  form > *{
+    height: 10%;
+  }
+  h1{
+    height: 10%;
+  }
+}
