@@ -1,5 +1,6 @@
 "use strict";
 export default class LoginPage {
+  /**Contains login page data and methods to be used to render the login page and ables the customers to login*/
   constructor() {
     this.inputFieldRegexPattern = /^[a-z,A-Z,0-9]{1,10}$/;
     this.notValidNameErrorMsg = "Not a valid username! Valid characters are a-z, A-Z, 0-9 and 1 to 10 in size!";

@@ -1,5 +1,6 @@
 "use strict";
 export default class SignUpPage {
+  /**Contains sign up page data and methods to be used to render the sign up page and ables the customers create a new user*/
   constructor() {
     this.inputFieldRegexPattern = /^[a-z,A-Z,0-9]{1,10}$/;
     this.notValidNameErrorMsg =

@@ -20,33 +20,49 @@ let confirmPurchase;
 let totalSum;
 
 const fieldValidator = {
-  isValidInputFormat (inputValue) { return /^[a-z,A-Z,0-9]{1,10}$/.test(inputValue) }
-}
+  isValidInputFormat(inputValue) {
+    return /^[a-z,A-Z,0-9]{1,10}$/.test(inputValue);
+  },
+};
 const elementHider = {
-  hideElement (element){ element.style.animationName = "hidden" }
-}
-const elementGetterErrorDivUsername = { 
-  getErrorDivForNameFieldE(){ return document.getElementById("e_name") }
-}
-const elementGetterErrorDivPassword = { 
-  getErrorDivForPassFieldE(){ return document.getElementById("e_pass") }
-}
-const displayerOfNotValidInputErrorMsg = { 
-  displayNotValidInputErrorMsg(errorDiv, errorMsg, inputField){
+  hideElement(element) {
+    element.style.animationName = "hidden";
+  },
+};
+const elementGetterErrorDivUsername = {
+  getErrorDivForNameFieldE() {
+    return document.getElementById("e_name");
+  },
+};
+const elementGetterErrorDivPassword = {
+  getErrorDivForPassFieldE() {
+    return document.getElementById("e_pass");
+  },
+};
+const displayerOfNotValidInputErrorMsg = {
+  displayNotValidInputErrorMsg(errorDiv, errorMsg, inputField) {
     errorDiv.innerText = errorMsg;
     errorDiv.style.animationName = "show";
     inputField.addEventListener("change", () => this.hideElement(errorDiv));
-  }
-}
-const customerObjectGetter = { 
-  getCustomerObject(name){return window.localStorage.getItem(name) ? JSON.parse(window.localStorage.getItem(name)) : null}
-}
-const customerChecker = { 
-  isCustomer(customerName){return window.localStorage.getItem(customerName) ? true : false}
-}
-const mainElementGetter = { 
-  getMainE(){return document.querySelector("main")}
-}
+  },
+};
+const customerObjectGetter = {
+  getCustomerObject(name) {
+    return window.localStorage.getItem(name)
+      ? JSON.parse(window.localStorage.getItem(name))
+      : null;
+  },
+};
+const customerChecker = {
+  isCustomer(customerName) {
+    return window.localStorage.getItem(customerName) ? true : false;
+  },
+};
+const mainElementGetter = {
+  getMainE() {
+    return document.querySelector("main");
+  },
+};
 
 Object.assign(LoginPage.prototype, fieldValidator);
 Object.assign(LoginPage.prototype, elementHider);
@@ -66,7 +82,6 @@ Object.assign(SignUpPage.prototype, customerObjectGetter);
 Object.assign(SignUpPage.prototype, customerChecker);
 Object.assign(SignUpPage.prototype, mainElementGetter);
 
-
 /** Get products from the json file and store it in a gobal variable */
 function loadProducts() {
   fetch("./products.json")
@@ -82,7 +97,10 @@ function loadProducts() {
 
 function initSite() {
   loadProducts();
-  waitForPoductsLoaded().then(addProductsToWebpage);
+  waitForPoductsLoaded()
+    .then(addProductsToWebpage)
+    .then(addPutToShoppingCartBtnListners)
+    .then(navShoppingCartBtn.addEventListener("click", displayShoppingCart));
 
   if (!window.localStorage.getItem("activeCustomer")) {
     createNewActiveCustomer();
@@ -119,12 +137,13 @@ function createNewActiveCustomer() {
   window.localStorage.setItem("activeCustomer", JSON.stringify(customer));
 }
 
-/** Uses the loaded products data to create a visible product list on the website */
-function addProductsToWebpage(container = containerOfPhones) {
+let createDivsContainingItemsFromList = (list = listOfProducts) => {
+  /** Uses the loaded products data to create a visible product list on the website */
+
   /************let Output för att vi vill ange ett värde som vi sen ska deklarera in i vår main page (containerOfPhones)*********/
   let output = "";
   /************Vi loopar alla produkter från JSON********/
-  for (const product of listOfProducts) {
+  for (const product of list) {
     /*****Vi anger += för att ge outputen flera värden då vi loopar så länge produkter finns*******/
     /******************BACKTICKS SÅ VI KAN SKRIVA HTMLKOD OCH LÄGGA IN VÅRA PRODUKTER I ELEMENTEN PÅ ETT SMIDIGT SÄTT****************************/
     let title = product.title;
@@ -139,24 +158,27 @@ function addProductsToWebpage(container = containerOfPhones) {
         </div>
     `;
   }
-  /**************EFTER ATT LOOPEN HAR GÅTT IGENOM SÅ LÄGGER VI IN INFORMATIONEN I CONTAINER*********/
-  container.innerHTML = output;
-  container.className = "containerOfPhones";
+  return output;
+};
 
-  addToShoppingCartBtns = document.getElementsByClassName(
-    "addToShoppingCartBtn"
-  );
-  addPutToShoppingCartBtnListners();
-  navShoppingCartBtn.addEventListener("click", displayShoppingCart);
+function addProductsToWebpage(container = containerOfPhones) {
+  /** Adds divs created with the products in the products.json, into the a container */
+  container.innerHTML = createDivsContainingItemsFromList();
+  container.className = "containerOfPhones";
 }
 
 function addPutToShoppingCartBtnListners() {
+  /**Helper function to add eventlistners to all add to shopping cart btns */
+  addToShoppingCartBtns = document.getElementsByClassName(
+    "addToShoppingCartBtn"
+  );
   for (const btn of addToShoppingCartBtns) {
     btn.addEventListener("click", addToShoppingCart);
   }
 }
 
 function addToShoppingCart() {
+  /**Adds the correct item from the listOfProcuts to the customers shopping list when the customers clicks on add item to shopping list*/
   let cust = JSON.parse(window.localStorage.getItem("activeCustomer"));
   cust.shoppingList.push(
     listOfProducts[listOfProducts.findIndex(phoneTitleMatch, this.id)]
@@ -165,24 +187,23 @@ function addToShoppingCart() {
   itemQuantity.innerHTML = cust.shoppingList.length;
   window.localStorage.setItem("activeCustomer", JSON.stringify(cust));
   window.localStorage.setItem(cust.username, JSON.stringify(cust));
-  console.log(`cust.shoppingList.lenght: ${cust.shoppingList.length}`);
 }
 
 function displayShoppingCart() {
+  /**Renders shopping cart to the main contianer */
   let list = createUlFromShoppingCartList();
   containerOfPhones.replaceChildren(list);
   containerOfPhones.className = "containerOfShoppingCart";
 
   let headerofcart = document.createElement("h1");
   headerofcart.className = "cartHeader";
-  headerofcart.innerHTML =
-    `<i class="fa-solid fa-cart-shopping"></i>` + "Kundvagn";
+  headerofcart.innerHTML = '<i class="fa-solid fa-cart-shopping"></i> Kundvagn';
   list.insertAdjacentElement("beforebegin", headerofcart);
 
   confirmPurchase = document.createElement("button");
   confirmPurchase.className = "confirmBtn";
   confirmPurchase.innerHTML =
-    `<i class="fa-solid fa-check"></i>` + " " + "Slutför ditt köp";
+    '<i class="fa-solid fa-check"></i> Slutför ditt köp';
   list.insertAdjacentElement("afterend", confirmPurchase);
 
   totalSum = document.createElement("p");
@@ -190,9 +211,6 @@ function displayShoppingCart() {
   totalSum.innerHTML = totalCart();
   list.insertAdjacentElement("afterend", totalSum);
 
-  removeFromShoppingCartBtns = document.getElementsByClassName(
-    "removeFromShoppingCartBtn"
-  );
   removeItemFromShoppingCartListner();
 
   confirmPurchase.addEventListener("click", () => {
@@ -245,6 +263,9 @@ function phoneTitleMatch(phone) {
 }
 
 function removeItemFromShoppingCartListner() {
+  removeFromShoppingCartBtns = document.getElementsByClassName(
+    "removeFromShoppingCartBtn"
+  );
   for (const btn of removeFromShoppingCartBtns) {
     btn.addEventListener("click", removeItemFromShoppingCart);
   }
@@ -287,7 +308,7 @@ function totalCart() {
   return "Totalt Pris:" + " " + totalValue + " " + "kr";
 }
 
-userBtnE.addEventListener("click", ({ lp = loginPage }) => {  
+userBtnE.addEventListener("click", ({ lp = loginPage }) => {
   let mainE = document.querySelector("main");
   mainE.className = "login-container";
   lp.renderLoginPage();
@@ -297,8 +318,6 @@ userBtnE.addEventListener("click", ({ lp = loginPage }) => {
   newUserBtn2.addEventListener("click", changeModalToNewUser);
   loginBtn2.addEventListener("click", login);
 });
-
-//Bild av Adrien Olichon: https://www.pexels.com/sv-se/foto/svartvitt-konst-monster-design-3137058/
 
 function changeModal(newOption, modal = mainE) {
   modal.innerHTML = newOption;
@@ -313,13 +332,12 @@ function changeModalToLoginView(loginF, container) {
 }
 
 function createUser() {
-  /**
-   * Create a new user and ads it to local storage as new user and active customer
-   *
-   */
+  /**Create a new user and ads it to local storage as new user and active customer*/
   let signUpPage = new SignUpPage();
   const userCreated = signUpPage.createUser();
-  if (!userCreated) {return}
+  if (!userCreated) {
+    return;
+  }
   const loginContainerE = document.querySelector(".login-container");
   addProductsToWebpage(loginContainerE);
   addPutToShoppingCartBtnListners();
@@ -327,13 +345,12 @@ function createUser() {
 }
 
 function login({ lp = loginPage }) {
-  /**
-   * Logs in user by adding them to local storage as active customer
-   *
-   */
+  /**Logs in user by adding them to local storage as active customer*/
 
   const userIsLoggedIn = lp.loginUser();
-  if (!userIsLoggedIn) {return}
+  if (!userIsLoggedIn) {
+    return;
+  }
   customer = JSON.parse(window.localStorage.getItem("activeCustomer"));
   if (confirm("Vill du se dina tidigare köp?") == true) {
     displayOrders();
@@ -342,10 +359,7 @@ function login({ lp = loginPage }) {
   }
 }
 let renderShoppingPage = () => {
-  /**
-   * Render the shopping page
-   *
-   */
+  /**Render the shopping page*/
   addProductsToWebpage();
   displayQuantityOfShoppingCartItems();
   addToShoppingCartBtns = document.getElementsByClassName(
@@ -403,17 +417,15 @@ function displayOrders() {
 
   for (const odr of orderList) {
     output = `
-    <div class="ofItems">
-      <p>${odr.title}</p>
-      <p>${odr.price} kr</p>
-      <p>${odr.date}</p>
-  </div>
-`;
+      <div class="ofItems">
+        <p>${odr.title}</p>
+        <p>${odr.price} kr</p>
+        <p>${odr.date}</p>
+      </div>`;
     let order = document.createElement("li");
     order.innerHTML = output;
     listOfOrdItems.appendChild(order);
   }
-
   container.replaceChildren(listOfOrdItems);
   container.className = "orderPage";
 }
