@@ -326,6 +326,9 @@ form .field:focus {
   color: #fff;
   line-height: 1rem;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .btn:hover,
