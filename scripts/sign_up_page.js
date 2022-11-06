@@ -11,8 +11,6 @@ export default class SignUpPage {
     this.nameTakenMessage = "That user name is already taken!";
   }
 
-  getMainE = () => document.querySelector("main");
-
   renderSignUpPage = () => {
     this.getMainE().innerHTML = `<h1>New user</h1><form id="my_form" action="javascript:void(0);">
     <input type="text" placeholder="Choose username" id="c_username" class="field" pattern="[A-Z,a-z,0-9]{1,10}">
@@ -23,77 +21,38 @@ export default class SignUpPage {
     </form>`;
   }
 
-  hideElement = (element) =>  element.style.animationName = "hidden";
-
-  isValidUsernameFormat = () => this.inputFieldRegexPattern.test(this.getInputFieldCreateUserNameE().value)
-  
-  isValidPasswordFormat = () => this.inputFieldRegexPattern.test(this.getInputFieldCreatePasswordE().value)
-
   getCreateNewUserBtnEFromPage = () => document.getElementById("createBtn");
   getInputFieldCreateUserNameE = () => document.getElementById("c_username");
   getInputFieldCreatePasswordE = () => document.getElementById("c_password");
-  getErrorDivForNameFieldE = () => document.getElementById("e_name");
-  getErrorDivForPassFieldE = () => document.getElementById("e_pass");
-
-  displayNotValidUsernameErrorMsg = () => {
-    const nameErrorDivE = this.getErrorDivForNameFieldE();
-    nameErrorDivE.textContent = this.notValidNameErrorMsg;
-    nameErrorDivE.style.animationName = "show";
-    const inputUsernameElement = this.getInputFieldCreateUserNameE();
-    inputUsernameElement.addEventListener("change", () =>
-      this.hideElement(nameErrorDivE)
-    );
-  };
-
-  displayNotValidPasswordErrorMsg = () => {
-    const passErrorDivE = this.getErrorDivForPassFieldE();
-    passErrorDivE.textContent = this.notValidpassErrorMsg;
-    passErrorDivE.style.animationName = "show";
-    const inputPasswordElement = this.getInputFieldCreatePasswordE();
-    inputPasswordElement.addEventListener("change", () =>
-      this.hideElement(passErrorDivE)
-    );
-  };
-
-  displayNameTakenMsg = () => {
-    const nameErrorDivE = this.getErrorDivForNameFieldE();
-    nameErrorDivE.textContent = this.nameTakenMessage;
-    nameErrorDivE.style.animationName = "show";
-    const inputUsernameElement = this.getInputFieldCreateUserNameE();
-    inputUsernameElement.addEventListener("change", () =>
-      this.hideElement(nameErrorDivE)
-    );
-  };
 
   createUser = () => {
-    let userInputUsername = this.getInputFieldCreateUserNameE().value;
-    let userInputUsernamePassword = this.getInputFieldCreatePasswordE().value;
-
+    let createUsernameInputE = this.getInputFieldCreateUserNameE();
+    let createPasswordInputE = this.getInputFieldCreatePasswordE();
     let eNameE = this.getErrorDivForNameFieldE();
     let ePassE = this.getErrorDivForPassFieldE();
 
 
-    let freeUsername = window.localStorage.getItem(userInputUsername) ? false : true;
+    let freeUsername = window.localStorage.getItem(createUsernameInputE.value) ? false : true;
 
-    if (!this.isValidUsernameFormat()) {
-      this.displayNotValidUsernameErrorMsg();
-      return;
+    if (!this.isValidInputFormat(createUsernameInputE.value)) {
+      this.displayNotValidInputErrorMsg(eNameE, this.notValidNameErrorMsg, createUsernameInputE);
+      return false;
     }
-    if (!this.isValidPasswordFormat()) {
-      this.displayNotValidPasswordErrorMsg();
-      return;
+    if (!this.isValidInputFormat(createPasswordInputE.value)) {
+      this.displayNotValidInputErrorMsg(ePassE, this.notValidpassErrorMsg, createPasswordInputE);
+      return false;
     }
     if (!freeUsername) {
-      this.displayNameTakenMsg();
-      return;
+      this.displayNotValidInputErrorMsg(eNameE, this.nameTakenMessage, createUsernameInputE);
+      return false;
     }
 
     let newUser;
 
-    if (this.isValidUsernameFormat() && this.isValidPasswordFormat() && freeUsername) {
+    if (this.isValidInputFormat(createUsernameInputE.value) && this.isValidInputFormat(createPasswordInputE.value) && freeUsername) {
       newUser = {
-        username: userInputUsername,
-        password: userInputUsernamePassword,
+        username: createUsernameInputE.value,
+        password: createPasswordInputE.value,
         shoppingList: [],
         orders: [],
       };
@@ -112,5 +71,6 @@ export default class SignUpPage {
       window.localStorage.setItem(newUser.username, JSON.stringify(newUser));
       window.localStorage.setItem("activeCustomer", JSON.stringify(newUser));
     }
+    return true
   }
 }

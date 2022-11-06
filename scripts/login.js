@@ -29,32 +29,34 @@ export default class LoginPage {
 
   loginUser = () => {
 
-    let usernameInputValue = this.getInputFieldUserNameE().value
-    let passwordInputValue = this.getInputFieldPasswordE().value
+    let usernameInputE = this.getInputFieldUserNameE()
+    let passwordInputE = this.getInputFieldPasswordE()
+    let eNameE = this.getErrorDivForNameFieldE();
+    let ePassE = this.getErrorDivForPassFieldE();
 
-    if (!this.isValidInputFormat(usernameInputValue)) 
+    if (!this.isValidInputFormat(usernameInputE.value)) 
     {
-      this.displayNotValidInputErrorMsg(this.getErrorDivForNameFieldE(), this.notValidNameErrorMsg, this.getInputFieldUserNameE());
+      this.displayNotValidInputErrorMsg(eNameE, this.notValidNameErrorMsg, usernameInputE);
       return false;
     }
 
-    if(!this.isValidInputFormat(passwordInputValue))
+    if(!this.isValidInputFormat(passwordInputE.value))
     {
-      this.displayNotValidInputErrorMsg(this.getErrorDivForPassFieldE(), this.notValidpassErrorMsg, this.getInputFieldPasswordE());
+      this.displayNotValidInputErrorMsg(ePassE, this.notValidpassErrorMsg, passwordInputE);
       return false;
     }
 
-    if(!this.isCustomer(usernameInputValue))
+    if(!this.isCustomer(usernameInputE.value))
     {
-      this.displayNotValidInputErrorMsg(this.getErrorDivForNameFieldE(), this.noUserFoundMsg, this.getInputFieldUserNameE());
+      this.displayNotValidInputErrorMsg(eNameE, this.noUserFoundMsg, usernameInputE);
       return false;
     }
 
-    const customer = this.getCustomerObject(usernameInputValue);
+    const customer = this.getCustomerObject(usernameInputE.value);
 
     if(!this.isCorrectPassword(customer))
     {
-      this.displayNotValidInputErrorMsg(this.getErrorDivForPassFieldE(), this.wrongPassMsg, this.getInputFieldPasswordE());
+      this.displayNotValidInputErrorMsg(ePassE, this.wrongPassMsg, passwordInputE);
       return false;
     }
 

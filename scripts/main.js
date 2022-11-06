@@ -57,6 +57,15 @@ Object.assign(LoginPage.prototype, customerObjectGetter);
 Object.assign(LoginPage.prototype, customerChecker);
 Object.assign(LoginPage.prototype, mainElementGetter);
 
+Object.assign(SignUpPage.prototype, fieldValidator);
+Object.assign(SignUpPage.prototype, elementHider);
+Object.assign(SignUpPage.prototype, elementGetterErrorDivUsername);
+Object.assign(SignUpPage.prototype, elementGetterErrorDivPassword);
+Object.assign(SignUpPage.prototype, displayerOfNotValidInputErrorMsg);
+Object.assign(SignUpPage.prototype, customerObjectGetter);
+Object.assign(SignUpPage.prototype, customerChecker);
+Object.assign(SignUpPage.prototype, mainElementGetter);
+
 
 /** Get products from the json file and store it in a gobal variable */
 function loadProducts() {
@@ -309,7 +318,8 @@ function createUser() {
    *
    */
   let signUpPage = new SignUpPage();
-  signUpPage.createUser();
+  const userCreated = signUpPage.createUser();
+  if (!userCreated) {return}
   const loginContainerE = document.querySelector(".login-container");
   addProductsToWebpage(loginContainerE);
   addPutToShoppingCartBtnListners();
