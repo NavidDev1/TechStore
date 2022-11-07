@@ -385,7 +385,7 @@ function displayOrders() {
   let aCustomer = JSON.parse(window.localStorage.getItem("activeCustomer"));
   let container = document.querySelector("main");
 
-  let date = new Date();
+  let date = new Date().toISOString().split('T', 1)[0];
   let totalSumString = totalCart();
   let output = "";
   let order = {
@@ -424,17 +424,18 @@ function displayOrders() {
   }
   console.log({orderItemList}) //telefoner i per order
   console.log({orderList}) //Order listan
-
+  let id = 1;
   for (const odr of orderList) {
     output = `
       <div class="ofItems">
-        <p>${odr.title}</p>
-        <p>${odr.price} kr</p>
-        <p>${odr.date}</p>
+        <h1>Order:${id}</h1>
+        <p>${odr.total}</p>
+        <p>${odr.orderDate}</p>
       </div>`;
     let order = document.createElement("li");
     order.innerHTML = output;
     listOfOrdItems.appendChild(order);
+    id++;
   }
   container.replaceChildren(listOfOrdItems);
   container.className = "orderPage";
