@@ -247,7 +247,7 @@ function createUlFromShoppingCartList() {
 
 function createItemsDiv(item) {
   let title = item.title;
-  let btnId = `btnRemove${title.split(" ").join("").toLowerCase()}`;
+  let btnId = title.split(" ").join("").toLowerCase();
   return `  
         <div class="cartItem">            
             <img src = "assets/${item.image}"></img>
@@ -272,28 +272,24 @@ function removeItemFromShoppingCartListner() {
 }
 
 function removeItemFromShoppingCart() {
-  var holder = customer.shoppingList.findIndex(phoneTitleMatch, this.id);
+  let cust = JSON.parse(window.localStorage.getItem("activeCustomer"));
+  var holder = cust.shoppingList.findIndex(phoneTitleMatch, this.id);
 
-  customer.shoppingList.splice(holder, 1);
-  localStorage.setItem("activeCustomer", JSON.stringify(customer));
-  localStorage.setItem("numberOfItems", customer.shoppingList.length);
-  itemQuantity.innerHTML = customer.shoppingList.length;
+  cust.shoppingList.splice(holder, 1);
+  localStorage.setItem("activeCustomer", JSON.stringify(cust));
+  localStorage.setItem("numberOfItems", cust.shoppingList.length);
+  itemQuantity.innerHTML = cust.shoppingList.length;
   displayShoppingCart();
 }
 
 function displayQuantityOfShoppingCartItems() {
-  itemQuantity.innerHTML = window.localStorage.getItem("activeCustomer")
-    ? JSON.parse(window.localStorage.getItem("activeCustomer")).shoppingList
-        .length
-    : 0;
+  let aCust = JSON.parse(window.localStorage.getItem("activeCustomer"));
+  itemQuantity.innerHTML = aCust ? aCust.shoppingList.length : 0;
   console.log(
-    `Number of items in customer shopping list is: ${customer.shoppingList.length}`
+    `Number of items in customer shopping list is: ${aCust.shoppingList.length}`
   );
   console.log(
-    `Number of items in activeCustomer shopping list is: ${
-      JSON.parse(window.localStorage.getItem("activeCustomer")).shoppingList
-        .length
-    }`
+    `Number of items in activeCustomer shopping list is: ${aCust.shoppingList.length}`
   );
 }
 
