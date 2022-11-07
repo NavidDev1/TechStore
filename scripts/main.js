@@ -395,6 +395,7 @@ function displayOrders() {
   };
 
   let orderList = [];
+  let orderItemList = [];
 
   aCustomer.orders.push(order);
 
@@ -405,15 +406,24 @@ function displayOrders() {
   TotalOrderString.innerText = "Din order:";
   listOfOrdItems.appendChild(TotalOrderString);
   for (const order of aCustomer.orders) {
+    // let prod = {}
     for (const product of order.items) {
       let prod = {
         title: product.title,
         price: product.price,
         date: order.date,
       };
-      orderList.push(prod);
+      orderItemList.push(prod);
     }
+    let orderL = {
+      orderDate: order.date,
+      items: orderItemList,
+      total: order.totalPrice
+    }
+    orderList.push(orderL)
   }
+  console.log({orderItemList}) //telefoner i per order
+  console.log({orderList}) //Order listan
 
   for (const odr of orderList) {
     output = `
