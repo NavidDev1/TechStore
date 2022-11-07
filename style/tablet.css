@@ -12,7 +12,7 @@
   
   --blueframe: rgba(76,123,195,255);
   --framebackgroundcolor: rgba(245,245,245,255);
-
+  --navtext: rgba(255,255,254,255);
 }
 
 
@@ -88,11 +88,12 @@ body {
 }
 
 #navcontainer a {
-  color: white;
+  color: var(--navtext);
   text-decoration: none;
 }
 
 #navcontainer i {
+  color: var(--navtext);
   font-size: 2rem;
   margin-right: 20px;
 }
@@ -241,3 +242,24 @@ body {
  margin-bottom: 80px;; 
 }
 }
+
+@media only screen and (max-height: 500px) {
+  .ofItems > *{
+    height: 10%;
+    margin-bottom: 1px;
+    margin-top: 1px;
+    padding: 5px;
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    align-items: center;
+    
+}
+}
+/* height: calc(100vh - 80px);
+padding: 4%;
+width:100%;
+display: flex;
+align-items: center;
+justify-content: center;
+flex-direction: column; */

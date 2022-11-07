@@ -13,7 +13,9 @@
         <link rel="stylesheet" href="/style/tablet.css">
 
         <!-- Link your stylesheet file/files, do NOT write styles in the html file! -->
-        <script src="./main.js" defer></script>
+        
+        <!-- <script type="module" src="./scripts/login.js" defer></script> -->
+        <script type="module" src="./scripts/main.js" defer></script>
         <script src="https://kit.fontawesome.com/90b3871c83.js" crossorigin="anonymous"></script>
         <script src="https://kit.fontawesome.com/8ff83b32cf.js" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.6.2/dist/sweetalert2.all.min.js"></script>
@@ -40,12 +42,16 @@
                     <li>
                         <!--Få siffran att ändra sig-->
                         <a class="item_quantity"></a>
+                    </li><li>
                          <!--LÄNKA TILL SHOPPINGCART-->
                         <div id="shoppingcart">
                             <i class="fa-solid fa-cart-shopping"></i>
                         </div>
                     </li>
-                    <!--hej-->
+                    <li id="user" >
+                        <i class="fa-solid fa-user"></i>
+                    </li>
+                    
                 </ul>
             </div>  
         </header>
