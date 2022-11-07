@@ -247,7 +247,7 @@ function createUlFromShoppingCartList() {
 
 function createItemsDiv(item) {
   let title = item.title;
-  let btnId = `btnRemove${title.split(" ").join("").toLowerCase()}`;
+  let btnId = title.split(" ").join("").toLowerCase();
   return `  
         <div class="cartItem">            
             <img src = "assets/${item.image}"></img>
@@ -272,28 +272,24 @@ function removeItemFromShoppingCartListner() {
 }
 
 function removeItemFromShoppingCart() {
-  var holder = customer.shoppingList.findIndex(phoneTitleMatch, this.id);
+  let cust = JSON.parse(window.localStorage.getItem("activeCustomer"));
+  var holder = cust.shoppingList.findIndex(phoneTitleMatch, this.id);
 
-  customer.shoppingList.splice(holder, 1);
-  localStorage.setItem("activeCustomer", JSON.stringify(customer));
-  localStorage.setItem("numberOfItems", customer.shoppingList.length);
-  itemQuantity.innerHTML = customer.shoppingList.length;
+  cust.shoppingList.splice(holder, 1);
+  localStorage.setItem("activeCustomer", JSON.stringify(cust));
+  localStorage.setItem("numberOfItems", cust.shoppingList.length);
+  itemQuantity.innerHTML = cust.shoppingList.length;
   displayShoppingCart();
 }
 
 function displayQuantityOfShoppingCartItems() {
-  itemQuantity.innerHTML = window.localStorage.getItem("activeCustomer")
-    ? JSON.parse(window.localStorage.getItem("activeCustomer")).shoppingList
-        .length
-    : 0;
+  let aCust = JSON.parse(window.localStorage.getItem("activeCustomer"));
+  itemQuantity.innerHTML = aCust ? aCust.shoppingList.length : 0;
   console.log(
-    `Number of items in customer shopping list is: ${customer.shoppingList.length}`
+    `Number of items in customer shopping list is: ${aCust.shoppingList.length}`
   );
   console.log(
-    `Number of items in activeCustomer shopping list is: ${
-      JSON.parse(window.localStorage.getItem("activeCustomer")).shoppingList
-        .length
-    }`
+    `Number of items in activeCustomer shopping list is: ${aCust.shoppingList.length}`
   );
 }
 
@@ -385,7 +381,7 @@ function displayOrders() {
   let aCustomer = JSON.parse(window.localStorage.getItem("activeCustomer"));
   let container = document.querySelector("main");
 
-  let date = new Date();
+  let date = new Date().toISOString().split('T', 1)[0];
   let totalSumString = totalCart();
   let output = "";
   let order = {
@@ -395,6 +391,7 @@ function displayOrders() {
   };
 
   let orderList = [];
+  let orderItemList = [];
 
   aCustomer.orders.push(order);
 
@@ -405,26 +402,36 @@ function displayOrders() {
   TotalOrderString.innerText = "Din order:";
   listOfOrdItems.appendChild(TotalOrderString);
   for (const order of aCustomer.orders) {
+    // let prod = {}
     for (const product of order.items) {
       let prod = {
         title: product.title,
         price: product.price,
         date: order.date,
       };
-      orderList.push(prod);
+      orderItemList.push(prod);
     }
+    let orderL = {
+      orderDate: order.date,
+      items: orderItemList,
+      total: order.totalPrice
+    }
+    orderList.push(orderL)
   }
-
+  console.log({orderItemList}) //telefoner i per order
+  console.log({orderList}) //Order listan
+  let id = 1;
   for (const odr of orderList) {
     output = `
       <div class="ofItems">
-        <p>${odr.title}</p>
-        <p>${odr.price} kr</p>
-        <p>${odr.date}</p>
+        <h1>Order:${id}</h1>
+        <p>${odr.total}</p>
+        <p>${odr.orderDate}</p>
       </div>`;
     let order = document.createElement("li");
     order.innerHTML = output;
     listOfOrdItems.appendChild(order);
+    id++;
   }
   container.replaceChildren(listOfOrdItems);
   container.className = "orderPage";

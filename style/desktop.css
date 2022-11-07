@@ -428,12 +428,17 @@ input:invalid {
   list-style: none;
   gap:20px;
 }
+.orderPage ul li {
+  width:20%;
+}
 
 .orderPage .ofItems{
   height:10%;
+  
 }
 .orderPage .ofItems p {
   font-size:20px;
   border-bottom: 1px solid black;
   text-align: center;
+  padding:20px;
 }
