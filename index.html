@@ -8,17 +8,63 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         
         <!-- Visit www.fontawesome.com on how to add font icons to your project -->
+        <link rel="stylesheet" href="/style/desktop.css">
+        <link rel="stylesheet" href="/style/mobile.css">
+        <link rel="stylesheet" href="/style/tablet.css">
+
         <!-- Link your stylesheet file/files, do NOT write styles in the html file! -->
-        <script src="./main.js"></script>
+        
+        <!-- <script type="module" src="./scripts/login.js" defer></script> -->
+        <script type="module" src="./scripts/main.js" defer></script>
+        <script src="https://kit.fontawesome.com/90b3871c83.js" crossorigin="anonymous"></script>
+        <script src="https://kit.fontawesome.com/8ff83b32cf.js" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.6.2/dist/sweetalert2.all.min.js"></script>
+        
+        
+       <!-- <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>-->
+
+        <style>
+            @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,700;0,800;1,700&display=swap');
+            </style>
     </head>
     <body onload="initSite()">
         <header>
             <!-- Your header title and shopping cart button goes here  -->
+            
+            <div id="navcontainer">
+                <ul class="navbar-left">
+                    <li class="hederlogo">
+                        <a href="index.html">TechStore</a>
+                    </li>
+                </ul>
+                    
+                <ul class="navbar-right">
+                    <li>
+                        <!--Få siffran att ändra sig-->
+                        <a class="item_quantity"></a>
+                    </li><li>
+                         <!--LÄNKA TILL SHOPPINGCART-->
+                        <div id="shoppingcart">
+                            <i class="fa-solid fa-cart-shopping"></i>
+                        </div>
+                    </li>
+                    <li id="user" >
+                        <i class="fa-solid fa-user"></i>
+                    </li>
+                    
+                </ul>
+            </div>  
         </header>
 
-        <main>
-            <!-- Add the content of your site here via javascript -->
+        <main class ="containerOfPhones">
+            <div class="ofItems">
+                <h1></h1>
+                <p></p>
+                <img></img>
+                <h2></h2>
+                <button></button>
+            </div>
         </main>
-
+        
     </body>
 </html>
