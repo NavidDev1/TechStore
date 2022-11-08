@@ -15,9 +15,10 @@ var listOfProducts;
 let customer = {};
 let productsLoaded = false;
 let productsLoadedResolve;
-let removeFromShoppingCartBtns;
+let removeFromShoppingCartBtn;
 let confirmPurchase;
 let totalSum;
+
 
 const fieldValidator = {
   isValidInputFormat(inputValue) {
@@ -211,7 +212,6 @@ function displayShoppingCart() {
   totalSum.innerHTML = totalCart();
   list.insertAdjacentElement("afterend", totalSum);
 
-  removeItemFromShoppingCartListner();
 
   confirmPurchase.addEventListener("click", () => {
     Swal.fire({
@@ -247,13 +247,13 @@ function createUlFromShoppingCartList() {
 
 function createItemsDiv(item) {
   let title = item.title;
-  let btnId = `btnRemove${title.split(" ").join("").toLowerCase()}`;
+  let btnId = title.split(" ").join("").toLowerCase();
   return `  
         <div class="cartItem">            
             <img src = "assets/${item.image}"></img>
             <h1>${item.title}</h1>
             <h2>${item.price} kr</h2>
-            <button id=${btnId} class="removeFromShoppingCartBtn"><i class="fa-regular fa-trash-can <i class="fa-regular fa-distribute-spacing-horizontal"></i>Ta bort</button>
+            <button id="${btnId}" class="removeFromShoppingCartBtn" onclick="removeItemFromCart(this)">Ta bort</button>
         </div>
     `;
 }
@@ -262,17 +262,17 @@ function phoneTitleMatch(phone) {
   return phone.title.split(" ").join("").toLowerCase() == this;
 }
 
-function removeItemFromShoppingCartListner() {
-  removeFromShoppingCartBtns = document.getElementsByClassName(
-    "removeFromShoppingCartBtn"
-  );
-  for (const btn of removeFromShoppingCartBtns) {
-    btn.addEventListener("click", removeItemFromShoppingCart);
-  }
-}
+// function removeItemFromShoppingCartListner() {
+//   removeFromShoppingCartBtns = document.getElementsByClassName(
+//     "removeFromShoppingCartBtn"
+//   );
+//   for (const btn of removeFromShoppingCartBtns) {
+//     btn.addEventListener("click", removeItemFromShoppingCart);
+//   }
+// }
 
-function removeItemFromShoppingCart() {
-  var holder = customer.shoppingList.findIndex(phoneTitleMatch, this.id);
+function removeItemFromCart(e) {
+  var holder = customer.shoppingList.findIndex(phoneTitleMatch, e.id);
 
   customer.shoppingList.splice(holder, 1);
   localStorage.setItem("activeCustomer", JSON.stringify(customer));
