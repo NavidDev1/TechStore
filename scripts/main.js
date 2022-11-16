@@ -212,7 +212,11 @@ function displayShoppingCart() {
   list.insertAdjacentElement("afterend", totalSum);
 
   removeItemFromShoppingCartListner();
+  let cust = JSON.parse(window.localStorage.getItem("activeCustomer"));
+  if (cust.shoppingList.length===0){
 
+    
+  }else {
   confirmPurchase.addEventListener("click", () => {
     Swal.fire({
       position: "center",
@@ -220,6 +224,7 @@ function displayShoppingCart() {
       title: "Ditt köp lyckades!",
       showConfirmButton: true,
     }).then((result) => {
+
       if (result.isConfirmed) {
         displayOrders();
         let aCustomer = JSON.parse(localStorage.getItem("activeCustomer"));
@@ -232,6 +237,7 @@ function displayShoppingCart() {
       }
     });
   });
+};
 }
 
 function createUlFromShoppingCartList() {
@@ -396,7 +402,7 @@ function displayOrders() {
   aCustomer.orders.push(order);
 
   window.localStorage.setItem("activeCustomer", JSON.stringify(aCustomer));
-
+  console.log(aCustomer);
   let listOfOrdItems = document.createElement("ul");
   var TotalOrderString = document.createElement("h1");
   TotalOrderString.innerText = "Din order:";
@@ -422,6 +428,7 @@ function displayOrders() {
   console.log({orderList}) //Order listan
   let id = 1;
   for (const odr of orderList) {
+
     output = `
       <div class="ofItems">
         <h1>Order:${id}</h1>
@@ -432,7 +439,16 @@ function displayOrders() {
     order.innerHTML = output;
     listOfOrdItems.appendChild(order);
     id++;
+
+    for (const items of orderItemList){
+      console.log(items);
+      let li = document.createElement("p");
+      li.innerHTML = items.title;
+      order.append(li);
+    }
   }
+  
+ 
   container.replaceChildren(listOfOrdItems);
   container.className = "orderPage";
 }
